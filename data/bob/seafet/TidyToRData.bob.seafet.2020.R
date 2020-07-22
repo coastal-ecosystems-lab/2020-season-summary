@@ -6,7 +6,7 @@ rm(list = ls())
 library(dplyr)
 library(lubridate)
 library(chron)
-
+library(here)
 
 # 
 # "20200430-20200710_processed.csv" 
@@ -14,8 +14,18 @@ library(chron)
 # "20200815-20201025_processed.csv"
 
 
+getwd()
 
-setwd("C:/Users/915712257/Box Sync/Inbox/oceanographic work/2020 season summary/data/bob/seafet")
+#setwd("C:/Users/915712257/Box Sync/Inbox/oceanographic work/2020 season summary/data/bob/seafet") #replaced with line 21
+
+setwd(here("data", "bob", "seafet"))
+
+getwd()
+
+#setwd(here()) #to reset to parent directory
+
+getwd()
+
 
 #read in field check sample data for BOB 2020 ########################################
 
