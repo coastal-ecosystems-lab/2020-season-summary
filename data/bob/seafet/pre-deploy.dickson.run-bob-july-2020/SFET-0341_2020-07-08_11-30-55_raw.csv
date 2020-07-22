@@ -1,0 +1,932 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<InstrumentPackage identifier="SeaFET0341" type="pH" description="SeaFET0341" version="1.0" date="2020-07-08-07:00" xsi:schemaLocation="http://www.satlantic.com/instrument sciencePkg.xsd" xmlns="http://www.satlantic.com/instrument" xmlns:ns2="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Operator>cadams</Operator>
+    <ApplicationName>Internal Software Suite</ApplicationName>
+    <ApplicationVersion>1.9.23</ApplicationVersion>
+    <Voltage>12</Voltage>
+    <Current>1.00</Current>
+    <CurrentMaximum>1.00</CurrentMaximum>
+    <Instrument version="2.0" serialNumber="0341" immersed="true" manufacturer="Satlantic" model="0.6" identifier="SeaFET0341" type="pH" description="SeaFET0341">
+        <PowerUpTime>0</PowerUpTime>
+        <VarAsciiFrame identifier="SATPHP0000" type="pH">
+            <FrameRate>1</FrameRate>
+            <Header>
+                <Base>SATPHP</Base>
+                <SerialNumber>0341</SerialNumber>
+            </Header>
+            <Terminator>\x0D\x0A</Terminator>
+            <FieldDelimiter>,</FieldDelimiter>
+            <SensorFieldGroup>
+                <Name>DATE</Name>
+                <Data>AI</Data>
+                <Units>N/A</Units>
+                <Type>Date</Type>
+                <SensorField>
+                    <Identifier>DATE</Identifier>
+                    <Sequence>1</Sequence>
+                    <Fit>
+                        <Type>YYYYDDD</Type>
+                    </Fit>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>TIME</Name>
+                <Data>AF</Data>
+                <Units>N/A</Units>
+                <Type>Time</Type>
+                <SensorField>
+                    <Identifier>TIME</Identifier>
+                    <Sequence>2</Sequence>
+                    <Fit>
+                        <Type>DECIMALHOUR_UTC</Type>
+                    </Fit>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>PH_INT</Name>
+                <Data>AF</Data>
+                <Units>pHт</Units>
+                <Type>pH</Type>
+                <SensorField>
+                    <Identifier>PH_INT</Identifier>
+                    <Sequence>3</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>PH_EXT</Name>
+                <Data>AF</Data>
+                <Units>pHт</Units>
+                <Type>pH</Type>
+                <SensorField>
+                    <Identifier>PH_EXT</Identifier>
+                    <Sequence>4</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>TEMP</Name>
+                <Data>AF</Data>
+                <Units>°C</Units>
+                <Type>Temperature</Type>
+                <SensorField>
+                    <Identifier>TEMP</Identifier>
+                    <Sequence>5</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>NEW_PH_INT</Name>
+                <Data>AF</Data>
+                <Units>pHт</Units>
+                <Type>pH</Type>
+                <SensorField>
+                    <Identifier>NEW_PH_INT</Identifier>
+                    <Sequence>6</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>NEW_PH_EXT</Name>
+                <Data>AF</Data>
+                <Units>pHт</Units>
+                <Type>pH</Type>
+                <SensorField>
+                    <Identifier>NEW_PH_EXT</Identifier>
+                    <Sequence>7</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>PRO_TEMP</Name>
+                <Data>AF</Data>
+                <Units>°C</Units>
+                <Type>Temperature</Type>
+                <SensorField>
+                    <Identifier>PRO_TEMP</Identifier>
+                    <Sequence>8</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>PRO_SALINITY</Name>
+                <Data>AF</Data>
+                <Units>PSU</Units>
+                <Type>Temperature</Type>
+                <SensorField>
+                    <Identifier>PRO_SALINITY</Identifier>
+                    <Sequence>9</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>STATUS</Name>
+                <Data>AI</Data>
+                <Units>N/A</Units>
+                <Type>Status</Type>
+                <SensorField>
+                    <Identifier>STATUS</Identifier>
+                    <Sequence>10</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>CHECK</Name>
+                <Data>AI</Data>
+                <Units>N/A</Units>
+                <Type>N/A</Type>
+                <SensorField>
+                    <Identifier>CHECK</Identifier>
+                    <Sequence>11</Sequence>
+                    <Fit>
+                        <Type>VERITYBYTE</Type>
+                    </Fit>
+                </SensorField>
+            </SensorFieldGroup>
+        </VarAsciiFrame>
+        <VarAsciiFrame identifier="SATSFET-CTD" type="pH">
+            <FrameRate>1</FrameRate>
+            <Header>
+                <Base>SATPHC</Base>
+                <SerialNumber>0341</SerialNumber>
+            </Header>
+            <Terminator>\x0D\x0A</Terminator>
+            <FieldDelimiter>,</FieldDelimiter>
+            <SensorFieldGroup>
+                <Name>TEMPERATURE</Name>
+                <Data>AF</Data>
+                <Units>°C</Units>
+                <Type>Temperature</Type>
+                <SensorField>
+                    <Identifier>TEMPERATURE</Identifier>
+                    <Sequence>1</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>CONDUCTIVITY</Name>
+                <Data>AF</Data>
+                <Units>S/m</Units>
+                <Type>Conductivity</Type>
+                <SensorField>
+                    <Identifier>CONDUCTIVITY</Identifier>
+                    <Sequence>2</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>PRESSURE</Name>
+                <Data>AF</Data>
+                <Units>dbar</Units>
+                <Type>Pressure (CTD)</Type>
+                <SensorField>
+                    <Identifier>PRESSURE</Identifier>
+                    <Sequence>3</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>OXYGEN_CONC</Name>
+                <Data>AF</Data>
+                <Units>ml/L</Units>
+                <Type>Oxygen</Type>
+                <SensorField>
+                    <Identifier>OXYGEN_CONC</Identifier>
+                    <Sequence>4</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>SALINITY</Name>
+                <Data>AF</Data>
+                <Units>psu</Units>
+                <Type>Salinity</Type>
+                <SensorField>
+                    <Identifier>CTD_SALINITY</Identifier>
+                    <Sequence>5</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>SOUND_VELOCITY</Name>
+                <Data>AF</Data>
+                <Units>m/s</Units>
+                <Type>Sound Velocity</Type>
+                <SensorField>
+                    <Identifier>SOUND_VELOCITY</Identifier>
+                    <Sequence>6</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>SPEC_CONDUCTIVITY</Name>
+                <Data>AF</Data>
+                <Units>S/m</Units>
+                <Type>Spec Conductivity</Type>
+                <SensorField>
+                    <Identifier>SPEC_CONDUCTIVITY</Identifier>
+                    <Sequence>7</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>TIME_STAMP</Name>
+                <Data>AS</Data>
+                <Units>N/A</Units>
+                <Type>Time Stamp</Type>
+                <SensorField>
+                    <Identifier>TIME_STAMP</Identifier>
+                    <Sequence>8</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+        </VarAsciiFrame>
+        <VarAsciiFrame identifier="SATSFET-LONG" type="pH">
+            <FrameRate>1</FrameRate>
+            <Header>
+                <Base>SATPHA</Base>
+                <SerialNumber>0341</SerialNumber>
+            </Header>
+            <Terminator>\x0D\x0A</Terminator>
+            <FieldDelimiter>,</FieldDelimiter>
+            <SensorFieldGroup>
+                <Name>DATE</Name>
+                <Data>AI</Data>
+                <Units>N/A</Units>
+                <Type>Date</Type>
+                <SensorField>
+                    <Identifier>DATE</Identifier>
+                    <Sequence>1</Sequence>
+                    <Fit>
+                        <Type>YYYYDDD</Type>
+                    </Fit>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>TIME</Name>
+                <Data>AF</Data>
+                <Units>N/A</Units>
+                <Type>Time</Type>
+                <SensorField>
+                    <Identifier>TIME</Identifier>
+                    <Sequence>2</Sequence>
+                    <Fit>
+                        <Type>DECIMALHOUR_UTC</Type>
+                    </Fit>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>PH_INT</Name>
+                <Data>AF</Data>
+                <Units>pHт</Units>
+                <Type>pH (INT)</Type>
+                <SensorField>
+                    <Identifier>PH_INT</Identifier>
+                    <Sequence>3</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>PH_EXT</Name>
+                <Data>AF</Data>
+                <Units>pHт</Units>
+                <Type>pH (EXT)</Type>
+                <SensorField>
+                    <Identifier>PH_EXT</Identifier>
+                    <Sequence>4</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>TEMP</Name>
+                <Data>AF</Data>
+                <Units>°C</Units>
+                <Type>Temperature</Type>
+                <SensorField>
+                    <Identifier>TEMP</Identifier>
+                    <Sequence>5</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>CTD_TEMP</Name>
+                <Data>AF</Data>
+                <Units>°C</Units>
+                <Type>Temperature (CTD)</Type>
+                <SensorField>
+                    <Identifier>CTD_TEMP</Identifier>
+                    <Sequence>6</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>CTD_SALINITY</Name>
+                <Data>AF</Data>
+                <Units>psu</Units>
+                <Type>Salinity (CTD)</Type>
+                <SensorField>
+                    <Identifier>CTD_SALINITY</Identifier>
+                    <Sequence>7</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>CTD_OXYGEN</Name>
+                <Data>AF</Data>
+                <Units>ml/L</Units>
+                <Type>Oxygen (CTD)</Type>
+                <SensorField>
+                    <Identifier>CTD_OXYGEN</Identifier>
+                    <Sequence>8</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>CTD_PRESSURE</Name>
+                <Data>AF</Data>
+                <Units>dbar</Units>
+                <Type>Pressure (CTD)</Type>
+                <SensorField>
+                    <Identifier>CTD_PRESSURE</Identifier>
+                    <Sequence>9</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>VOLT_INT</Name>
+                <Data>AF</Data>
+                <Units>V</Units>
+                <Type>Voltage (INT)</Type>
+                <SensorField>
+                    <Identifier>VOLT_INT</Identifier>
+                    <Sequence>10</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>VOLT_EXT</Name>
+                <Data>AF</Data>
+                <Units>V</Units>
+                <Type>Voltage (EXT)</Type>
+                <SensorField>
+                    <Identifier>VOLT_EXT</Identifier>
+                    <Sequence>11</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>VOLT_THERM</Name>
+                <Data>AF</Data>
+                <Units>V</Units>
+                <Type>Voltage (THERM)</Type>
+                <SensorField>
+                    <Identifier>VOLT_THERM</Identifier>
+                    <Sequence>12</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>VOLT_SUPPLY</Name>
+                <Data>AF</Data>
+                <Units>V</Units>
+                <Type>Voltage (Supply)</Type>
+                <SensorField>
+                    <Identifier>VOLT_SUPPLY</Identifier>
+                    <Sequence>13</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>I_SUPPLY</Name>
+                <Data>AI</Data>
+                <Units>mA</Units>
+                <Type>Current (Supply)</Type>
+                <SensorField>
+                    <Identifier>I_SUPPLY</Identifier>
+                    <Sequence>14</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>HUMIDITY</Name>
+                <Data>AF</Data>
+                <Units>%</Units>
+                <Type>Humidity</Type>
+                <SensorField>
+                    <Identifier>HUMIDITY</Identifier>
+                    <Sequence>15</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>VOLT_5</Name>
+                <Data>AF</Data>
+                <Units>V</Units>
+                <Type>Voltage (5)</Type>
+                <SensorField>
+                    <Identifier>VOLT_5</Identifier>
+                    <Sequence>16</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>VOLT_MBATT</Name>
+                <Data>AF</Data>
+                <Units>V</Units>
+                <Type>Voltage (Battery)</Type>
+                <SensorField>
+                    <Identifier>VOLT_MBATT</Identifier>
+                    <Sequence>17</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>VOLT_ISO</Name>
+                <Data>AF</Data>
+                <Units>V</Units>
+                <Type>Voltage (ISO)</Type>
+                <SensorField>
+                    <Identifier>VOLT_ISO</Identifier>
+                    <Sequence>18</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>VOLT_ISO_BATT</Name>
+                <Data>AF</Data>
+                <Units>V</Units>
+                <Type>Voltage (ISO Battery)</Type>
+                <SensorField>
+                    <Identifier>VOLT_ISO_BATT</Identifier>
+                    <Sequence>19</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>I_B</Name>
+                <Data>AI</Data>
+                <Units>nA</Units>
+                <Type>Current (Substrate)</Type>
+                <SensorField>
+                    <Identifier>I_B</Identifier>
+                    <Sequence>20</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>I_K</Name>
+                <Data>AI</Data>
+                <Units>nA</Units>
+                <Type>Current (Electrode)</Type>
+                <SensorField>
+                    <Identifier>I_K</Identifier>
+                    <Sequence>21</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>V_K</Name>
+                <Data>AF</Data>
+                <Units>V</Units>
+                <Type>Voltage (Electrode)</Type>
+                <SensorField>
+                    <Identifier>V_K</Identifier>
+                    <Sequence>22</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>STATUS</Name>
+                <Data>AS</Data>
+                <Units>N/A</Units>
+                <Type>Status</Type>
+                <SensorField>
+                    <Identifier>STATUS</Identifier>
+                    <Sequence>23</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>CHECK</Name>
+                <Data>AI</Data>
+                <Units>N/A</Units>
+                <Type>N/A</Type>
+                <SensorField>
+                    <Identifier>CHECK</Identifier>
+                    <Sequence>24</Sequence>
+                    <Fit>
+                        <Type>VERITYBYTE</Type>
+                    </Fit>
+                </SensorField>
+            </SensorFieldGroup>
+        </VarAsciiFrame>
+        <VarAsciiFrame identifier="SATSFET-SHORT" type="pH">
+            <FrameRate>1</FrameRate>
+            <Header>
+                <Base>SATPHB</Base>
+                <SerialNumber>0341</SerialNumber>
+            </Header>
+            <Terminator>\x0D\x0A</Terminator>
+            <FieldDelimiter>,</FieldDelimiter>
+            <SensorFieldGroup>
+                <Name>DATE</Name>
+                <Data>AI</Data>
+                <Units>N/A</Units>
+                <Type>Date</Type>
+                <SensorField>
+                    <Identifier>DATE</Identifier>
+                    <Sequence>1</Sequence>
+                    <Fit>
+                        <Type>YYYYDDD</Type>
+                    </Fit>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>TIME</Name>
+                <Data>AF</Data>
+                <Units>N/A</Units>
+                <Type>Time</Type>
+                <SensorField>
+                    <Identifier>TIME</Identifier>
+                    <Sequence>2</Sequence>
+                    <Fit>
+                        <Type>DECIMALHOUR_UTC</Type>
+                    </Fit>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>PH_INT</Name>
+                <Data>AF</Data>
+                <Units>pHт</Units>
+                <Type>pH (INT)</Type>
+                <SensorField>
+                    <Identifier>PH_INT</Identifier>
+                    <Sequence>3</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>PH_EXT</Name>
+                <Data>AF</Data>
+                <Units>pHт</Units>
+                <Type>pH (EXT)</Type>
+                <SensorField>
+                    <Identifier>PH_EXT</Identifier>
+                    <Sequence>4</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>TEMP</Name>
+                <Data>AF</Data>
+                <Units>°C</Units>
+                <Type>Temperature</Type>
+                <SensorField>
+                    <Identifier>TEMP</Identifier>
+                    <Sequence>5</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>CTD_TEMP</Name>
+                <Data>AF</Data>
+                <Units>°C</Units>
+                <Type>Temperature (CTD)</Type>
+                <SensorField>
+                    <Identifier>CTD_TEMP</Identifier>
+                    <Sequence>6</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>CTD_SALINITY</Name>
+                <Data>AF</Data>
+                <Units>psu</Units>
+                <Type>Salinity (CTD)</Type>
+                <SensorField>
+                    <Identifier>CTD_SALINITY</Identifier>
+                    <Sequence>7</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>CTD_OXYGEN</Name>
+                <Data>AF</Data>
+                <Units>ml/L</Units>
+                <Type>Oxygen (CTD)</Type>
+                <SensorField>
+                    <Identifier>CTD_OXYGEN</Identifier>
+                    <Sequence>8</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>CTD_PRESSURE</Name>
+                <Data>AF</Data>
+                <Units>dbar</Units>
+                <Type>Pressure (CTD)</Type>
+                <SensorField>
+                    <Identifier>CTD_PRESSURE</Identifier>
+                    <Sequence>9</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>STATUS</Name>
+                <Data>AS</Data>
+                <Units>N/A</Units>
+                <Type>Status</Type>
+                <SensorField>
+                    <Identifier>STATUS</Identifier>
+                    <Sequence>10</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+            <SensorFieldGroup>
+                <Name>CHECK</Name>
+                <Data>AI</Data>
+                <Units>N/A</Units>
+                <Type>N/A</Type>
+                <SensorField>
+                    <Identifier>CHECK</Identifier>
+                    <Sequence>11</Sequence>
+                    <Fit>
+                        <Type>VERITYBYTE</Type>
+                    </Fit>
+                </SensorField>
+            </SensorFieldGroup>
+        </VarAsciiFrame>
+    </Instrument>
+    <Instrument version="2.X" serialNumber="0001" immersed="false" identifier="SAT_HEADER" type="FILE-HEADER">
+        <PowerUpTime>0</PowerUpTime>
+        <VarAsciiFrame identifier="SATFHR" type="FILE-HEADER">
+            <FrameRate>0</FrameRate>
+            <Header>
+                <Base>SATFHR</Base>
+            </Header>
+            <Terminator>\x0D\x0A</Terminator>
+            <FieldDelimiter>,</FieldDelimiter>
+            <SensorFieldGroup>
+                <Name>RECORD-DATA</Name>
+                <Data>AS</Data>
+                <Units>N/A</Units>
+                <Type>N/A</Type>
+                <SensorField>
+                    <Identifier>RECORD-KEY</Identifier>
+                    <Sequence>1</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+                <SensorField>
+                    <Identifier>RECORD-VALUE</Identifier>
+                    <Sequence>2</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+        </VarAsciiFrame>
+        <FixedFrame identifier="SATHDR" type="FILE-HEADER">
+            <FrameRate>0</FrameRate>
+            <Header>
+                <Base>SATHDR</Base>
+            </Header>
+            <SensorFieldGroup>
+                <Name>RECORD-DATA</Name>
+                <ASCIIData>
+                    <Type>AS</Type>
+                    <Length>122</Length>
+                </ASCIIData>
+                <Units>N/A</Units>
+                <Type>N/A</Type>
+                <SensorField>
+                    <Identifier>RECORD-DATA</Identifier>
+                    <Sequence>1</Sequence>
+                    <IsUseable>true</IsUseable>
+                </SensorField>
+            </SensorFieldGroup>
+        </FixedFrame>
+    </Instrument>
+</InstrumentPackage>
+SATFHR,FILE-VERSION,3.0.0
+SATFHR,APP-VERSION,SeaFETCom 2.0.3_115
+SATFHR,INSTR-PACKAGE,SFET_0341_001.xml|SeaFET0341|1.0|2019-01-03-0800|58938
+SATFHR,TIME-STAMP,2020-07-08T11:30:55-0700
+SATFHR,FW-VERSION,SeaFET v3.8.0
+SATFHR,SERIAL-NUMBER,0341
+SATFHR,CAL_PHINT_OFFSET_COEFF,-1.079574e+00
+SATFHR,CAL_PHINT_SLOPE_COEFF,-1.101000e-03
+SATFHR,CAL_PHEXT_OFFSET_COEFF,-1.085770e+00
+SATFHR,CAL_PHEXT_SLOPE_COEFF,-1.048000e-03
+SATFHR,ONBOARD_SALINITY_PSU,35.000
+SATFHR,SAMPLES_AVERAGED,1
+SATFHR,OPERATOR,lab
+SATFHR,EXPERIMENT,
+SATFHR,COMMENT,
+SATPHA0341,2020190,18.6676826,8.26374,8.25915,18.2564,nan,nan,nan,nan,-0.92259138,-0.87796360,0.91791361,11.877,20,12.3,4.898,11.749,6.124,6.227,601,425,0.00000000,0x0000,58
+SATPHA0341,2020190,18.6679611,8.26274,8.25926,18.2573,nan,nan,nan,nan,-0.92264890,-0.87795644,0.91788887,11.877,20,12.3,4.898,11.749,6.124,6.227,601,425,0.00000000,0x0000,38
+SATPHA0341,2020190,18.6682376,8.26326,8.25939,18.2577,nan,nan,nan,nan,-0.92261880,-0.87794870,0.91787755,11.877,20,12.3,4.898,11.749,6.124,6.227,601,425,0.00000000,0x0000,41
+SATPHA0341,2020190,18.6685161,8.26282,8.25726,18.2586,nan,nan,nan,nan,-0.92264354,-0.87807118,0.91785490,11.877,20,12.3,4.898,11.749,6.124,6.227,601,425,0.00000000,0x0000,68
+SATPHA0341,2020190,18.6687946,8.26618,8.25962,18.2590,nan,nan,nan,nan,-0.92244923,-0.87793439,0.91784328,11.877,20,12.3,4.898,11.749,6.124,6.227,601,425,0.00000000,0x0000,46
+SATPHA0341,2020190,18.6690711,8.26192,8.25735,18.2596,nan,nan,nan,nan,-0.92269510,-0.87806493,0.91782838,11.877,20,12.3,4.898,11.749,6.124,6.227,601,425,0.00000000,0x0000,63
+SATPHA0341,2020190,18.6693496,8.26447,8.25801,18.2595,nan,nan,nan,nan,-0.92254787,-0.87802678,0.91782867,11.877,20,12.3,4.906,11.741,6.121,6.232,0,550,0.00000000,0x0000,170
+SATPHA0341,2020190,18.6696262,8.26464,8.25961,18.2596,nan,nan,nan,nan,-0.92253774,-0.87793439,0.91782748,11.877,20,12.3,4.906,11.741,6.121,6.232,0,550,0.00000000,0x0000,172
+SATPHA0341,2020190,18.6699047,8.26243,8.25686,18.2600,nan,nan,nan,nan,-0.92266559,-0.87809294,0.91781735,11.877,20,12.3,4.906,11.741,6.121,6.232,0,550,0.00000000,0x0000,186
+SATPHA0341,2020190,18.6701831,8.26423,8.26111,18.2607,nan,nan,nan,nan,-0.92256069,-0.87784618,0.91779679,11.877,20,12.3,4.906,11.741,6.121,6.232,0,550,0.00000000,0x0000,199
+SATPHA0341,2020190,19.0010375,8.26084,8.25429,18.3211,nan,nan,nan,nan,-0.92272460,-0.87818443,0.91617137,11.885,20,12.4,4.930,11.749,6.123,6.229,241,42,0.00000000,0x0000,171
+SATPHA0341,2020190,19.0013160,8.26175,8.25476,18.3219,nan,nan,nan,nan,-0.92267155,-0.87815672,0.91615140,11.885,20,12.4,4.930,11.749,6.123,6.229,241,42,0.00000000,0x0000,167
+SATPHA0341,2020190,19.0015926,8.26228,8.25480,18.3227,nan,nan,nan,nan,-0.92264026,-0.87815344,0.91612815,11.885,20,12.4,4.930,11.749,6.123,6.229,241,42,0.00000000,0x0000,166
+SATPHA0341,2020190,19.0018711,8.26025,8.25738,18.3233,nan,nan,nan,nan,-0.92275738,-0.87800383,0.91611236,11.885,20,12.4,4.930,11.749,6.123,6.229,241,42,0.00000000,0x0000,168
+SATPHA0341,2020190,19.0021495,8.25995,8.25415,18.3235,nan,nan,nan,nan,-0.92277467,-0.87819010,0.91610819,11.885,20,12.4,4.930,11.749,6.123,6.229,241,42,0.00000000,0x0000,152
+SATPHA0341,2020190,19.0024261,8.25987,8.25283,18.3239,nan,nan,nan,nan,-0.92277914,-0.87826639,0.91609776,11.885,20,12.4,4.930,11.749,6.123,6.229,241,42,0.00000000,0x0000,128
+SATPHA0341,2020190,19.0027046,8.26135,8.25394,18.3245,nan,nan,nan,nan,-0.92269331,-0.87820142,0.91608047,11.869,20,12.4,4.898,11.757,6.121,6.231,0,41,0.00000000,0x0000,14
+SATPHA0341,2020190,19.0029830,8.26056,8.25823,18.3249,nan,nan,nan,nan,-0.92273861,-0.87795317,0.91606944,11.869,20,12.4,4.898,11.757,6.121,6.231,0,41,0.00000000,0x0000,242
+SATPHA0341,2020190,19.0032596,8.25974,8.25440,18.3250,nan,nan,nan,nan,-0.92278599,-0.87817430,0.91606676,11.869,20,12.4,4.898,11.757,6.121,6.231,0,41,0.00000000,0x0000,238
+SATPHA0341,2020190,19.0035381,8.26096,8.25733,18.3253,nan,nan,nan,nan,-0.92271506,-0.87800472,0.91606020,11.869,20,12.4,4.898,11.757,6.121,6.231,0,41,0.00000000,0x0000,21
+SATPHA0341,2020190,19.3343639,8.26085,8.25477,18.3878,nan,nan,nan,nan,-0.92268794,-0.87809443,0.91437846,11.893,20,12.4,4.898,11.757,6.124,6.227,391,115,0.00000000,0x0000,46
+SATPHA0341,2020190,19.3346424,8.25985,8.25561,18.3887,nan,nan,nan,nan,-0.92274546,-0.87804466,0.91435462,11.893,20,12.4,4.898,11.757,6.124,6.227,391,115,0.00000000,0x0000,65
+SATPHA0341,2020190,19.3349208,8.26018,8.25616,18.3891,nan,nan,nan,nan,-0.92272609,-0.87801307,0.91434597,11.893,20,12.4,4.898,11.757,6.124,6.227,391,115,0.00000000,0x0000,81
+SATPHA0341,2020190,19.3351974,8.25643,8.25877,18.3895,nan,nan,nan,nan,-0.92294305,-0.87786167,0.91433405,11.893,20,12.4,4.898,11.757,6.124,6.227,391,115,0.00000000,0x0000,62
+SATPHA0341,2020190,19.3354759,8.25821,8.25532,18.3896,nan,nan,nan,nan,-0.92283993,-0.87806075,0.91433137,11.893,20,12.4,4.898,11.757,6.124,6.227,391,115,0.00000000,0x0000,67
+SATPHA0341,2020190,19.3357543,8.26141,8.25478,18.3911,nan,nan,nan,nan,-0.92265367,-0.87809085,0.91429024,11.893,20,12.4,4.898,11.757,6.124,6.227,391,115,0.00000000,0x0000,81
+SATPHA0341,2020190,19.3360309,8.26100,8.25467,18.3909,nan,nan,nan,nan,-0.92267751,-0.87809711,0.91429680,11.877,20,12.4,4.906,11.757,6.121,6.228,158,629,0.00000000,0x0000,83
+SATPHA0341,2020190,19.3363094,8.25892,8.25589,18.3918,nan,nan,nan,nan,-0.92279762,-0.87802588,0.91427356,11.877,20,12.4,4.906,11.757,6.121,6.228,158,629,0.00000000,0x0000,49
+SATPHA0341,2020190,19.3365879,8.25704,8.25307,18.3915,nan,nan,nan,nan,-0.92290639,-0.87818920,0.91428041,11.877,20,12.4,4.906,11.757,6.121,6.228,158,629,0.00000000,0x0000,74
+SATPHA0341,2020190,19.3368644,8.25878,8.25515,18.3913,nan,nan,nan,nan,-0.92280566,-0.87806940,0.91428697,11.877,20,12.4,4.906,11.757,6.121,6.228,158,629,0.00000000,0x0000,56
+SATPHA0341,2020190,19.6676902,8.25428,8.25178,18.4611,nan,nan,nan,nan,-0.92302888,-0.87819874,0.91241151,11.893,20,12.4,4.906,11.766,6.124,6.228,0,419,0.00000000,0x0000,184
+SATPHA0341,2020190,19.6679687,8.25429,8.25059,18.4619,nan,nan,nan,nan,-0.92302769,-0.87826699,0.91238975,11.893,20,12.4,4.906,11.766,6.124,6.228,0,419,0.00000000,0x0000,143
+SATPHA0341,2020190,19.6682453,8.25563,8.24770,18.4622,nan,nan,nan,nan,-0.92294991,-0.87843418,0.91238290,11.893,20,12.4,4.906,11.766,6.124,6.228,0,419,0.00000000,0x0000,181
+SATPHA0341,2020190,19.6685237,8.25759,8.25066,18.4635,nan,nan,nan,nan,-0.92283606,-0.87826162,0.91234743,11.893,20,12.4,4.906,11.766,6.124,6.228,0,419,0.00000000,0x0000,181
+SATPHA0341,2020190,19.6688022,8.25352,8.24903,18.4636,nan,nan,nan,nan,-0.92307120,-0.87835550,0.91234534,11.893,20,12.4,4.906,11.766,6.124,6.228,0,419,0.00000000,0x0000,210
+SATPHA0341,2020190,19.6690788,8.25535,8.24883,18.4641,nan,nan,nan,nan,-0.92296510,-0.87836712,0.91233253,11.893,20,12.4,4.906,11.766,6.124,6.228,0,419,0.00000000,0x0000,184
+SATPHA0341,2020190,19.6693572,8.25722,8.24970,18.4644,nan,nan,nan,nan,-0.92285692,-0.87831616,0.91232538,11.885,20,12.4,4.898,11.766,6.121,6.229,252,461,0.00000000,0x0000,69
+SATPHA0341,2020190,19.6696357,8.25472,8.25173,18.4647,nan,nan,nan,nan,-0.92300117,-0.87819874,0.91231703,11.885,20,12.4,4.898,11.766,6.121,6.229,252,461,0.00000000,0x0000,79
+SATPHA0341,2020190,19.6699123,8.25825,8.25069,18.4650,nan,nan,nan,nan,-0.92279672,-0.87825834,0.91230750,11.885,20,12.4,4.898,11.766,6.121,6.229,252,461,0.00000000,0x0000,70
+SATPHA0341,2020190,19.6701908,8.25325,8.25185,18.4648,nan,nan,nan,nan,-0.92308640,-0.87819159,0.91231405,11.885,20,12.4,4.898,11.766,6.121,6.229,252,461,0.00000000,0x0000,85
+SATPHA0341,2020190,20.0010185,8.25121,8.24799,18.5425,nan,nan,nan,nan,-0.92316299,-0.87834239,0.91023027,11.909,20,12.4,4.914,11.774,6.124,6.226,482,6,0.00000000,0x0000,218
+SATPHA0341,2020190,20.0012969,8.25514,8.24931,18.5433,nan,nan,nan,nan,-0.92293471,-0.87826490,0.91020941,11.909,20,12.4,4.914,11.774,6.124,6.226,482,6,0.00000000,0x0000,215
+SATPHA0341,2020190,20.0015735,8.25462,8.24821,18.5442,nan,nan,nan,nan,-0.92296451,-0.87832778,0.91018646,11.909,20,12.4,4.914,11.774,6.124,6.226,482,6,0.00000000,0x0000,205
+SATPHA0341,2020190,20.0018520,8.25277,8.24850,18.5447,nan,nan,nan,nan,-0.92307120,-0.87831079,0.91017216,11.909,20,12.4,4.914,11.774,6.124,6.226,482,6,0.00000000,0x0000,228
+SATPHA0341,2020190,20.0021286,8.25416,8.25087,18.5445,nan,nan,nan,nan,-0.92299073,-0.87817400,0.91017842,11.909,20,12.4,4.914,11.774,6.124,6.226,482,6,0.00000000,0x0000,215
+SATPHA0341,2020190,20.0024070,8.25390,8.24792,18.5451,nan,nan,nan,nan,-0.92300564,-0.87834417,0.91016203,11.909,20,12.4,4.914,11.774,6.124,6.226,482,6,0.00000000,0x0000,236
+SATPHA0341,2020190,20.0026855,8.25132,8.25090,18.5459,nan,nan,nan,nan,-0.92315435,-0.87817072,0.91014146,11.893,20,12.4,4.914,11.766,6.122,6.230,589,415,0.00000000,0x0000,120
+SATPHA0341,2020190,20.0029621,8.25135,8.24774,18.5461,nan,nan,nan,nan,-0.92315256,-0.87835341,0.91013461,11.893,20,12.4,4.914,11.766,6.122,6.230,589,415,0.00000000,0x0000,123
+SATPHA0341,2020190,20.0032405,8.24989,8.24871,18.5463,nan,nan,nan,nan,-0.92323690,-0.87829679,0.91012984,11.893,20,12.4,4.914,11.766,6.122,6.230,589,415,0.00000000,0x0000,86
+SATPHA0341,2020190,20.0035190,8.25224,8.25096,18.5466,nan,nan,nan,nan,-0.92310100,-0.87816655,0.91012090,11.893,20,12.4,4.914,11.766,6.122,6.230,589,415,0.00000000,0x0000,136
+SATPHA0341,2020190,20.3343734,8.25038,8.24619,18.6171,nan,nan,nan,nan,-0.92317104,-0.87837666,0.90823650,11.901,20,12.4,4.906,11.774,6.124,6.228,651,93,0.00000000,0x0000,160
+SATPHA0341,2020190,20.3346519,8.24966,8.24649,18.6180,nan,nan,nan,nan,-0.92321217,-0.87835878,0.90820997,11.901,20,12.4,4.906,11.774,6.124,6.228,651,93,0.00000000,0x0000,130
+SATPHA0341,2020190,20.3349285,8.25286,8.24417,18.6190,nan,nan,nan,nan,-0.92302620,-0.87849199,0.90818375,11.901,20,12.4,4.906,11.774,6.124,6.228,651,93,0.00000000,0x0000,142
+SATPHA0341,2020190,20.3352069,8.25099,8.24523,18.6194,nan,nan,nan,nan,-0.92313408,-0.87843000,0.90817272,11.901,20,12.4,4.906,11.774,6.124,6.228,651,93,0.00000000,0x0000,168
+SATPHA0341,2020190,20.3354854,8.25247,8.24645,18.6194,nan,nan,nan,nan,-0.92304855,-0.87835937,0.90817362,11.901,20,12.4,4.906,11.774,6.124,6.228,651,93,0.00000000,0x0000,138
+SATPHA0341,2020190,20.3357620,8.25217,8.24745,18.6197,nan,nan,nan,nan,-0.92306584,-0.87830156,0.90816497,11.901,20,12.4,4.906,11.774,6.124,6.228,651,93,0.00000000,0x0000,146
+SATPHA0341,2020190,20.3360404,8.25204,8.24810,18.6203,nan,nan,nan,nan,-0.92307269,-0.87826311,0.90815007,11.901,20,12.4,4.898,11.766,6.121,6.232,0,565,0.00000000,0x0000,243
+SATPHA0341,2020190,20.3363170,8.25518,8.24843,18.6202,nan,nan,nan,nan,-0.92289119,-0.87824404,0.90815126,11.901,20,12.4,4.898,11.766,6.121,6.232,0,565,0.00000000,0x0000,221
+SATPHA0341,2020190,20.3365955,8.25180,8.24730,18.6205,nan,nan,nan,nan,-0.92308670,-0.87830960,0.90814411,11.901,20,12.4,4.898,11.766,6.121,6.232,0,565,0.00000000,0x0000,221
+SATPHA0341,2020190,20.3368740,8.25306,8.24885,18.6209,nan,nan,nan,nan,-0.92301368,-0.87821960,0.90813487,11.901,20,12.4,4.898,11.766,6.121,6.232,0,565,0.00000000,0x0000,202
+SATPHA0341,2020190,20.6676979,8.24873,8.24203,18.6671,nan,nan,nan,nan,-0.92323929,-0.87857127,0.90689808,11.901,20,12.4,4.906,11.774,6.125,6.228,34,523,0.00000000,0x0000,122
+SATPHA0341,2020190,20.6679763,8.25004,8.24520,18.6678,nan,nan,nan,nan,-0.92316299,-0.87838679,0.90687990,11.901,20,12.4,4.906,11.774,6.125,6.228,34,523,0.00000000,0x0000,119
+SATPHA0341,2020190,20.6682548,8.24965,8.24685,18.6684,nan,nan,nan,nan,-0.92318534,-0.87829053,0.90686321,11.901,20,12.4,4.906,11.774,6.125,6.228,34,523,0.00000000,0x0000,133
+SATPHA0341,2020190,20.6685314,8.24987,8.24437,18.6683,nan,nan,nan,nan,-0.92317312,-0.87843418,0.90686738,11.901,20,12.4,4.906,11.774,6.125,6.228,34,523,0.00000000,0x0000,135
+SATPHA0341,2020190,20.6688098,8.24806,8.24588,18.6686,nan,nan,nan,nan,-0.92327743,-0.87834656,0.90685904,11.901,20,12.4,4.906,11.774,6.125,6.228,34,523,0.00000000,0x0000,116
+SATPHA0341,2020190,20.6690883,8.25070,8.24341,18.6697,nan,nan,nan,nan,-0.92312395,-0.87848901,0.90683102,11.901,20,12.4,4.906,11.774,6.125,6.228,34,523,0.00000000,0x0000,155
+SATPHA0341,2020190,20.6693649,8.24876,8.24548,18.6695,nan,nan,nan,nan,-0.92323631,-0.87836921,0.90683639,11.901,20,12.4,4.914,11.766,6.122,6.226,0,638,0.00000000,0x0000,176
+SATPHA0341,2020190,20.6696434,8.24959,8.24577,18.6699,nan,nan,nan,nan,-0.92318832,-0.87835192,0.90682476,11.901,20,12.4,4.914,11.766,6.122,6.226,0,638,0.00000000,0x0000,169
+SATPHA0341,2020190,20.6699218,8.25069,8.24561,18.6697,nan,nan,nan,nan,-0.92312484,-0.87836146,0.90682864,11.901,20,12.4,4.914,11.766,6.122,6.226,0,638,0.00000000,0x0000,184
+SATPHA0341,2020190,20.6701984,8.24928,8.24436,18.6703,nan,nan,nan,nan,-0.92320591,-0.87843328,0.90681433,11.901,20,12.4,4.914,11.766,6.122,6.226,0,638,0.00000000,0x0000,209
+SATPHA0341,2020190,21.0010261,8.24834,8.24607,18.7033,nan,nan,nan,nan,-0.92324256,-0.87830334,0.90593189,11.901,20,12.4,4.906,11.774,6.125,6.226,213,290,0.00000000,0x0000,136
+SATPHA0341,2020190,21.0013027,8.24754,8.24398,18.7041,nan,nan,nan,nan,-0.92328876,-0.87842375,0.90591073,11.901,20,12.4,4.906,11.774,6.125,6.226,213,290,0.00000000,0x0000,116
+SATPHA0341,2020190,21.0015811,8.24768,8.24332,18.7053,nan,nan,nan,nan,-0.92327982,-0.87846040,0.90587884,11.901,20,12.4,4.906,11.774,6.125,6.226,213,290,0.00000000,0x0000,112
+SATPHA0341,2020190,21.0018596,8.24664,8.24416,18.7058,nan,nan,nan,nan,-0.92334002,-0.87841153,0.90586692,11.901,20,12.4,4.906,11.774,6.125,6.226,213,290,0.00000000,0x0000,119
+SATPHA0341,2020190,21.0021362,8.25060,8.24564,18.7064,nan,nan,nan,nan,-0.92310994,-0.87832540,0.90585112,11.901,20,12.4,4.906,11.774,6.125,6.226,213,290,0.00000000,0x0000,142
+SATPHA0341,2020190,21.0024147,8.24804,8.24203,18.7060,nan,nan,nan,nan,-0.92325866,-0.87853461,0.90586036,11.901,20,12.4,4.906,11.774,6.125,6.226,213,290,0.00000000,0x0000,132
+SATPHA0341,2020190,21.0026931,8.24982,8.24447,18.7064,nan,nan,nan,nan,-0.92315524,-0.87839305,0.90584903,11.901,20,12.4,4.906,11.774,6.123,6.230,0,186,0.00000000,0x0000,221
+SATPHA0341,2020190,21.0029697,8.24847,8.24026,18.7069,nan,nan,nan,nan,-0.92323303,-0.87863653,0.90583652,11.901,20,12.4,4.906,11.774,6.123,6.230,0,186,0.00000000,0x0000,214
+SATPHA0341,2020190,21.0032482,8.25041,8.24263,18.7076,nan,nan,nan,nan,-0.92312037,-0.87849855,0.90581685,11.901,20,12.4,4.906,11.774,6.123,6.230,0,186,0.00000000,0x0000,226
+SATPHA0341,2020190,21.0035247,8.24859,8.24428,18.7072,nan,nan,nan,nan,-0.92322587,-0.87840318,0.90582937,11.901,20,12.4,4.906,11.774,6.123,6.230,0,186,0.00000000,0x0000,212
+SATPHA0341,2020190,21.3343734,8.24637,8.24162,18.7402,nan,nan,nan,nan,-0.92333704,-0.87852686,0.90494811,11.909,20,12.4,4.914,11.782,6.125,6.229,0,205,0.00000000,0x0000,215
+SATPHA0341,2020190,21.3346519,8.24662,8.24199,18.7412,nan,nan,nan,nan,-0.92332214,-0.87850421,0.90492099,11.909,20,12.4,4.914,11.782,6.125,6.229,0,205,0.00000000,0x0000,216
+SATPHA0341,2020190,21.3349304,8.24766,8.23571,18.7415,nan,nan,nan,nan,-0.92326164,-0.87886750,0.90491414,11.909,20,12.4,4.914,11.782,6.125,6.229,0,205,0.00000000,0x0000,209
+SATPHA0341,2020190,21.3352069,8.25033,8.24589,18.7414,nan,nan,nan,nan,-0.92310696,-0.87827801,0.90491563,11.909,20,12.4,4.914,11.782,6.125,6.229,0,205,0.00000000,0x0000,210
+SATPHA0341,2020190,21.3354854,8.24893,8.24347,18.7428,nan,nan,nan,nan,-0.92318713,-0.87841689,0.90487837,11.909,20,12.4,4.914,11.782,6.125,6.229,0,205,0.00000000,0x0000,179
+SATPHA0341,2020190,21.3357639,8.24689,8.24162,18.7429,nan,nan,nan,nan,-0.92330545,-0.87852388,0.90487599,11.909,20,12.4,4.914,11.782,6.125,6.229,0,205,0.00000000,0x0000,176
+SATPHA0341,2020190,21.3360404,8.24810,8.24258,18.7433,nan,nan,nan,nan,-0.92323511,-0.87846785,0.90486437,11.901,20,12.4,4.914,11.774,6.122,6.230,0,389,0.00000000,0x0000,221
+SATPHA0341,2020190,21.3363189,8.24828,8.24071,18.7439,nan,nan,nan,nan,-0.92322438,-0.87857574,0.90485006,11.901,20,12.4,4.914,11.774,6.122,6.230,0,389,0.00000000,0x0000,204
+SATPHA0341,2020190,21.3365974,8.25044,8.24236,18.7437,nan,nan,nan,nan,-0.92309951,-0.87848037,0.90485483,11.901,20,12.4,4.914,11.774,6.122,6.230,0,389,0.00000000,0x0000,200
+SATPHA0341,2020190,21.3368740,8.24801,8.24629,18.7435,nan,nan,nan,nan,-0.92324048,-0.87825298,0.90485960,11.901,20,12.4,4.914,11.774,6.122,6.230,0,389,0.00000000,0x0000,204
+SATPHA0341,2020190,21.6676940,8.24856,8.23852,18.7764,nan,nan,nan,nan,-0.92319101,-0.87867259,0.90398371,11.917,20,12.4,4.898,11.782,6.125,6.224,595,300,0.00000000,0x0000,68
+SATPHA0341,2020190,21.6679725,8.24982,8.24094,18.7762,nan,nan,nan,nan,-0.92311769,-0.87853223,0.90398967,11.917,20,12.4,4.898,11.782,6.125,6.224,595,300,0.00000000,0x0000,58
+SATPHA0341,2020190,21.6682491,8.24958,8.24280,18.7777,nan,nan,nan,nan,-0.92313081,-0.87842345,0.90394884,11.917,20,12.4,4.898,11.782,6.125,6.224,595,300,0.00000000,0x0000,72
+SATPHA0341,2020190,21.6685276,8.25052,8.24324,18.7777,nan,nan,nan,nan,-0.92307657,-0.87839782,0.90394824,11.917,20,12.4,4.898,11.782,6.125,6.224,595,300,0.00000000,0x0000,66
+SATPHA0341,2020190,21.6688060,8.24757,8.23990,18.7784,nan,nan,nan,nan,-0.92324733,-0.87859064,0.90393096,11.917,20,12.4,4.898,11.782,6.125,6.224,595,300,0.00000000,0x0000,66
+SATPHA0341,2020190,21.6690826,8.24626,8.24090,18.7783,nan,nan,nan,nan,-0.92332273,-0.87853282,0.90393185,11.917,20,12.4,4.898,11.782,6.125,6.224,595,300,0.00000000,0x0000,84
+SATPHA0341,2020190,21.6693611,8.24946,8.24331,18.7791,nan,nan,nan,nan,-0.92313736,-0.87839245,0.90391129,11.909,20,12.4,4.898,11.774,6.122,6.222,560,600,0.00000000,0x0000,93
+SATPHA0341,2020190,21.6696376,8.24747,8.24217,18.7794,nan,nan,nan,nan,-0.92325240,-0.87845802,0.90390384,11.909,20,12.4,4.898,11.774,6.122,6.222,560,600,0.00000000,0x0000,86
+SATPHA0341,2020190,21.6699161,8.24707,8.24295,18.7795,nan,nan,nan,nan,-0.92327535,-0.87841272,0.90389937,11.909,20,12.4,4.898,11.774,6.122,6.222,560,600,0.00000000,0x0000,70
+SATPHA0341,2020190,21.6701946,8.24609,8.24226,18.7796,nan,nan,nan,nan,-0.92333197,-0.87845295,0.90389668,11.909,20,12.4,4.898,11.774,6.122,6.222,560,600,0.00000000,0x0000,68
+SATPHA0341,2020190,22.0010433,8.24522,8.24082,18.8124,nan,nan,nan,nan,-0.92336505,-0.87850540,0.90302526,11.909,20,12.4,4.898,11.782,6.125,6.229,0,96,0.00000000,0x0000,27
+SATPHA0341,2020190,22.0013198,8.24694,8.23904,18.8132,nan,nan,nan,nan,-0.92326521,-0.87860792,0.90300381,11.909,20,12.4,4.898,11.782,6.125,6.229,0,96,0.00000000,0x0000,1
+SATPHA0341,2020190,22.0015983,8.24561,8.23901,18.8135,nan,nan,nan,nan,-0.92334210,-0.87860941,0.90299606,11.909,20,12.4,4.898,11.782,6.125,6.229,0,96,0.00000000,0x0000,253
+SATPHA0341,2020190,22.0018768,8.24549,8.24011,18.8141,nan,nan,nan,nan,-0.92334836,-0.87854534,0.90297877,11.909,20,12.4,4.898,11.782,6.125,6.229,0,96,0.00000000,0x0000,230
+SATPHA0341,2020190,22.0021533,8.24464,8.24155,18.8142,nan,nan,nan,nan,-0.92339754,-0.87846130,0.90297579,11.909,20,12.4,4.898,11.782,6.125,6.229,0,96,0.00000000,0x0000,244
+SATPHA0341,2020190,22.0024318,8.24458,8.23937,18.8156,nan,nan,nan,nan,-0.92340052,-0.87858647,0.90293794,11.909,20,12.4,4.898,11.782,6.125,6.229,0,96,0.00000000,0x0000,231
+SATPHA0341,2020190,22.0027103,8.24317,8.24212,18.8149,nan,nan,nan,nan,-0.92348217,-0.87842762,0.90295672,11.909,20,12.4,4.898,11.782,6.122,6.232,605,345,0.00000000,0x0000,111
+SATPHA0341,2020190,22.0029869,8.24495,8.23919,18.8151,nan,nan,nan,nan,-0.92337936,-0.87859749,0.90295314,11.909,20,12.4,4.898,11.782,6.122,6.232,605,345,0.00000000,0x0000,65
+SATPHA0341,2020190,22.0032653,8.24560,8.24288,18.8153,nan,nan,nan,nan,-0.92334121,-0.87838381,0.90294808,11.909,20,12.4,4.898,11.782,6.122,6.232,605,345,0.00000000,0x0000,106
+SATPHA0341,2020190,22.0035438,8.24771,8.24196,18.8164,nan,nan,nan,nan,-0.92321872,-0.87843596,0.90291678,11.909,20,12.4,4.898,11.782,6.122,6.232,605,345,0.00000000,0x0000,83
+SATPHA0341,2020190,22.3343639,8.24416,8.24134,18.8484,nan,nan,nan,nan,-0.92340737,-0.87844192,0.90206682,11.925,20,12.4,4.914,11.782,6.125,6.224,117,544,0.00000000,0x0000,107
+SATPHA0341,2020190,22.3346405,8.24497,8.23812,18.8502,nan,nan,nan,nan,-0.92335939,-0.87862670,0.90201824,11.925,20,12.4,4.914,11.782,6.125,6.224,117,544,0.00000000,0x0000,109
+SATPHA0341,2020190,22.3349189,8.24296,8.23706,18.8499,nan,nan,nan,nan,-0.92347592,-0.87868839,0.90202450,11.925,20,12.4,4.914,11.782,6.125,6.224,117,544,0.00000000,0x0000,76
+SATPHA0341,2020190,22.3351974,8.24385,8.23831,18.8506,nan,nan,nan,nan,-0.92342376,-0.87861508,0.90200752,11.925,20,12.4,4.914,11.782,6.125,6.224,117,544,0.00000000,0x0000,110
+SATPHA0341,2020190,22.3354740,8.24356,8.23875,18.8502,nan,nan,nan,nan,-0.92344105,-0.87859034,0.90201705,11.925,20,12.4,4.914,11.782,6.125,6.224,117,544,0.00000000,0x0000,122
+SATPHA0341,2020190,22.3357524,8.24296,8.23859,18.8512,nan,nan,nan,nan,-0.92347532,-0.87859869,0.90199053,11.925,20,12.4,4.914,11.782,6.125,6.224,117,544,0.00000000,0x0000,78
+SATPHA0341,2020190,22.3360309,8.24212,8.24057,18.8520,nan,nan,nan,nan,-0.92352330,-0.87848305,0.90197086,11.917,20,12.4,4.906,11.782,6.123,6.227,311,547,0.00000000,0x0000,124
+SATPHA0341,2020190,22.3363075,8.24430,8.23756,18.8515,nan,nan,nan,nan,-0.92339724,-0.87865769,0.90198427,11.917,20,12.4,4.906,11.782,6.123,6.227,311,547,0.00000000,0x0000,85
+SATPHA0341,2020190,22.3365859,8.24497,8.23948,18.8525,nan,nan,nan,nan,-0.92335820,-0.87854564,0.90195655,11.917,20,12.4,4.906,11.782,6.123,6.227,311,547,0.00000000,0x0000,72
+SATPHA0341,2020190,22.3368625,8.24506,8.23944,18.8529,nan,nan,nan,nan,-0.92335253,-0.87854772,0.90194702,11.917,20,12.4,4.906,11.782,6.123,6.227,311,547,0.00000000,0x0000,94
+SATPHA0341,2020190,22.6677112,8.24113,8.23471,18.8875,nan,nan,nan,nan,-0.92356175,-0.87878942,0.90102583,11.909,20,12.4,4.898,11.782,6.124,6.230,316,324,0.00000000,0x0000,93
+SATPHA0341,2020190,22.6679878,8.24256,8.23845,18.8880,nan,nan,nan,nan,-0.92347890,-0.87857246,0.90101182,11.909,20,12.4,4.898,11.782,6.124,6.230,316,324,0.00000000,0x0000,71
+SATPHA0341,2020190,22.6682662,8.24449,8.23810,18.8893,nan,nan,nan,nan,-0.92336624,-0.87859123,0.90097844,11.909,20,12.4,4.898,11.782,6.124,6.230,316,324,0.00000000,0x0000,78
+SATPHA0341,2020190,22.6685447,8.24305,8.23686,18.8889,nan,nan,nan,nan,-0.92344999,-0.87866365,0.90098857,11.909,20,12.4,4.898,11.782,6.124,6.230,316,324,0.00000000,0x0000,42
+SATPHA0341,2020190,22.6688213,8.24112,8.23762,18.8904,nan,nan,nan,nan,-0.92356085,-0.87861806,0.90094774,11.909,20,12.4,4.898,11.782,6.124,6.230,316,324,0.00000000,0x0000,91
+SATPHA0341,2020190,22.6690998,8.24275,8.23744,18.8904,nan,nan,nan,nan,-0.92346638,-0.87862879,0.90094864,11.909,20,12.4,4.898,11.782,6.124,6.230,316,324,0.00000000,0x0000,54
+SATPHA0341,2020190,22.6693782,8.24273,8.24085,18.8906,nan,nan,nan,nan,-0.92346757,-0.87843090,0.90094238,11.917,20,12.4,4.906,11.782,6.122,6.225,0,547,0.00000000,0x0000,188
+SATPHA0341,2020190,22.6696548,8.24021,8.23910,18.8902,nan,nan,nan,nan,-0.92361390,-0.87853282,0.90095371,11.917,20,12.4,4.906,11.782,6.122,6.225,0,547,0.00000000,0x0000,209
+SATPHA0341,2020190,22.6699333,8.24241,8.23738,18.8911,nan,nan,nan,nan,-0.92348575,-0.87863117,0.90093046,11.917,20,12.4,4.906,11.782,6.122,6.225,0,547,0.00000000,0x0000,197
+SATPHA0341,2020190,22.6702117,8.24361,8.24248,18.8911,nan,nan,nan,nan,-0.92341631,-0.87833583,0.90092897,11.917,20,12.4,4.906,11.782,6.122,6.225,0,547,0.00000000,0x0000,209
+SATPHA0341,2020190,23.0010318,8.24291,8.23611,18.9291,nan,nan,nan,nan,-0.92343658,-0.87866961,0.89992046,11.925,20,12.4,4.898,11.790,6.124,6.224,0,393,0.00000000,0x0000,194
+SATPHA0341,2020190,23.0013103,8.24015,8.23596,18.9285,nan,nan,nan,nan,-0.92359691,-0.87867856,0.89993447,11.925,20,12.4,4.898,11.790,6.124,6.224,0,393,0.00000000,0x0000,176
+SATPHA0341,2020190,23.0015888,8.23998,8.23699,18.9304,nan,nan,nan,nan,-0.92360556,-0.87861716,0.89988529,11.925,20,12.4,4.898,11.790,6.124,6.224,0,393,0.00000000,0x0000,153
+SATPHA0341,2020190,23.0018653,8.24001,8.23468,18.9302,nan,nan,nan,nan,-0.92360377,-0.87875127,0.89989036,11.925,20,12.4,4.898,11.790,6.124,6.224,0,393,0.00000000,0x0000,196
+SATPHA0341,2020190,23.0021438,8.24053,8.23532,18.9305,nan,nan,nan,nan,-0.92357337,-0.87871372,0.89988142,11.925,20,12.4,4.898,11.790,6.124,6.224,0,393,0.00000000,0x0000,202
+SATPHA0341,2020190,23.0024204,8.24205,8.23468,18.9320,nan,nan,nan,nan,-0.92348456,-0.87874978,0.89984238,11.925,20,12.4,4.898,11.790,6.124,6.224,0,393,0.00000000,0x0000,185
+SATPHA0341,2020190,23.0026988,8.24030,8.23342,18.9319,nan,nan,nan,nan,-0.92358648,-0.87882280,0.89984446,11.917,20,12.4,4.906,11.790,6.122,6.226,0,333,0.00000000,0x0000,194
+SATPHA0341,2020190,23.0029773,8.23954,8.23891,18.9322,nan,nan,nan,nan,-0.92363029,-0.87850451,0.89983612,11.917,20,12.4,4.906,11.790,6.122,6.226,0,333,0.00000000,0x0000,204
+SATPHA0341,2020190,23.0032539,8.24226,8.23669,18.9323,nan,nan,nan,nan,-0.92347234,-0.87863296,0.89983403,11.917,20,12.4,4.906,11.790,6.122,6.226,0,333,0.00000000,0x0000,204
+SATPHA0341,2020190,23.0035324,8.24303,8.23727,18.9321,nan,nan,nan,nan,-0.92342793,-0.87859928,0.89983999,11.917,20,12.4,4.906,11.790,6.122,6.226,0,333,0.00000000,0x0000,188
+SATPHA0341,2020190,23.3343811,8.23906,8.23541,18.9727,nan,nan,nan,nan,-0.92363625,-0.87866932,0.89876234,11.925,20,12.4,4.906,11.782,6.125,6.223,400,260,0.00000000,0x0000,98
+SATPHA0341,2020190,23.3346595,8.24220,8.23424,18.9732,nan,nan,nan,nan,-0.92345416,-0.87873697,0.89874774,11.925,20,12.4,4.906,11.782,6.125,6.223,400,260,0.00000000,0x0000,89
+SATPHA0341,2020190,23.3349380,8.24123,8.23598,18.9738,nan,nan,nan,nan,-0.92350989,-0.87863564,0.89873284,11.925,20,12.4,4.906,11.782,6.125,6.223,400,260,0.00000000,0x0000,76
+SATPHA0341,2020190,23.3352146,8.24059,8.23399,18.9743,nan,nan,nan,nan,-0.92354685,-0.87875038,0.89871823,11.925,20,12.4,4.906,11.782,6.125,6.223,400,260,0.00000000,0x0000,86
+SATPHA0341,2020190,23.3354930,8.23747,8.23496,18.9748,nan,nan,nan,nan,-0.92372715,-0.87869375,0.89870721,11.925,20,12.4,4.906,11.782,6.125,6.223,400,260,0.00000000,0x0000,80
+SATPHA0341,2020190,23.3357696,8.23884,8.23336,18.9757,nan,nan,nan,nan,-0.92364758,-0.87878525,0.89868307,11.925,20,12.4,4.906,11.782,6.125,6.223,400,260,0.00000000,0x0000,61
+SATPHA0341,2020190,23.3360481,8.23967,8.23331,18.9760,nan,nan,nan,nan,-0.92359930,-0.87878823,0.89867383,11.909,20,12.4,4.922,11.774,6.122,6.221,467,247,0.00000000,0x0000,70
+SATPHA0341,2020190,23.3363265,8.23744,8.23431,18.9755,nan,nan,nan,nan,-0.92372894,-0.87873071,0.89868873,11.909,20,12.4,4.922,11.774,6.122,6.221,467,247,0.00000000,0x0000,70
+SATPHA0341,2020190,23.3366031,8.23932,8.23408,18.9759,nan,nan,nan,nan,-0.92361956,-0.87874382,0.89867651,11.909,20,12.4,4.922,11.774,6.122,6.221,467,247,0.00000000,0x0000,73
+SATPHA0341,2020190,23.3368816,8.23665,8.23375,18.9760,nan,nan,nan,nan,-0.92377454,-0.87876290,0.89867532,11.909,20,12.4,4.922,11.774,6.122,6.221,467,247,0.00000000,0x0000,64
+SATPHA0341,2020190,23.6677017,8.23785,8.23281,19.0169,nan,nan,nan,nan,-0.92368274,-0.87877869,0.89758843,11.925,20,12.5,4.898,11.790,6.125,6.223,0,400,0.00000000,0x0000,162
+SATPHA0341,2020190,23.6679782,8.23785,8.23314,19.0175,nan,nan,nan,nan,-0.92368274,-0.87875932,0.89757323,11.925,20,12.5,4.898,11.790,6.125,6.223,0,400,0.00000000,0x0000,176
+SATPHA0341,2020190,23.6682567,8.23808,8.23254,19.0183,nan,nan,nan,nan,-0.92366904,-0.87879329,0.89755088,11.925,20,12.5,4.898,11.790,6.125,6.223,0,400,0.00000000,0x0000,175
+SATPHA0341,2020190,23.6685352,8.23862,8.23214,19.0187,nan,nan,nan,nan,-0.92363715,-0.87881594,0.89754194,11.925,20,12.5,4.898,11.790,6.125,6.223,0,400,0.00000000,0x0000,189
+SATPHA0341,2020190,23.6688117,8.23880,8.23400,19.0191,nan,nan,nan,nan,-0.92362672,-0.87870776,0.89752942,11.925,20,12.5,4.898,11.790,6.125,6.223,0,400,0.00000000,0x0000,195
+SATPHA0341,2020190,23.6690902,8.23666,8.23213,19.0192,nan,nan,nan,nan,-0.92375040,-0.87881594,0.89752733,11.925,20,12.5,4.898,11.790,6.125,6.223,0,400,0.00000000,0x0000,204
+SATPHA0341,2020190,23.6693687,8.23630,8.23591,19.0199,nan,nan,nan,nan,-0.92377096,-0.87859630,0.89750945,11.909,20,12.5,4.906,11.790,6.122,6.228,0,353,0.00000000,0x0000,171
+SATPHA0341,2020190,23.6696453,8.23866,8.23437,19.0198,nan,nan,nan,nan,-0.92363417,-0.87868571,0.89751243,11.909,20,12.5,4.906,11.790,6.122,6.228,0,353,0.00000000,0x0000,180
+SATPHA0341,2020190,23.6699237,8.23737,8.23248,19.0197,nan,nan,nan,nan,-0.92370927,-0.87879538,0.89751541,11.909,20,12.5,4.906,11.790,6.122,6.228,0,353,0.00000000,0x0000,171
+SATPHA0341,2020190,23.6702003,8.24083,8.23158,19.0204,nan,nan,nan,nan,-0.92350810,-0.87884724,0.89749753,11.909,20,12.5,4.906,11.790,6.122,6.228,0,353,0.00000000,0x0000,217
+SATPHA0341,2020191,0.0010500,8.23540,8.22916,19.0593,nan,nan,nan,nan,-0.92380255,-0.87895125,0.89646518,11.917,20,12.5,4.906,11.790,6.125,6.226,165,104,0.00000000,0x0000,172
+SATPHA0341,2020191,0.0013278,8.23389,8.23115,19.0598,nan,nan,nan,nan,-0.92388957,-0.87883532,0.89645117,11.917,20,12.5,4.906,11.790,6.125,6.226,165,104,0.00000000,0x0000,139
+SATPHA0341,2020191,0.0016056,8.23791,8.23079,19.0607,nan,nan,nan,nan,-0.92365592,-0.87885528,0.89642673,11.917,20,12.5,4.906,11.790,6.125,6.226,165,104,0.00000000,0x0000,144
+SATPHA0341,2020191,0.0018834,8.23507,8.23247,19.0609,nan,nan,nan,nan,-0.92382073,-0.87875753,0.89642286,11.917,20,12.5,4.906,11.790,6.125,6.226,165,104,0.00000000,0x0000,152
+SATPHA0341,2020191,0.0021611,8.23552,8.23126,19.0618,nan,nan,nan,nan,-0.92379420,-0.87882697,0.89639782,11.917,20,12.5,4.906,11.790,6.125,6.226,165,104,0.00000000,0x0000,155
+SATPHA0341,2020191,0.0024389,8.23598,8.22881,19.0622,nan,nan,nan,nan,-0.92376738,-0.87896853,0.89638769,11.917,20,12.5,4.906,11.790,6.125,6.226,165,104,0.00000000,0x0000,116
+SATPHA0341,2020191,0.0027167,8.23817,8.23267,19.0618,nan,nan,nan,nan,-0.92364042,-0.87874501,0.89639812,11.917,20,12.5,4.906,11.798,6.123,6.223,205,216,0.00000000,0x0000,158
+SATPHA0341,2020191,0.0029947,8.23493,8.23086,19.0622,nan,nan,nan,nan,-0.92382788,-0.87884962,0.89638710,11.917,20,12.5,4.906,11.798,6.123,6.223,205,216,0.00000000,0x0000,131
+SATPHA0341,2020191,0.0032725,8.23807,8.23078,19.0626,nan,nan,nan,nan,-0.92364579,-0.87885409,0.89637637,11.917,20,12.5,4.906,11.798,6.123,6.223,205,216,0.00000000,0x0000,137
+SATPHA0341,2020191,0.0035503,8.23536,8.23062,19.0628,nan,nan,nan,nan,-0.92380255,-0.87886303,0.89637190,11.917,20,12.5,4.906,11.798,6.123,6.223,205,216,0.00000000,0x0000,169
+SATPHA0341,2020191,0.3343717,8.23615,8.22993,19.0984,nan,nan,nan,nan,-0.92373818,-0.87886959,0.89542865,11.925,20,12.5,4.906,11.798,6.126,6.227,0,361,0.00000000,0x0000,210
+SATPHA0341,2020191,0.3346495,8.23625,8.23113,19.0991,nan,nan,nan,nan,-0.92373162,-0.87879985,0.89541196,11.925,20,12.5,4.906,11.798,6.126,6.227,0,361,0.00000000,0x0000,231
+SATPHA0341,2020191,0.3349275,8.23566,8.23105,19.0994,nan,nan,nan,nan,-0.92376559,-0.87880402,0.89540183,11.925,20,12.5,4.906,11.798,6.126,6.227,0,361,0.00000000,0x0000,240
+SATPHA0341,2020191,0.3352053,8.23531,8.23183,19.1006,nan,nan,nan,nan,-0.92378526,-0.87875783,0.89537024,11.925,20,12.5,4.906,11.798,6.126,6.227,0,361,0.00000000,0x0000,1
+SATPHA0341,2020191,0.3354831,8.23419,8.22951,19.1006,nan,nan,nan,nan,-0.92385023,-0.87889194,0.89537054,11.925,20,12.5,4.906,11.798,6.126,6.227,0,361,0.00000000,0x0000,250
+SATPHA0341,2020191,0.3357609,8.23392,8.22887,19.1009,nan,nan,nan,nan,-0.92386573,-0.87892919,0.89536279,11.925,20,12.5,4.906,11.798,6.126,6.227,0,361,0.00000000,0x0000,215
+SATPHA0341,2020191,0.3360386,8.23619,8.23052,19.1008,nan,nan,nan,nan,-0.92373430,-0.87883323,0.89536547,11.917,20,12.5,4.906,11.790,6.123,6.226,0,331,0.00000000,0x0000,16
+SATPHA0341,2020191,0.3363164,8.24018,8.22981,19.1010,nan,nan,nan,nan,-0.92350304,-0.87887436,0.89536070,11.917,20,12.5,4.906,11.790,6.123,6.226,0,331,0.00000000,0x0000,27
+SATPHA0341,2020191,0.3365942,8.23852,8.22986,19.1019,nan,nan,nan,nan,-0.92359870,-0.87887048,0.89533686,11.917,20,12.5,4.906,11.790,6.123,6.226,0,331,0.00000000,0x0000,232
+SATPHA0341,2020191,0.3368720,8.23791,8.22997,19.1020,nan,nan,nan,nan,-0.92363417,-0.87886393,0.89533299,11.917,20,12.5,4.906,11.790,6.123,6.226,0,331,0.00000000,0x0000,245
+SATPHA0341,2020191,0.6677240,8.23155,8.22941,19.1312,nan,nan,nan,nan,-0.92398732,-0.87886959,0.89456021,11.917,20,12.5,4.906,11.798,6.125,6.221,0,307,0.00000000,0x0000,244
+SATPHA0341,2020191,0.6680018,8.23370,8.22679,19.1312,nan,nan,nan,nan,-0.92386275,-0.87902158,0.89456081,11.917,20,12.5,4.906,11.798,6.125,6.221,0,307,0.00000000,0x0000,255
+SATPHA0341,2020191,0.6682798,8.23519,8.22773,19.1321,nan,nan,nan,nan,-0.92377573,-0.87896615,0.89453846,11.917,20,12.5,4.906,11.798,6.125,6.221,0,307,0.00000000,0x0000,221
+SATPHA0341,2020191,0.6685577,8.23238,8.22747,19.1333,nan,nan,nan,nan,-0.92393815,-0.87897986,0.89450538,11.917,20,12.5,4.906,11.798,6.125,6.221,0,307,0.00000000,0x0000,217
+SATPHA0341,2020191,0.6688354,8.23497,8.22875,19.1328,nan,nan,nan,nan,-0.92378795,-0.87890595,0.89451760,11.917,20,12.5,4.906,11.798,6.125,6.221,0,307,0.00000000,0x0000,211
+SATPHA0341,2020191,0.6691132,8.23412,8.22703,19.1339,nan,nan,nan,nan,-0.92383652,-0.87900489,0.89448958,11.917,20,12.5,4.906,11.798,6.125,6.221,0,307,0.00000000,0x0000,247
+SATPHA0341,2020191,0.6693910,8.23398,8.22993,19.1334,nan,nan,nan,nan,-0.92384487,-0.87883710,0.89450269,11.925,20,12.5,4.906,11.790,6.123,6.226,382,601,0.00000000,0x0000,130
+SATPHA0341,2020191,0.6696687,8.23390,8.23141,19.1334,nan,nan,nan,nan,-0.92384994,-0.87875127,0.89450418,11.925,20,12.5,4.906,11.790,6.123,6.226,382,601,0.00000000,0x0000,136
+SATPHA0341,2020191,0.6699465,8.23569,8.22847,19.1342,nan,nan,nan,nan,-0.92374533,-0.87892115,0.89448153,11.925,20,12.5,4.906,11.790,6.123,6.226,382,601,0.00000000,0x0000,133
+SATPHA0341,2020191,0.6702243,8.23718,8.23194,19.1345,nan,nan,nan,nan,-0.92365920,-0.87871938,0.89447349,11.925,20,12.5,4.906,11.790,6.123,6.226,382,601,0.00000000,0x0000,143
+SATPHA0341,2020191,1.0010486,8.23160,8.22787,19.1558,nan,nan,nan,nan,-0.92397123,-0.87893575,0.89391082,11.933,20,12.5,4.898,11.798,6.125,6.220,280,631,0.00000000,0x0000,137
+SATPHA0341,2020191,1.0013264,8.23388,8.22797,19.1565,nan,nan,nan,nan,-0.92383891,-0.87892919,0.89389294,11.933,20,12.5,4.898,11.798,6.125,6.220,280,631,0.00000000,0x0000,109
+SATPHA0341,2020191,1.0016043,8.23296,8.22806,19.1574,nan,nan,nan,nan,-0.92389136,-0.87892353,0.89386880,11.933,20,12.5,4.898,11.798,6.125,6.220,280,631,0.00000000,0x0000,134
+SATPHA0341,2020191,1.0018820,8.23366,8.22589,19.1577,nan,nan,nan,nan,-0.92385053,-0.87904900,0.89386105,11.933,20,12.5,4.898,11.798,6.125,6.220,280,631,0.00000000,0x0000,144
+SATPHA0341,2020191,1.0021598,8.23211,8.22636,19.1576,nan,nan,nan,nan,-0.92394053,-0.87902188,0.89386194,11.933,20,12.5,4.898,11.798,6.125,6.220,280,631,0.00000000,0x0000,143
+SATPHA0341,2020191,1.0024375,8.23521,8.22559,19.1586,nan,nan,nan,nan,-0.92376053,-0.87906539,0.89383691,11.933,20,12.5,4.898,11.798,6.125,6.220,280,631,0.00000000,0x0000,135
+SATPHA0341,2020191,1.0027153,8.23023,8.22671,19.1590,nan,nan,nan,nan,-0.92404901,-0.87900012,0.89382469,11.925,20,12.5,4.914,11.790,6.122,6.227,0,21,0.00000000,0x0000,94
+SATPHA0341,2020191,1.0029934,8.23608,8.22527,19.1588,nan,nan,nan,nan,-0.92370957,-0.87908357,0.89383125,11.925,20,12.5,4.914,11.790,6.122,6.227,0,21,0.00000000,0x0000,46
+SATPHA0341,2020191,1.0032712,8.23422,8.22962,19.1591,nan,nan,nan,nan,-0.92381745,-0.87883144,0.89382261,11.925,20,12.5,4.914,11.790,6.122,6.227,0,21,0.00000000,0x0000,74
+SATPHA0341,2020191,1.0035489,8.23447,8.22897,19.1601,nan,nan,nan,nan,-0.92380255,-0.87886810,0.89379727,11.925,20,12.5,4.914,11.790,6.122,6.227,0,21,0.00000000,0x0000,43
+SATPHA0341,2020191,1.3343731,8.23445,8.22763,19.1759,nan,nan,nan,nan,-0.92379510,-0.87893098,0.89337766,11.925,20,12.5,4.906,11.806,6.126,6.226,0,491,0.00000000,0x0000,234
+SATPHA0341,2020191,1.3346508,8.23398,8.22508,19.1765,nan,nan,nan,nan,-0.92382192,-0.87907850,0.89336395,11.925,20,12.5,4.906,11.806,6.126,6.226,0,491,0.00000000,0x0000,239
+SATPHA0341,2020191,1.3349287,8.23316,8.22604,19.1777,nan,nan,nan,nan,-0.92386931,-0.87902158,0.89333027,11.925,20,12.5,4.906,11.806,6.126,6.226,0,491,0.00000000,0x0000,252
+SATPHA0341,2020191,1.3352065,8.23284,8.22777,19.1771,nan,nan,nan,nan,-0.92388778,-0.87892174,0.89334845,11.925,20,12.5,4.906,11.806,6.126,6.226,0,491,0.00000000,0x0000,229
+SATPHA0341,2020191,1.3354842,8.23540,8.22751,19.1785,nan,nan,nan,nan,-0.92373877,-0.87893575,0.89330911,11.925,20,12.5,4.906,11.806,6.126,6.226,0,491,0.00000000,0x0000,242
+SATPHA0341,2020191,1.3357620,8.23350,8.22684,19.1782,nan,nan,nan,nan,-0.92384934,-0.87897449,0.89331895,11.925,20,12.5,4.906,11.806,6.126,6.226,0,491,0.00000000,0x0000,232
+SATPHA0341,2020191,1.3360397,8.23270,8.22810,19.1785,nan,nan,nan,nan,-0.92389523,-0.87890118,0.89331060,11.933,20,12.5,4.898,11.798,6.123,6.221,315,502,0.00000000,0x0000,154
+SATPHA0341,2020191,1.3363175,8.23368,8.22597,19.1792,nan,nan,nan,nan,-0.92383831,-0.87902426,0.89329272,11.933,20,12.5,4.898,11.798,6.123,6.221,315,502,0.00000000,0x0000,135
+SATPHA0341,2020191,1.3365954,8.23231,8.22913,19.1793,nan,nan,nan,nan,-0.92391759,-0.87884068,0.89328974,11.933,20,12.5,4.898,11.798,6.123,6.221,315,502,0.00000000,0x0000,119
+SATPHA0341,2020191,1.3368731,8.23506,8.22815,19.1796,nan,nan,nan,nan,-0.92375814,-0.87889760,0.89328080,11.933,20,12.5,4.898,11.798,6.123,6.221,315,502,0.00000000,0x0000,128
