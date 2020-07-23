@@ -1,28 +1,18 @@
 
 #combining data from text files
 
-setwd("C:/Users/915712257/Box Sync/Inbox/oceanographic work/MARI SeapHOx assessment/2019 data")
-
-
-rm(list = ls())
-
 library(dplyr)
 library(lubridate)
-
-list.files()
-
-# [1] "20190311-20190521 MARI data raw_final.csv"                               
-# [2] "20190521-20190731 MARI data raw.csv"                                 
-# [3] "20190731-20191009 MARI data raw.csv" 
-# "mari-buoy_field_samples_metadata_2019.csv" 
-# "mari field bath 201900521.csv"
+library(here)
 
 
 
-#read in field check sample data for mari 2019 ########################################
+
+
+#read in field check sample data for mari 2020 ########################################
 
 #read data tables and match var names
-df1 = read.csv("mari-buoy_field_samples_metadata_2019.csv",
+df1 = read.csv("mari-buoy_field_samples_metadata_2020.csv",
                header=T, stringsAsFactors=F, sep=",")
 
 df1$datetime <- as.POSIXct(paste(df1$Date,df1$UTC), format = "%m/%d/%Y %H:%M") 
@@ -33,26 +23,26 @@ df1$pH.check.median <- as.numeric(df1$pH.check.median)
 head(df1)
 # 
 # Date   UTC Sample.. Cast_Sal Cast_Temp pH.check.median   pH.check1   pH.check2   pH.check3
-# 3/11/2019 19:38   M-0058      NaN       NaN             NaN         NaN         NaN         NaN
+# 3/11/2020 19:38   M-0058      NaN       NaN             NaN         NaN         NaN         NaN
 
 
 chk.df <- df1
 rm(df1)
 
 #clear workspace and reload tidied data
-save(chk.df, file = "mari-check.samples-2019.RData")
+save(chk.df, file = "mari-check.samples-2020.RData")
 
 rm(list=ls())
 
-load("mari-check.samples-2019.RData")
+load("mari-check.samples-2020.RData")
 
 rm(list=ls())
 
 
-#read in bath check sample data for mari 2019 ########################################
+#read in bath check sample data for mari 2020 ########################################
 
 #read data tables and match var names
-df1 = read.csv("mari-buoy_bath_samples_metadata_2019.csv",
+df1 = read.csv("mari-buoy_bath_samples_metadata_2020.csv",
                header=T, stringsAsFactors=F, sep=",")
 
 df1$datetime <- as.POSIXct(paste(df1$Date,df1$UTC), format = "%m/%d/%Y %H:%M") 
@@ -63,142 +53,81 @@ df1$pH.check.median <- as.numeric(df1$pH.check.median)
 head(df1)
 # 
 # Date   UTC Sample.. Cast_Sal Cast_Temp pH.check.median   pH.check1   pH.check2   pH.check3
-# 3/11/2019 19:38   M-0058      NaN       NaN             NaN         NaN         NaN         NaN
+# 3/11/2020 19:38   M-0058      NaN       NaN             NaN         NaN         NaN         NaN
 
 
 bth.chk.df <- df1
 rm(df1)
 
 #clear workspace and reload tidied data
-save(bth.chk.df, file = "mari-bath.check.samples-2019.RData")
+save(bth.chk.df, file = "mari-bath.check.samples-2020.RData")
 
 rm(list=ls())
 
-load("mari-bath.check.samples-2019.RData")
+load("mari-bath.check.samples-2020.RData")
 
 rm(list=ls())
 
 
-# PRE deployment common bath run 2019 ############################################
 
-#pull in instrument data
+# PRE deployment dickson standard run 2020 ############################################
 
-#read data tables and match var names
-df1 = read.csv("pre-deployment.mari-2019/mari predeployment bath 20190301-20190307.csv",
-               header=T, stringsAsFactors=F, sep=",")
+setwd(here("data", "mari", "pre-deploy.dickson.run-mari-july-2020"))
+
+getwd()
+
+list.files()
+
+# [1] "03-10-july-2020-sphx-1004-data.txt" "feb-july-2020-sphx-1004-data.txt"  
+# [3] "sphx-1004-2020-cal-coeffs.txt" 
+
+
+#reading in the text file, as.is = T keeps the strings as strings and not factors
+df1 <- read.table("03-10-july-2020-sphx-1004-data.txt", sep = ",", as.is = T, header = F)
 
 
 #get var names by printing data
 head(df1)
 # 
 
-# FrameSync      DateTime..UTC. Sample.Number.... Error.Flags.... Temperature..Celsius.
-# 1 SSPHOX01004 03/01/2019 04:25:42                 1              20               16.2112
-# 
-# External.pH..pH. Internal.pH..pH. External.pH..Volt. Internal.pH..Volt. pH.Temperature..Celsius.
-# 1           7.8070           8.0059          -0.996100          -1.031704                  16.5352
-# 
-# Pressure..Decibar. Salinity..psu. Conductivity..S.m. Oxygen..ml.L. Relative.Humidity....
-# 1              0.219        32.7005            4.15122         5.679                     0
-#
-# Int.Temperature..Celsius.
-# 1                      16.9
+# V1                  V2  V3 V4      V5     V6     V7        V8        V9     V10   V11
+# 1 SSPHOX01004 2020-07-03T00:27:29 588 20 18.6478 8.0062 8.2429 -0.857622 -0.894020 20.9791 0.040
 
-df1 <- df1 %>%                     
-  rename(datetime = 'DateTime..UTC.',
-         sample.num = 'Sample.Number....',
-         sbe_err = 'Error.Flags....', 
-         ctd_temp = 'Temperature..Celsius.', 
-         pH_ext = 'External.pH..pH.', 
-         pH_int = 'Internal.pH..pH.', 
-         pH_ext_v = "External.pH..Volt.",
-         pH_int_v = 'Internal.pH..Volt.', 
-         pH_temp = 'pH.Temperature..Celsius.', 
-         press_dbar = 'Pressure..Decibar.',
-         ctd_sal = 'Salinity..psu.',
-         cond_Sm = "Conductivity..S.m.",
-         ctd_o2_ml_l = 'Oxygen..ml.L.', 
-         RH = "Relative.Humidity....",
-         pH_int_temp = 'Int.Temperature..Celsius.')
+# V12     V13   V14 V15  V16
+# 1 30.7915 4.15105 7.856 3.2 20.3
 
-df1 <- select(df1, -FrameSync, -sbe_err, -sample.num, -press_dbar, -cond_Sm, -ctd_o2_ml_l, -RH, -pH_int_temp)
-
-
-#setting date time to POSIXct and arranging data by datetime
-
-df1$datetime <- as.POSIXct(df1$datetime, format = "%m/%d/%Y %H:%M") 
-
-#have data ascend in time
-
-df1 <- df1 %>%
-  arrange(datetime)
-
-#calculate difference between pH electrodes
-df1$pH_diff <- df1$pH_int - df1$pH_ext
-df1$abs_pH_diff <- abs(df1$pH_int - df1$pH_ext)
-
-df1$volt_diff <- df1$pH_ext_v - df1$pH_int_v
-df1$abs_v_diff <- abs(df1$pH_ext_v - df1$pH_int_v)
-
-#saving final test proof data for seafetV2 translator script
-save(df1, file = "mari-common-bath-predeploy.2019.sphx.RData")
-
-rm(list=ls())
-
-
-#double check looks good
-load("mari-common-bath-predeploy.2019.sphx.RData")
-
-
-
-
-rm(list=ls())
-
-
-
-# PRE deployment dickson standard run 2019 ############################################
-
-#read data tables and match var names
-df1 = read.csv("pre-deployment.mari-2019/mari dickson_standard_run 20190308-20190309.csv",
-               header=T, stringsAsFactors=F, sep=",")
-
-#get var names by printing data
-head(df1)
-# 
-
-# FrameSync      DateTime..UTC. Sample.Number.... Error.Flags.... Temperature..Celsius. External.pH..pH.
-# 1 SSPHOX01004 03/08/2019 04:40:59              2017              20               14.9507           8.2547
-# 
-# Internal.pH..pH. External.pH..Volt. Internal.pH..Volt. pH.Temperature..Celsius. Pressure..Decibar. Salinity..psu.
-# 1           8.2892          -0.967675          -1.016114                  16.4852              0.160        28.0675
-# 
-# Conductivity..S.m. Oxygen..ml.L. Relative.Humidity.... Int.Temperature..Celsius.
-# 1            3.51603         5.970                     0                      15.3
 
 
 df1 <- df1 %>%                     
-  rename(datetime = 'DateTime..UTC.',
-         sample.num = 'Sample.Number....',
-         sbe_err = 'Error.Flags....', 
-         ctd_temp = 'Temperature..Celsius.', 
-         og_pH_ext = 'External.pH..pH.', #origninal pH value based on wrong temp
-         og_pH_int = 'Internal.pH..pH.', #origninal pH value based on wrong temp
-         pH_ext_v = "External.pH..Volt.",
-         pH_int_v = 'Internal.pH..Volt.', 
-         pH_temp = 'pH.Temperature..Celsius.', 
-         press_dbar = 'Pressure..Decibar.',
-         ctd_sal = 'Salinity..psu.',
-         cond_Sm = "Conductivity..S.m.",
-         ctd_o2_ml_l = 'Oxygen..ml.L.', 
-         RH = "Relative.Humidity....",
-         pH_int_temp = 'Int.Temperature..Celsius.')
+  rename(instrument = V1,
+         datetime = V2,
+         sample.num = V3,
+         sbe_err = V4, 
+         ctd_temp = V5, 
+         og_pH_ext = V6, #origninal pH value based on wrong temp
+         og_pH_int = V7, #origninal pH value based on wrong temp
+         pH_ext_v = V8,
+         pH_int_v = V9, 
+         pH_temp = V10, 
+         press_dbar = V11,
+         ctd_sal = V12,
+         cond_Sm = V13,
+         ctd_o2_ml_l = V14, 
+         RH = V15,
+         pH_int_temp = V16)
 
-df1 <- select(df1, -FrameSync, -sbe_err, -sample.num, -press_dbar, -cond_Sm, -ctd_o2_ml_l, -RH, -pH_int_temp)
+df1 <- select(df1, -instrument, -sbe_err, -sample.num, -press_dbar, -cond_Sm, -ctd_o2_ml_l, -RH, -pH_int_temp)
 
+
+# pulling datetime object from "2020-07-03T00:27:29" format
+
+df1$datetime <- ymd_hms(df1$datetime, tz = "UTC")
 
 #setting date time to POSIXct and arranging data by datetime
+# if in format mm/dd/yyyy hh:mm 
+# change format = "%m/%d/%Y %H:%M:%S" if you have seconds
 
-df1$datetime <- as.POSIXct(df1$datetime, format = "%m/%d/%Y %H:%M") 
+#df1$datetime <- as.POSIXct(df1$datetime, format = "%m/%d/%Y %H:%M", tz = "GMT") 
 
 #have data ascend in time
 
@@ -206,20 +135,13 @@ df1 <- df1 %>%
   arrange(datetime)
 
 
-#saving final test proof data for seafetV2 translator script
-save(df1, file = "mari.dickson.run.predeploy.2019.sphx.RData")
 
-rm(list=ls())
-
-
-
-load("mari.dickson.run.predeploy.2019.sphx.RData")
+# PRE deployment set up seafetV2 processing algorithm mari 2020 ###################
 
 
 #for calculations to be accurate, greatest digit count is 22, deafault is 7
 options(digits = 15)
 
-# PRE deployment set up seafetV2 processing algorithm mari 2019 ###################
 
 # data and calculations pulled from Seabird Application Note 99 
 # see: https://www.seabird.com/application-notes
@@ -229,11 +151,23 @@ options(digits = 15)
 # in summary report I assumed KDF0 and KDF2 were for the DuraFET internal electrode reference 
 # will know if orignal and newly added pH values match
 
-mari.2019.cal.df <- data.frame(k0_int.mari.2019.sbe = -1.47344,
-                         k2_int.mari.2019.sbe = -0.00110563, 
-                         k0_ext.mari.2019.sbe = -1.463136,
-                         k2_ext.mari.2019.sbe = -0.001000847,
-                         stringsAsFactors = FALSE)
+# works if data file has header with constants
+# instr.info <- read.table("sphx-1004-2020-cal-coeffs.txt", nrows = 11, as.is = T, header = F)
+# 
+# mari.2020.cal.df <- data.frame(k0_int.mari.2020.sbe = as.numeric(instr.info$V3[8]),
+#                                k2_int.mari.2020.sbe = as.numeric(instr.info$V3[9]), 
+#                                k0_ext.mari.2020.sbe = as.numeric(instr.info$V3[6]),
+#                                k2_ext.mari.2020.sbe = as.numeric(instr.info$V3[7]),
+#                                stringsAsFactors = FALSE)
+
+
+# opted to go manual because out of time
+
+mari.2020.cal.df <- data.frame(k0_int.mari.2020.sbe = -1.348486,
+                               k2_int.mari.2020.sbe = -0.001221943, 
+                               k0_ext.mari.2020.sbe = -1.339465,
+                               k2_ext.mari.2020.sbe = -0.001024461,
+                               stringsAsFactors = FALSE)
 
 
 # defining constants for seafetV2 ################
@@ -242,11 +176,11 @@ mari.2019.cal.df <- data.frame(k0_int.mari.2019.sbe = -1.47344,
 # usually in xml format before raw data or in a separate xml data file
 
 
-k0_int <- mari.2019.cal.df$k0_int.mari.2019.sbe 
-k2_int <- mari.2019.cal.df$k2_int.mari.2019.sbe
+k0_int <- mari.2020.cal.df$k0_int.mari.2020.sbe 
+k2_int <- mari.2020.cal.df$k2_int.mari.2020.sbe
 
-k0_ext <- mari.2019.cal.df$k0_ext.mari.2019.sbe
-k2_ext <- mari.2019.cal.df$k2_ext.mari.2019.sbe
+k0_ext <- mari.2020.cal.df$k0_ext.mari.2020.sbe
+k2_ext <- mari.2020.cal.df$k2_ext.mari.2020.sbe
 
 # data value calls
 
@@ -315,52 +249,138 @@ df1$pH_ext_cell <- round(df1$pH_ext_cell, digits = 4)
 
 
 #calculate difference between pH electrodes
-df1$pH_diff <- df1$pH_int_cell - df1$pH_ext_cell
+
 df1$abs_pH_diff <- abs(df1$pH_int_cell - df1$pH_ext_cell)
+
+df1$abs_v_diff <- abs(df1$pH_ext_v - df1$pH_int_v)
+
+
+# save mari 2020 PRE deployment dickson std run #################################
+
+here()
+
+setwd(here("tidied-data", "mari"))
+
+getwd()
+
+df1 <- select(df1, datetime,
+             pH_int_v, pH_ext_v, abs_v_diff, pH_temp,
+             pH_int_cell, pH_ext_cell, abs_pH_diff)
+
+#clear workspace and reload tidied data
+save(df1, file = "mari-pre-deploy-dickson-run-prcsd-2020.RData")
+
+
+
+# subsetting predeployment  dickson standard run to get median pH value from
+# last 278 samples, or 4.6333 hours of run
+# t3 <- '2020-03-08 20:00:00'
+# df1 <- filter(df1, datetime > t3)
+
+# save(df1, file = "mari-pre-deploy-dickson-run-prcsd-calibration-08mar2020.RData")
+
+median.dickson.value.int <- median(df1$pH_int_cell)
+print(median.dickson.value.int) 
+
+# [1] 8.28535
+
+median.dickson.value.ext <- median(df1$pH_ext_cell)
+print(median.dickson.value.ext) 
+# [1] 8.25785
+
+median.temp.value <- median(df1$pH_temp) 
+print(median.temp.value) 
+# [1] 18.525
+
+
+
+
+# PRE deployment common bath run 2020 ############################################
+
+#pull in instrument data
+
+#read data tables and match var names
+df1 = read.csv("pre-deployment.mari-2020/mari predeployment bath 20200301-20200307.csv",
+               header=T, stringsAsFactors=F, sep=",")
+
+
+#get var names by printing data
+head(df1)
+# 
+
+# FrameSync      DateTime..UTC. Sample.Number.... Error.Flags.... Temperature..Celsius.
+# 1 SSPHOX01004 03/01/2020 04:25:42                 1              20               16.2112
+# 
+# External.pH..pH. Internal.pH..pH. External.pH..Volt. Internal.pH..Volt. pH.Temperature..Celsius.
+# 1           7.8070           8.0059          -0.996100          -1.031704                  16.5352
+# 
+# Pressure..Decibar. Salinity..psu. Conductivity..S.m. Oxygen..ml.L. Relative.Humidity....
+# 1              0.219        32.7005            4.15122         5.679                     0
+#
+# Int.Temperature..Celsius.
+# 1                      16.9
+
+df1 <- df1 %>%                     
+  rename(datetime = 'DateTime..UTC.',
+         sample.num = 'Sample.Number....',
+         sbe_err = 'Error.Flags....', 
+         ctd_temp = 'Temperature..Celsius.', 
+         pH_ext = 'External.pH..pH.', 
+         pH_int = 'Internal.pH..pH.', 
+         pH_ext_v = "External.pH..Volt.",
+         pH_int_v = 'Internal.pH..Volt.', 
+         pH_temp = 'pH.Temperature..Celsius.', 
+         press_dbar = 'Pressure..Decibar.',
+         ctd_sal = 'Salinity..psu.',
+         cond_Sm = "Conductivity..S.m.",
+         ctd_o2_ml_l = 'Oxygen..ml.L.', 
+         RH = "Relative.Humidity....",
+         pH_int_temp = 'Int.Temperature..Celsius.')
+
+df1 <- select(df1, -FrameSync, -sbe_err, -sample.num, -press_dbar, -cond_Sm, -ctd_o2_ml_l, -RH, -pH_int_temp)
+
+
+#setting date time to POSIXct and arranging data by datetime
+
+df1$datetime <- as.POSIXct(df1$datetime, format = "%m/%d/%Y %H:%M") 
+
+#have data ascend in time
+
+df1 <- df1 %>%
+  arrange(datetime)
+
+#calculate difference between pH electrodes
+df1$pH_diff <- df1$pH_int - df1$pH_ext
+df1$abs_pH_diff <- abs(df1$pH_int - df1$pH_ext)
 
 df1$volt_diff <- df1$pH_ext_v - df1$pH_int_v
 df1$abs_v_diff <- abs(df1$pH_ext_v - df1$pH_int_v)
 
-
-# save mari 2019 PRE deployment dickson std run #################################
-
-#clear workspace and reload tidied data
-save(df1, file = "mari-pre-deploy-dickson-run-prcsd-2019.RData")
+#saving final test proof data for seafetV2 translator script
+save(df1, file = "mari-common-bath-predeploy.2020.sphx.RData")
 
 rm(list=ls())
 
-load("mari-pre-deploy-dickson-run-prcsd-2019.RData")
 
-# subsetting predeployment  dickson standard run to get median pH value from
-# last 278 samples, or 4.6333 hours of run
-t3 <- '2019-03-08 20:00:00'
-df1 <- filter(df1, datetime > t3)
+#double check looks good
+load("mari-common-bath-predeploy.2020.sphx.RData")
 
-save(df1, file = "mari-pre-deploy-dickson-run-prcsd-calibration-08mar2019.RData")
 
-median.dickson.value.int <- median(df1$pH_int_cell)
-print(median.dickson.value.int) 
-#8.3305
 
-median.dickson.value.ext <- median(df1$pH_ext_cell)
-print(median.dickson.value.ext) 
-#8.3564
-
-median.temp.value <- median(df1$pH_temp) 
-print(median.temp.value) 
-#16.0377
 
 rm(list=ls())
+
+
 
 
 
 # DEPLOYMENT instrument data tidying ####################################################
 
 
-mari.2019.screen.df <- data.frame(k0_int.mari.2019.eos = -1.50105017881742,
-                                  k2_int.mari.2019.eos = -0.00110563, 
-                                  k0_ext.mari.2019.eos = -1.48621134712642,
-                                  k2_ext.mari.2019.eos = -0.001000847,
+mari.2020.screen.df <- data.frame(k0_int.mari.2020.eos = -1.50105017881742,
+                                  k2_int.mari.2020.eos = -0.00110563, 
+                                  k0_ext.mari.2020.eos = -1.48621134712642,
+                                  k2_ext.mari.2020.eos = -0.001000847,
                                   int.v.min = -1.06,
                                   int.v.max =  -1.02,
                                   ext.v.min = -1.01,
@@ -368,15 +388,15 @@ mari.2019.screen.df <- data.frame(k0_int.mari.2019.eos = -1.50105017881742,
                                   stringsAsFactors = FALSE)
 
 #clear workspace and reload tidied data
-save(mari.2019.screen.df, file = "mari.2019.screen.RData")
+save(mari.2020.screen.df, file = "mari.2020.screen.RData")
 
 rm(list=ls())
 
-load("mari.2019.screen.RData")
+load("mari.2020.screen.RData")
 
 
 #read data tables and match var names
-df1 = read.csv("20190311-20190521 MARI data raw_final.csv",
+df1 = read.csv("20200311-20200521 MARI data raw_final.csv",
                header=T, stringsAsFactors=F, sep=",")
 
 #get var names by printing data
@@ -384,7 +404,7 @@ head(df1)
 # 
 
 # FrameSync      DateTime..UTC. Sample.Number.... Error.Flags.... Temperature..Celsius. External.pH..pH.
-# 1 SSPHOX01004 03/11/2019 19:20:01              3413              20               12.1862           7.8925
+# 1 SSPHOX01004 03/11/2020 19:20:01              3413              20               12.1862           7.8925
 # 
 # Internal.pH..pH. External.pH..Volt. Internal.pH..Volt. pH.Temperature..Celsius. Pressure..Decibar.
 # 1           7.9485          -0.986572          -1.036893                  12.7169             15.635
@@ -419,13 +439,13 @@ df1 <- select(df1, -FrameSync, -sbe_err, -Sample.Number....)
 
 
 
-df2 = read.csv("20190521-20190731 MARI data raw.csv",
+df2 = read.csv("20200521-20200731 MARI data raw.csv",
                header=T, stringsAsFactors=F, sep=",")
 
 head(df2)
 
 # DateTime..UTC.00.00. Error.Flags.... Temperature..Celsius. External.pH..pH. Internal.pH..pH. External.pH..Volt.
-# 1  05/21/2019 20:00:01              20               15.0302           7.8871           7.8151          -0.984715
+# 1  05/21/2020 20:00:01              20               15.0302           7.8871           7.8151          -0.984715
 # 
 # Internal.pH..Volt. pH.Temperature..Celsius. Pressure..Decibar. Salinity..psu. Conductivity..S.m. Oxygen..ml.L.
 # 1          -1.043181                  15.1217             17.923        23.8620            3.04211        12.021
@@ -456,14 +476,14 @@ df2 <- select(df2, -sbe_err)
 
 
 
-df3 = read.csv("20190731-20191009 MARI data raw.csv",
+df3 = read.csv("20200731-20201009 MARI data raw.csv",
                header=T, stringsAsFactors=F, sep=",")
 
 
 head(df3)
 
 # DateTime..UTC.00.00. Temperature..Celsius. External.pH..pH. Internal.pH..pH. External.pH..Volt. Internal.pH..Volt.
-# 1  07/31/2019 18:40:00               17.1073           7.9241           7.8764          -0.986307          -1.038726
+# 1  07/31/2020 18:40:00               17.1073           7.9241           7.8764          -0.986307          -1.038726
 # 
 # pH.Temperature..Celsius. Pressure..Decibar. Salinity..psu. Conductivity..S.m. Oxygen..ml.L. Oxygen..mg.L.
 # 1                  18.3569             17.070        29.9288            3.91244        13.234      18.91178
@@ -514,30 +534,30 @@ data$abs_v_diff <- data$pH_ext_v - data$pH_int_v
 
 #flag out bad voltages
 
-data <- filter(data, pH_int_v > mari.2019.screen.df$int.v.min & pH_int_v < mari.2019.screen.df$int.v.max)
+data <- filter(data, pH_int_v > mari.2020.screen.df$int.v.min & pH_int_v < mari.2020.screen.df$int.v.max)
 
-data <- filter(data, pH_ext_v > mari.2019.screen.df$ext.v.min & pH_ext_v < mari.2019.screen.df$ext.v.max)
+data <- filter(data, pH_ext_v > mari.2020.screen.df$ext.v.min & pH_ext_v < mari.2020.screen.df$ext.v.max)
 
 #clear workspace and reload tidied data
-save(data, file = "mari.2019.RData")
+save(data, file = "mari.2020.RData")
 
 rm(list=ls())
 
-load("mari.2019.RData")
+load("mari.2020.RData")
 
 rm(list=ls())
 
 #save as csv
 
-#write.csv(data, "mari_2019.csv")
+#write.csv(data, "mari_2020.csv")
 
 
 # ADJUSTED DEPLOYMENT DATA BASED ON CALIBRATION K0 (E*) VALUES #########
 
 rm(list=ls())
 
-load("mari.2019.screen.RData")
-load("mari.2019.RData")
+load("mari.2020.screen.RData")
+load("mari.2020.RData")
 
 #read data tables and match var names
 df1 = data
@@ -548,7 +568,7 @@ head(df1)
 # 
 
 # FrameSync      DateTime..UTC. Sample.Number.... Error.Flags.... Temperature..Celsius. External.pH..pH.
-# 1 SSPHOX01004 03/08/2019 04:40:59              2017              20               14.9507           8.2547
+# 1 SSPHOX01004 03/08/2020 04:40:59              2017              20               14.9507           8.2547
 # 
 # Internal.pH..pH. External.pH..Volt. Internal.pH..Volt. pH.Temperature..Celsius. Pressure..Decibar. Salinity..psu.
 # 1           8.2892          -0.967675          -1.016114                  16.4852              0.160        28.0675
@@ -569,7 +589,7 @@ df1 <- select(df1, -QARTOD, -volt_diff, -pH_diff)
 #for calculations to be accurate, greatest digit count is 22, deafault is 7
 options(digits = 15)
 
-# ADJUSTED DEPLOYMENT set up seafetV2 processing algorithm mari 2019 ###################
+# ADJUSTED DEPLOYMENT set up seafetV2 processing algorithm mari 2020 ###################
 
 # data and calculations pulled from Seabird Application Note 99 
 # see: https://www.seabird.com/application-notes
@@ -578,10 +598,10 @@ options(digits = 15)
 # can pull data from seafet summary reports or raw .sbsdata for V2
 # in summary report I assumed KDF0 and KDF2 were for the DuraFET internal electrode reference 
 
-# mari.2019.cal.df <- data.frame(k0_int.mari.2019.sbe = -1.47344,
-#                                k2_int.mari.2019.sbe = -0.00110563,
-#                                k0_ext.mari.2019.sbe = -1.463136,
-#                                k2_ext.mari.2019.sbe = -0.001000847,
+# mari.2020.cal.df <- data.frame(k0_int.mari.2020.sbe = -1.47344,
+#                                k2_int.mari.2020.sbe = -0.00110563,
+#                                k0_ext.mari.2020.sbe = -1.463136,
+#                                k2_ext.mari.2020.sbe = -0.001000847,
 #                                stringsAsFactors = FALSE)
 
 
@@ -591,11 +611,11 @@ options(digits = 15)
 # usually in xml format before raw data or in a separate xml data file
 
 
-k0_int <- mari.2019.screen.df$k0_int.mari.2019.eos 
-k2_int <- mari.2019.screen.df$k2_int.mari.2019.eos
+k0_int <- mari.2020.screen.df$k0_int.mari.2020.eos 
+k2_int <- mari.2020.screen.df$k2_int.mari.2020.eos
 
-k0_ext <- mari.2019.screen.df$k0_ext.mari.2019.eos
-k2_ext <- mari.2019.screen.df$k2_ext.mari.2019.eos
+k0_ext <- mari.2020.screen.df$k0_ext.mari.2020.eos
+k2_ext <- mari.2020.screen.df$k2_ext.mari.2020.eos
 
 # data value calls
 
@@ -670,10 +690,10 @@ df1$abs_pH_diff <- abs(df1$pH_int_cell - df1$pH_ext_cell)
 df1$abs_v_diff <- abs(df1$pH_ext_v - df1$pH_int_v)
 
 
-# save mari 2019 PRE deployment dickson std run #################################
+# save mari 2020 PRE deployment dickson std run #################################
 
 #clear workspace and reload tidied data
-save(df1, file = "mari.2019.adj.final.RData")
+save(df1, file = "mari.2020.adj.final.RData")
 
 median(df1$pH_int_cell)
 median(df1$og_pH_int)
@@ -682,17 +702,17 @@ median(df1$og_pH_ext)
 
 rm(list=ls())
 
-load("mari.2019.adj.final.RData")
+load("mari.2020.adj.final.RData")
 
 
 rm(list=ls())
 
-# MID deployment common bath run 2019 ############################################
+# MID deployment common bath run 2020 ############################################
 
 #pull in instrument data
 
 #read data tables and match var names
-df1 = read.csv("mari field bath 201900521.csv",
+df1 = read.csv("mari field bath 202000521.csv",
                header=T, stringsAsFactors=F, sep=",")
 
 
@@ -701,7 +721,7 @@ head(df1)
 # 
 
 # FrameSync      DateTime..UTC. Sample.Number.... Error.Flags.... Temperature..Celsius.
-# 1 SSPHOX01004 03/01/2019 04:25:42                 1              20               16.2112
+# 1 SSPHOX01004 03/01/2020 04:25:42                 1              20               16.2112
 # 
 # External.pH..pH. Internal.pH..pH. External.pH..Volt. Internal.pH..Volt. pH.Temperature..Celsius.
 # 1           7.8070           8.0059          -0.996100          -1.031704                  16.5352
@@ -749,13 +769,13 @@ df1$volt_diff <- df1$pH_ext_v - df1$pH_int_v
 df1$abs_v_diff <- abs(df1$pH_ext_v - df1$pH_int_v)
 
 #saving final test proof data for seafetV2 translator script
-save(df1, file = "mari-field-bath-20190521.sphx.RData")
+save(df1, file = "mari-field-bath-20200521.sphx.RData")
 
 rm(list=ls())
 
 
 #double check looks good
-load("mari-field-bath-20190521.sphx.RData")
+load("mari-field-bath-20200521.sphx.RData")
 
 
 
@@ -765,12 +785,12 @@ rm(list=ls())
 
 
 
-# POST deployment common bath run 2019 ############################################
+# POST deployment common bath run 2020 ############################################
 
 #pull in instrument data
 
 #read data tables and match var names
-df1 = read.csv("post-deployment.mari-2019/20191112 pH bath and dickson run/mari-post-deployment.common.bath-20191030-20191106.csv",
+df1 = read.csv("post-deployment.mari-2020/20201112 pH bath and dickson run/mari-post-deployment.common.bath-20201030-20201106.csv",
                header=T, stringsAsFactors=F, sep=",")
 
 # create variable with oxygen converted to mg per liter
@@ -783,7 +803,7 @@ summary(df1)
 # 
 
 # FrameSync      DateTime..UTC. Sample.Number.... Error.Flags.... Temperature..Celsius. External.pH..pH.
-# SSPHOX01004 10/30/2019 21:40:01             11679              20               14.1991           7.9407
+# SSPHOX01004 10/30/2020 21:40:01             11679              20               14.1991           7.9407
 # 
 # Internal.pH..pH. External.pH..Volt. Internal.pH..Volt. pH.Temperature..Celsius. Pressure..Decibar.
 # 7.9267          -0.989392          -1.037188                  14.1402              0.268
@@ -835,13 +855,13 @@ df1$volt_diff <- df1$pH_ext_v - df1$pH_int_v
 df1$abs_v_diff <- abs(df1$pH_ext_v - df1$pH_int_v)
 
 #saving final test proof data for seafetV2 translator script
-save(df1, file = "mari-common-bath-post.deploy.2019.sphx.RData")
+save(df1, file = "mari-common-bath-post.deploy.2020.sphx.RData")
 
 rm(list=ls())
 
 
 #double check looks good
-load("mari-common-bath-post.deploy.2019.sphx.RData")
+load("mari-common-bath-post.deploy.2020.sphx.RData")
 
 
 
@@ -850,10 +870,10 @@ rm(list=ls())
 
 
 
-# POST deployment dickson standard run 2019 ############################################
+# POST deployment dickson standard run 2020 ############################################
 
 #read data tables and match var names
-df1 = read.csv("post-deployment.mari-2019/20191112 pH bath and dickson run/mari-post-deployment.dickson.std.run-20191106-20191113.csv",
+df1 = read.csv("post-deployment.mari-2020/20201112 pH bath and dickson run/mari-post-deployment.dickson.std.run-20201106-20201113.csv",
                header=T, stringsAsFactors=F, sep=",")
 
 #get var names by printing data
@@ -861,7 +881,7 @@ head(df1)
 # 
 
 # FrameSync      DateTime..UTC. Sample.Number.... Error.Flags.... Temperature..Celsius. External.pH..pH.
-# 1 SSPHOX01004 03/08/2019 04:40:59              2017              20               14.9507           8.2547
+# 1 SSPHOX01004 03/08/2020 04:40:59              2017              20               14.9507           8.2547
 # 
 # Internal.pH..pH. External.pH..Volt. Internal.pH..Volt. pH.Temperature..Celsius. Pressure..Decibar. Salinity..psu.
 # 1           8.2892          -0.967675          -1.016114                  16.4852              0.160        28.0675
@@ -901,19 +921,19 @@ df1 <- df1 %>%
 
 
 #saving final test proof data for seafetV2 translator script
-save(df1, file = "mari.dickson.run.post.deploy.2019.sphx.RData")
+save(df1, file = "mari.dickson.run.post.deploy.2020.sphx.RData")
 
 rm(list=ls())
 
 
 
-load("mari.dickson.run.post.deploy.2019.sphx.RData")
+load("mari.dickson.run.post.deploy.2020.sphx.RData")
 
 
 #for calculations to be accurate, greatest digit count is 22, deafault is 7
 options(digits = 15)
 
-# POST deployment set up seafetV2 processing algorithm mari 2019 ###################
+# POST deployment set up seafetV2 processing algorithm mari 2020 ###################
 
 # data and calculations pulled from Seabird Application Note 99 
 # see: https://www.seabird.com/application-notes
@@ -923,10 +943,10 @@ options(digits = 15)
 # in summary report I assumed KDF0 and KDF2 were for the DuraFET internal electrode reference 
 # will know if orignal and newly added pH values match
 
-mari.2019.cal.df <- data.frame(k0_int.mari.2019.sbe = -1.47344,
-                               k2_int.mari.2019.sbe = -0.00110563, 
-                               k0_ext.mari.2019.sbe = -1.463136,
-                               k2_ext.mari.2019.sbe = -0.001000847,
+mari.2020.cal.df <- data.frame(k0_int.mari.2020.sbe = -1.47344,
+                               k2_int.mari.2020.sbe = -0.00110563, 
+                               k0_ext.mari.2020.sbe = -1.463136,
+                               k2_ext.mari.2020.sbe = -0.001000847,
                                stringsAsFactors = FALSE)
 
 
@@ -936,11 +956,11 @@ mari.2019.cal.df <- data.frame(k0_int.mari.2019.sbe = -1.47344,
 # usually in xml format before raw data or in a separate xml data file
 
 
-k0_int <- mari.2019.cal.df$k0_int.mari.2019.sbe 
-k2_int <- mari.2019.cal.df$k2_int.mari.2019.sbe
+k0_int <- mari.2020.cal.df$k0_int.mari.2020.sbe 
+k2_int <- mari.2020.cal.df$k2_int.mari.2020.sbe
 
-k0_ext <- mari.2019.cal.df$k0_ext.mari.2019.sbe
-k2_ext <- mari.2019.cal.df$k2_ext.mari.2019.sbe
+k0_ext <- mari.2020.cal.df$k0_ext.mari.2020.sbe
+k2_ext <- mari.2020.cal.df$k2_ext.mari.2020.sbe
 
 # data value calls
 
@@ -1017,20 +1037,20 @@ df1$abs_pH_diff <- abs(df1$pH_int_cell - df1$pH_ext_cell)
 df1$volt_diff <- df1$pH_ext_v - df1$pH_int_v
 df1$abs_v_diff <- abs(df1$pH_ext_v - df1$pH_int_v)
 
-# save mari 2019 POST deployment dickson std run #################################
+# save mari 2020 POST deployment dickson std run #################################
 
 #clear workspace and reload tidied data
-save(df1, file = "mari-post-deploy-dickson-run-prcsd-2019.RData")
+save(df1, file = "mari-post-deploy-dickson-run-prcsd-2020.RData")
 
 rm(list=ls())
 
-load("mari-post-deploy-dickson-run-prcsd-2019.RData")
+load("mari-post-deploy-dickson-run-prcsd-2020.RData")
 
 # subsetting post-deployment  dickson standard run to get median pH value from
 # last ___number____ samples, or _____number______ hours of run
 
 
-t3 <- '2019-03-08 20:00:00'
+t3 <- '2020-03-08 20:00:00'
 df1 <- filter(df1, datetime > t3)
 
 median.dickson.value.int <- median(df1$pH_int_cell)
@@ -1049,11 +1069,11 @@ rm(list=ls())
 
 
 
-#### calibrating 2019 MARI data with pre-deploy  Dickson Run ##############################################
+#### calibrating 2020 MARI data with pre-deploy  Dickson Run ##############################################
 
 rm(list = ls())
 
-load("mari-pre-deploy-dickson-run-prcsd-calibration-08mar2019.RData")
+load("mari-pre-deploy-dickson-run-prcsd-calibration-08mar2020.RData")
 
 # data called variables
 

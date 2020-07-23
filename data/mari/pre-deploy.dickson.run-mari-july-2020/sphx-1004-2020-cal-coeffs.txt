@@ -1,5 +1,3 @@
-<Executed/>
-getcc
 <CalibrationCoefficients DeviceType='Shallow SeapHox2' SerialNumber='0001004'>
   <Calibration format='PH1' id='pH'>
     <SerialNumFET>89329</SerialNumFET>
