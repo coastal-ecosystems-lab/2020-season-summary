@@ -94,118 +94,180 @@ rm(list=ls())
 
 # DATA WAS CAPTURED WITH ONBOARD SALINITY OF 35 SO NEEDS NO MANIPULATION OTHER THAN TIDYING
 
-#rm(list=ls())
-
-setwd("C:/Users/915712257/Box Sync/Inbox/oceanographic work/2020 season summary/data/bob/seafet/pre-deploy.dickson.run-bob-july-2020")
+getwd()
 
 setwd(here("data", "bob", "seafet", "pre-deploy.dickson.run-bob-july-2020"))
 
-file_list <- list.files()
-file_dir <- "/pre-deploy.dickson.run-bob-july-2020"
-df_lengths <- c(1:length(file_list))
-df_names <- paste0("df", as.character(df_lengths))
+getwd()
 
-#read data tables and match var names
+# read data tables and match var names
+# adapted from:
+# https://www.r-bloggers.com/merging-multiple-data-files-into-one-data-frame/
+# https://stackoverflow.com/questions/43858448/how-to-load-and-merge-multiple-csv-files-in-r
 
-for (i in 1:length(file_list)) {
-
-  df  <-  read.csv(file_list[i],
-                 header=T, stringsAsFactors=F, sep=",", skip = 8) 
-  
-  df_names[1] <- df
-  
-  rm(df)
-  
+multMerge_skip8 = function(mypath){
+  filenames = list.files(path = mypath, full.names = TRUE)
+  datalist = lapply(filenames, 
+                    function(x){read.csv(file = x,
+                                         header = FALSE,
+                                         stringsAsFactors = FALSE,
+                                         skip = 8)})
+  Reduce(function(x,y) {merge(x, y, all = TRUE)}, datalist)
 }
 
-df  <-  read.csv(file_list[1],
-                 header=F, stringsAsFactors=F, sep=",", skip = 8) 
+
+df  <- multMerge_skip8(here("data", "bob", "seafet", "pre-deploy.dickson.run-bob-july-2020"))
 
 #get var names by printing data
-head(df1)
+head(df)
 
-# DateTime  PH_INT  PH_EXT    TEMP   VOLT_INT   VOLT_EXT VOLT_THERM VOLT_SUPPLY I_SUPPLY
-# 1  04/20/2020 03:46:05 8.26041 7.96928 20.0768 -1.0451558 -1.0147369 0.86978107      12.457       28
+# V1      V2        V3      V4      V5      V6  V7  V8  V9 V10        V11        V12       V13    V14
+# 1 SATPHA0341 2020185 0.6672978 8.19789 8.12666 20.2416 NaN NaN NaN NaN -0.9253558 -0.8838120 0.8655131 12.795
 
-# HUMIDITY VOLT_5 VOLT_MBATT VOLT_ISO VOLT_ISO_BATT I_B I_K V_K STATUS CHECK
-# 1     31.3   4.89     12.346    6.114         6.152 339  36   0      0   181
+# V15  V16   V17    V18   V19   V20 V21 V22 V23 V24 V25
+# 1  20 12.5 4.922 12.668 6.127 6.268 290 179   0   0 111
 
-df1 <- df1 %>%                     
-  rename(datetime = 'DateTime',
-         pH_int = 'PH_INT',
+df <- df %>%                     
+  rename(Instrument = "V1",
+         Date =  "V2",
+         Time = "V3",
+         PH_INT = "V4",
+         PH_EXT = "V5",
+         TEMP = "V6",
+         CTD_TEMP = "V7",
+         CTD_SALINITY = "V8",
+         CTD_OXYGEN = "V9",
+         CTD_PRESSURE ="V10",
+         VOLT_INT = "V11",
+         VOLT_EXT = "V12",
+         VOLT_THERM = "V13",
+         VOLT_SUPPLY = "V14",
+         I_SUPPLY = "V15",
+         HUMIDITY ="V16",
+         VOLT_5 = "V17",
+         VOLT_MBATT = "V18",
+         VOLT_ISO = "V19",
+         VOLT_ISO_BATT ="V20",
+         I_B = "V21",
+         I_K = "V22",
+         V_K = "V23",
+         STATUS = "V24",
+         CHECK  = "V25")
+
+
+
+df <- select(df, -Instrument, -CTD_TEMP, -CTD_SALINITY, -CTD_OXYGEN, -CTD_PRESSURE)
+
+df <- df %>%                     
+  rename(pH_int = 'PH_INT', 
          pH_ext = 'PH_EXT',
          pH_temp = 'TEMP',
          pH_int_v = 'VOLT_INT',
          pH_ext_v ='VOLT_EXT')
 
 
+# convert seabird julian date and decimal time to R datetime object
+
+#pull data set year
+
+df.year <-  as.numeric(substr(df$Date[1], 1,4))
+
+#parse out julian day
+df$day <- as.numeric(substr(df$Date, 5,8))
+
+# create origin of year
+df.origin.yr <- paste0(df.year-1, "-12-31")
+
+df.origin.yr <- as.Date(df.origin.yr)
+
+print(df.origin.yr)
+
+#add days passed to origin
+df$date <-  df.origin.yr +df$day
+
+df$hms <- times((df$Time /(24)))
+
+#combine date and time to string
+df$datetime <- paste0(df$date," ", df$hms)
+
+# convert datetime to POSIXcT
+
+df$datetime <- as.POSIXct(df$datetime) 
+
+#round to nearest 20th minute to group each sampling event
+# the setting on the seafet is to take 10 samples every 20 minutes
+
+df$datetime.tag <- round_date(df$datetime, "20 minutes")
+
+# remove datetime generation vars
+df <- select(df, -day, -date, -hms)
 
 
-#setting date time to POSIXct and arranging data by datetime
 
-df1$datetime <- as.POSIXct(df1$datetime, format = "%m/%d/%Y %H:%M:%S") 
+#reorder and pull select vars
+
+df <- select(df, datetime, pH_int, pH_ext, pH_temp, pH_int_v, pH_ext_v, datetime.tag)
+
 
 #have data ascend in time
 
-df1 <- df1 %>%
+df <- df %>%
   arrange(datetime)
 
 
-df1$abs_pH_diff <- abs(df1$pH_int - df1$pH_ext)
+# calculate absolute pH and voltage differences for assessment
+# we are looking for convergence in values
 
-df1$abs_v_diff <- abs(df1$pH_int_v - df1$pH_ext_v)
+df$abs_pH_diff <- abs(df$pH_int - df$pH_ext)
+
+df$abs_v_diff <- abs(df$pH_int_v - df$pH_ext_v)
 
 
-df1 <- select(df1, datetime,
+df <- select(df, datetime,
               pH_int_v, pH_ext_v, abs_v_diff, pH_temp,
               pH_int, pH_ext, abs_pH_diff, everything())
 
 
-#saving final test proof data for seafetV2 translator script
-save(df1, file = "bob.dickson.run.predeploy.2020.sft.RData")
-
-rm(list=ls())
-
-
-
-load("bob.dickson.run.predeploy.2020.sft.RData")
 
 
 
 #### save BOB 2020 PRE deployment dickson std run #################################
 
-setwd("C:/Users/915712257/Box Sync/Inbox/oceanographic work/2020 season summary/data/bob/seafet")
+here()
 
+setwd(here("tidied-data", "bob", "seafet"))
 
-#clear workspace and reload tidied data
-save(df1, file = "bob-pre-deploy-dickson-run-prcsd-2020.RData")
+getwd()
 
-rm(list=ls())
+save(df, file = "bob.dickson.run.predeploy.2020.sft.RData")
 
-load("bob-pre-deploy-dickson-run-prcsd-2020.RData")
+#rm(list=ls())
+
+#load("bob.dickson.run.predeploy.2020.sft.RData")
+
 
 # need to adjust later
 # subsetting predeployment  dickson standard run to get median pH value from
 # last 278 samples, or 4.6333 hours of run
 
 t3 <- '2020-03-08 20:00:00'
-#df1 <- filter(df1, datetime > t3)
+#df <- filter(df, datetime > t3)
 
-#save(df1, file = "mari-pre-deploy-dickson-run-prcsd-calibration-08mar2020.RData")
+#save(df, file = "mari-pre-deploy-dickson-run-prcsd-calibration-08mar2020.RData")
 
-median.dickson.value.int <- median(df1$pH_int_cell)
+median.dickson.value.int <- median(df$pH_int)
 print(median.dickson.value.int) 
-#8.3305
+# [1] 8.252905
 
-median.dickson.value.ext <- median(df1$pH_ext_cell)
+median.dickson.value.ext <- median(df$pH_ext)
 print(median.dickson.value.ext) 
-#8.3564
+#[1] 8.253865
 
-median.temp.value <- median(df1$pH_temp) 
+median.temp.value <- median(df$pH_temp) 
 print(median.temp.value) 
-#16.0377
+#[1] 18.5659
 
-rm(list=ls())
+#rm(list=ls())
 
 
 
