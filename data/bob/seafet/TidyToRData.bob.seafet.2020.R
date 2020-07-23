@@ -1,8 +1,6 @@
 
 #combining data from text files
 
-rm(list = ls())
-
 library(dplyr)
 library(lubridate)
 library(chron)
@@ -96,9 +94,11 @@ rm(list=ls())
 
 # DATA WAS CAPTURED WITH ONBOARD SALINITY OF 35 SO NEEDS NO MANIPULATION OTHER THAN TIDYING
 
-rm(list=ls())
+#rm(list=ls())
 
 setwd("C:/Users/915712257/Box Sync/Inbox/oceanographic work/2020 season summary/data/bob/seafet/pre-deploy.dickson.run-bob-july-2020")
+
+setwd(here("data", "bob", "seafet", "pre-deploy.dickson.run-bob-july-2020"))
 
 file_list <- list.files()
 file_dir <- "/pre-deploy.dickson.run-bob-july-2020"
