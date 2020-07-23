@@ -250,7 +250,7 @@ save(df, file = "bob.dickson.run.predeploy.2020.sft.RData")
 # subsetting predeployment  dickson standard run to get median pH value from
 # last 278 samples, or 4.6333 hours of run
 
-t3 <- '2020-03-08 20:00:00'
+# t3 <- '2020-03-08 20:00:00'
 #df <- filter(df, datetime > t3)
 
 #save(df, file = "mari-pre-deploy-dickson-run-prcsd-calibration-08mar2020.RData")
