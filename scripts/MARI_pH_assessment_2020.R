@@ -6,15 +6,15 @@ library(Scale)
 library(grid)
 library(lubridate)
 library(dplyr)
+library(here)
 
 
 
 ##### set working directory ###############################
 
-setwd("C:/Users/915712257/Box Sync/Inbox/oceanographic work/MARI SeapHOx assessment")
+setwd(here())
 
-
-rm(list =ls())
+getwd()
 
 
 # load scatter plot regression function #####################################################
@@ -44,44 +44,44 @@ ggplotRegression <- function(dat, xvar, yvar){
 ######load tidied data ####################################
 
 #load instrument specifications
-load("2019 data/mari.2019.screen.RData")
+#load("data/mari.2020.screen.RData")
 
 
 #load predeployment common bath and check samples
-load("2019 data/mari-common-bath-predeploy.2019.sphx.RData")
+load("tidied-data/mari-common-bath-predeploy.2020.sphx.RData")
 pre.deploy.bath <- df1
 rm(df1)
 
 #load predeployment Dickson Standard Run
-load("2019 data/mari-pre-deploy-dickson-run-prcsd-2019.RData")
+load("tidied-data/mari/mari-pre-deploy-dickson-run-prcsd-2020.RData")
 pre.dickson <- df1
 rm(df1)
 
 
 #intstrument data
-load("2019 data/mari.2019.RData")
+load("tidied-data/mari.2020.RData")
 sfx.df <- data
 rm(data)
 
-#load MID Deployment Field Bath (5/21/2019)
-load("2019 data/mari-field-bath-20190521.sphx.RData")
+#load MID Deployment Field Bath (5/21/2020)
+load("tidied-data/mari-field-bath-20200521.sphx.RData")
 field.bath <- df1
 rm(df1)
 
 # field check samples
-load("2019 data/mari-check.samples-2019.RData")
+load("tidied-data/mari-check.samples-2020.RData")
 
 # bath check samples
-load("2019 data/mari-bath.check.samples-2019.RData")
+load("tidied-data/mari-bath.check.samples-2020.RData")
 
 
 #load POST deployment common bath and check samples
-load("2019 data/mari-common-bath-post.deploy.2019.sphx.RData")
+load("tidied-data/mari-common-bath-post.deploy.2020.sphx.RData")
 post.deploy.bath <- df1
 rm(df1)
 
 #load POST deployment Dickson Standard Run
-load("2019 data/mari-post-deploy-dickson-run-prcsd-2019.RData")
+load("tidied-data/mari-post-deploy-dickson-run-prcsd-2020.RData")
 post.dickson <- df1
 rm(df1)
 
@@ -89,7 +89,7 @@ rm(df1)
 #adjusted data with local calibration constant
 # DID NOT PROVE TO BE BETTER THAN THE FACTORY CALIBRATION
 
-# load("2019 data/mari.2019.adj.final.RData")
+# load("2020 data/mari.2020.adj.final.RData")
 # adj.sfx.df <- df1
 # rm(df1)
 
@@ -97,14 +97,14 @@ rm(df1)
 
 
 head(pre.deploy.bath)
-"2019-03-01 04:25:00"
+"2020-03-01 04:25:00"
 
 tail(pre.deploy.bath)
-"2019-03-08 04:15:00"
+"2020-03-08 04:15:00"
 
 #event time bounds
-t1 <-  '2019-03-01 00:00:00'
-t2 <- '2019-03-09 00:00:00'
+t1 <-  '2020-03-01 00:00:00'
+t2 <- '2020-03-09 00:00:00'
 
 
 p = ggplot(pre.deploy.bath, aes(x = datetime))
@@ -114,7 +114,7 @@ pre.b.int.v = p + geom_point(aes(y = pH_int_v), size = 0.25, color = "seagreen")
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(mari.2019.screen.df$int.v.min, mari.2019.screen.df$int.v.max) +
+  ylim(mari.2020.screen.df$int.v.min, mari.2020.screen.df$int.v.max) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -135,7 +135,7 @@ pre.b.ext.v = p + geom_point(aes(), size = 0.25, color = "green") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(mari.2019.screen.df$ext.v.min, mari.2019.screen.df$ext.v.max) +
+  ylim(mari.2020.screen.df$ext.v.min, mari.2020.screen.df$ext.v.max) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -248,7 +248,7 @@ print(pre.b.s)
 
 p = ggplot(pre.deploy.bath, aes(datetime, ctd_sal))
 pre.b.s.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Pre-Deployment Common Bath for MARI 2019") + #last x label sets the time axis label
+  xlab("Pre-Deployment Common Bath for MARI 2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -270,7 +270,7 @@ summary(pre.deploy.bath$ctd_temp)
 
 p = ggplot(pre.deploy.bath, aes(datetime, ctd_temp))
 pre.b.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Pre-Deployment Common Bath for MARI 2019") + #last x label sets the time axis label
+  xlab("Pre-Deployment Common Bath for MARI 2020") + #last x label sets the time axis label
   ylab("T\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -315,7 +315,7 @@ rm(df1)
 
 
 
-# PRE deployment Dickson Standard Run Assessment ########################################################
+# PRE deployment Dickson Standard Run Assessment ##############################
 
 
 #creating Dickson Standard Line to be plotted alongside instrument data
@@ -348,27 +348,29 @@ pre.dickson$DL_pH_diff_ext <- abs(pre.dickson$pH_ext_cell - pre.dickson$DL)
 
 head(pre.dickson)
 
-# datetime ctd_temp og_pH_ext og_pH_int  pH_ext_v  pH_int_v pH_temp ctd_sal pH_int_cell
-# 2019-03-08 04:40:00  14.9507    8.2547    8.2892 -0.967675 -1.016114 16.4852 28.0675      8.2748
+# datetime  pH_int_v  pH_ext_v abs_v_diff pH_temp pH_int_cell pH_ext_cell
+# 1 2020-07-03 00:27:29 -0.894020 -0.857622   0.036398 20.9791      8.2263      8.0284
 
 tail(pre.dickson)
 
-# datetime ctd_temp og_pH_ext og_pH_int  pH_ext_v  pH_int_v pH_temp ctd_sal pH_int_cell
-# 2019-03-09 00:33:00  16.0064    8.2601    8.3312 -0.966578 -1.013138 16.0212 28.3174      8.3310
+# datetime  pH_int_v  pH_ext_v abs_v_diff pH_temp pH_int_cell pH_ext_cell
+# 557 2020-07-10 19:01:12 -0.891338 -0.847015   0.044323 18.2690      8.2920      8.2547
 
 #event time bounds
-t1 <-  '2019-03-08 03:00:00'
-t2 <- '2019-03-09 01:00:00'
+t1 <-  '2020-07-02 23:27:29'
+t2 <- '2020-07-10 20:01:12'
 
-t3 <- '2019-03-08 20:00:00'
+# t3 <- '2020-03-08 20:00:00'
 
 summary(pre.dickson$pH_int_v)
-# Min.        1st Qu.         Median           Mean        3rd Qu.           Max. 
-# -1.01611400000 -1.01311950000 -1.01294000000 -1.01293489908 -1.01271700000 -1.01251900000
 
-print(mari.2019.screen.df$int.v.min)
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# -0.8940 -0.8923 -0.8916 -0.8914 -0.8907 -0.8889 
+
+# will add this in later when we determine our screens with more seasons of data
+#print(mari.2020.screen.df$int.v.min)
 # -1.06
-print(mari.2019.screen.df$int.v.max) 
+#print(mari.2020.screen.df$int.v.max) 
 # -1.02
 
 
@@ -381,7 +383,7 @@ pre.d.int.v = p + geom_point(aes(y = pH_int_v), size = 0.25, color = "seagreen")
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(-1.02, -1.01) +
+  ylim(-0.897, -0.885) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -396,14 +398,14 @@ print(pre.d.int.v)
 
 
 summary(pre.dickson$pH_ext_v)
-# Min.         1st Qu.          Median            Mean         3rd Qu.            Max. 
-# -0.967675000000 -0.966529000000 -0.966390000000 -0.966413097581 -0.966322000000 -0.966094000000 
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# -0.8576 -0.8469 -0.8465 -0.8465 -0.8460 -0.8449 
 
 #adjusting plotting range for pH_int_v because it is out of range...
 
-print(mari.2019.screen.df$ext.v.min)
+#print(mari.2020.screen.df$ext.v.min)
 # -1.01
-print(mari.2019.screen.df$ext.v.max) 
+#print(mari.2020.screen.df$ext.v.max) 
 # -0.97
 
 p = ggplot(pre.dickson, aes(datetime, pH_ext_v))
@@ -413,7 +415,7 @@ pre.d.ext.v = p + geom_point(aes(), size = 0.25, color = "green") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(-0.97, -0.965) +
+  ylim(-0.850, -0.844) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -507,7 +509,7 @@ print(pre.d.pH.diff)
 p = ggplot(pre.dickson, aes(x =datetime))
 pre.d.DL.diff = p + geom_point(aes(y = DL_pH_diff_int), size = 0.25, color = "seagreen") +
   geom_point(aes(datetime, DL_pH_diff_ext), size = 0.25, color = "green") +
-  xlab("Pre-Deployment Dickson Standard Run for MARI 2019") + #last x label sets the time axis label
+  xlab("Pre-Deployment Dickson Standard Run for MARI 2020") + #last x label sets the time axis label
   ylab("abs offset from Dickson\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -532,12 +534,12 @@ summary(pre.dickson$pH_temp)
 
 p = ggplot(pre.dickson, aes(datetime, pH_temp))
 pre.d.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Pre-Deployment Dickson Standard Run for MARI 2019") + #last x label sets the time axis label
+  xlab("Pre-Deployment Dickson Standard Run for MARI 2020") + #last x label sets the time axis label
   ylab("T\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(14.0, 17.0) +
+  ylim(16.0, 22.0) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25),  #theme for bottom plot
         panel.grid.minor = element_line(colour = "grey", size = 0.25),
@@ -553,9 +555,44 @@ print(pre.d.t.dt)
 # no salinity plot, salinity is a nominal 35
 
 
+
+# saving plots of pre deployment dickson standard run ##############
+
+ls()
+
+# "pre.d.DL.diff"   
+# [5] "pre.d.ext.v"      "pre.d.int.v"      "pre.d.pH.diff"    "pre.d.pHs"       
+# [9] "pre.d.t.dt"       "pre.d.v_diff"     "pre.dickson"      "sal_std"         
+
+
+
+
+ggsave("plots/mari/MARI-pre.deployment_dickson.std.volts.png",
+       plot = grid.draw(rbind(ggplotGrob(pre.d.int.v), ggplotGrob(pre.d.ext.v),
+                              ggplotGrob(pre.d.v_diff), ggplotGrob(pre.d.t.dt), 
+                              size = "last")), width = 6.65, height = 3.5)
+
+
+
+ggsave("plots/mari/MARI-pre.deployment_dickson.std.pHs.png",
+       plot = grid.draw(rbind(ggplotGrob(pre.d.pHs), ggplotGrob(pre.d.pH.diff),
+                              ggplotGrob(pre.d.t.dt), 
+                              size = "last")), width = 6.65, height = 3.5)
+
+
+
+
+
+
+
+
+
+
+
+
 # adjusted PRE deployment Dickson standard plots to more stable section #######################
 
-t3 <- '2019-03-08 20:00:00'
+t3 <- '2020-03-08 20:00:00'
 pre.dickson.trim <- filter(pre.dickson, datetime > t3)
 
 p = ggplot(pre.dickson.trim, aes(x = datetime))
@@ -704,7 +741,7 @@ print(pre.d.DL.diff.trim)
 
 p = ggplot(pre.dickson.trim, aes(datetime, pH_temp))
 pre.d.t.dt.trim = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Pre-Deployment Dickson Standard Run for MARI March 8-9th 2019") + #last x label sets the time axis label
+  xlab("Pre-Deployment Dickson Standard Run for MARI March 8-9th 2020") + #last x label sets the time axis label
   ylab("T\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t3, format = "%Y-%m-%d %H:%M:%S"),
@@ -759,24 +796,24 @@ head(sfx.df)
 tail(sfx.df)
 
 #sfx season time bounds
-#2019-03-11 19:20:00
-#2019-10-09 18:20:00
+#2020-03-11 19:20:00
+#2020-10-09 18:20:00
 
 
 #event time bounds
-t1 <-  '2019-03-11 00:00:00'
-t2 <- '2019-10-11 00:00:00'
-#t2 <- '2019-03-26 00:00:00'
+t1 <-  '2020-03-11 00:00:00'
+t2 <- '2020-10-11 00:00:00'
+#t2 <- '2020-03-26 00:00:00'
 
 summary(sfx.df)
 
 # datetime                      ctd_temp         pH_ext          pH_int         pH_ext_v          pH_int_v     
-# Min.   :2019-03-11 19:20:00   Min.   :10.95   Min.   :6.133   Min.   :7.608   Min.   :-1.0072   Min.   :-1.056  
-# 1st Qu.:2019-05-03 17:45:00   1st Qu.:13.72   1st Qu.:7.729   1st Qu.:7.727   1st Qu.:-0.9974   1st Qu.:-1.048  
-# Median :2019-06-25 19:30:00   Median :15.28   Median :7.802   Median :7.804   Median :-0.9930   Median :-1.044  
-# Mean   :2019-06-25 19:02:42   Mean   :15.31   Mean   :7.816   Mean   :7.819   Mean   :-0.9923   Mean   :-1.043  
-# 3rd Qu.:2019-08-17 19:55:00   3rd Qu.:16.81   3rd Qu.:7.912   3rd Qu.:7.905   3rd Qu.:-0.9870   3rd Qu.:-1.038  
-# Max.   :2019-10-09 18:20:00   Max.   :20.41   Max.   :8.146   Max.   :8.133   Max.   :-0.9754   Max.   :-1.026  
+# Min.   :2020-03-11 19:20:00   Min.   :10.95   Min.   :6.133   Min.   :7.608   Min.   :-1.0072   Min.   :-1.056  
+# 1st Qu.:2020-05-03 17:45:00   1st Qu.:13.72   1st Qu.:7.729   1st Qu.:7.727   1st Qu.:-0.9974   1st Qu.:-1.048  
+# Median :2020-06-25 19:30:00   Median :15.28   Median :7.802   Median :7.804   Median :-0.9930   Median :-1.044  
+# Mean   :2020-06-25 19:02:42   Mean   :15.31   Mean   :7.816   Mean   :7.819   Mean   :-0.9923   Mean   :-1.043  
+# 3rd Qu.:2020-08-17 19:55:00   3rd Qu.:16.81   3rd Qu.:7.912   3rd Qu.:7.905   3rd Qu.:-0.9870   3rd Qu.:-1.038  
+# Max.   :2020-10-09 18:20:00   Max.   :20.41   Max.   :8.146   Max.   :8.133   Max.   :-0.9754   Max.   :-1.026  
 
 # pH_temp        press_dbar       ctd_sal           cond_Sm         ctd_o2_ml_l      ctd_o2_mg_l           RH       
 # Min.   :10.99   Min.   : 0.01   Min.   : 0.2497   Min.   :0.04037   Min.   : 3.431   Min.   : 4.903   Min.   :0.000  
@@ -1003,7 +1040,7 @@ print(sfx.sal)
 
 p = ggplot(sfx.df, aes(datetime, ctd_sal))
 sfx.sal.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Deployment MARI 2019") + #last x label sets the time axis label
+  xlab("Deployment MARI 2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -1044,7 +1081,7 @@ print(sfx.temp)
 
 p = ggplot(sfx.df, aes(datetime, ctd_o2_mg_l))
 sfx.o2 = p + geom_point(aes(), size = 0.25, color = "red") +
-  xlab("Deployment MARI 2019") + #last x label sets the time axis label
+  xlab("Deployment MARI 2020") + #last x label sets the time axis label
   ylab("O2 (mg/L)\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -1171,24 +1208,24 @@ head(adj.sfx.df)
 tail(adj.sfx.df)
 
 #adj.sfx season time bounds
-#2019-03-11 19:20:00
-#2019-10-09 18:20:00
+#2020-03-11 19:20:00
+#2020-10-09 18:20:00
 
 
 #event time bounds
-t1 <-  '2019-03-11 00:00:00'
-t2 <- '2019-10-11 00:00:00'
-#t2 <- '2019-03-26 00:00:00'
+t1 <-  '2020-03-11 00:00:00'
+t2 <- '2020-10-11 00:00:00'
+#t2 <- '2020-03-26 00:00:00'
 
 summary(adj.sfx.df)
 
 # datetime                      ctd_temp         pH_ext          pH_int         pH_ext_v          pH_int_v     
-# Min.   :2019-03-11 19:20:00   Min.   :10.95   Min.   :6.133   Min.   :7.608   Min.   :-1.0072   Min.   :-1.056  
-# 1st Qu.:2019-05-03 17:45:00   1st Qu.:13.72   1st Qu.:7.729   1st Qu.:7.727   1st Qu.:-0.9974   1st Qu.:-1.048  
-# Median :2019-06-25 19:30:00   Median :15.28   Median :7.802   Median :7.804   Median :-0.9930   Median :-1.044  
-# Mean   :2019-06-25 19:02:42   Mean   :15.31   Mean   :7.816   Mean   :7.819   Mean   :-0.9923   Mean   :-1.043  
-# 3rd Qu.:2019-08-17 19:55:00   3rd Qu.:16.81   3rd Qu.:7.912   3rd Qu.:7.905   3rd Qu.:-0.9870   3rd Qu.:-1.038  
-# Max.   :2019-10-09 18:20:00   Max.   :20.41   Max.   :8.146   Max.   :8.133   Max.   :-0.9754   Max.   :-1.026  
+# Min.   :2020-03-11 19:20:00   Min.   :10.95   Min.   :6.133   Min.   :7.608   Min.   :-1.0072   Min.   :-1.056  
+# 1st Qu.:2020-05-03 17:45:00   1st Qu.:13.72   1st Qu.:7.729   1st Qu.:7.727   1st Qu.:-0.9974   1st Qu.:-1.048  
+# Median :2020-06-25 19:30:00   Median :15.28   Median :7.802   Median :7.804   Median :-0.9930   Median :-1.044  
+# Mean   :2020-06-25 19:02:42   Mean   :15.31   Mean   :7.816   Mean   :7.819   Mean   :-0.9923   Mean   :-1.043  
+# 3rd Qu.:2020-08-17 19:55:00   3rd Qu.:16.81   3rd Qu.:7.912   3rd Qu.:7.905   3rd Qu.:-0.9870   3rd Qu.:-1.038  
+# Max.   :2020-10-09 18:20:00   Max.   :20.41   Max.   :8.146   Max.   :8.133   Max.   :-0.9754   Max.   :-1.026  
 
 # pH_temp        press_dbar       ctd_sal           cond_Sm         ctd_o2_ml_l      ctd_o2_mg_l           RH       
 # Min.   :10.99   Min.   : 0.01   Min.   : 0.2497   Min.   :0.04037   Min.   : 3.431   Min.   : 4.903   Min.   :0.000  
@@ -1415,7 +1452,7 @@ print(adj.sfx.sal)
 
 p = ggplot(adj.sfx.df, aes(datetime, ctd_sal))
 adj.sfx.sal.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Deployment MARI 2019") + #last x label sets the time axis label
+  xlab("Deployment MARI 2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -1456,7 +1493,7 @@ print(adj.sfx.temp)
 
 p = ggplot(adj.sfx.df, aes(datetime, ctd_o2_mg_l))
 adj.sfx.o2 = p + geom_point(aes(), size = 0.25, color = "red") +
-  xlab("Deployment MARI 2019") + #last x label sets the time axis label
+  xlab("Deployment MARI 2020") + #last x label sets the time axis label
   ylab("O2 (mg/L)\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -1571,14 +1608,14 @@ rm(df3)
 
 
 head(field.bath)
-"2019-05-21 17:27:00"
+"2020-05-21 17:27:00"
 
 tail(field.bath)
-"2019-05-21 18:05:00"
+"2020-05-21 18:05:00"
 
 #event time bounds
-t1 <-  '2019-05-21 17:26:00'
-t2 <- '2019-05-21 18:06:00'
+t1 <-  '2020-05-21 17:26:00'
+t2 <- '2020-05-21 18:06:00'
 
 
 p = ggplot(field.bath, aes(x = datetime))
@@ -1588,7 +1625,7 @@ mid.b.int.v = p + geom_point(aes(y = pH_int_v), size = 0.25, color = "seagreen")
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(mari.2019.screen.df$int.v.min, mari.2019.screen.df$int.v.max) +
+  ylim(mari.2020.screen.df$int.v.min, mari.2020.screen.df$int.v.max) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -1609,7 +1646,7 @@ mid.b.ext.v = p + geom_point(aes(), size = 0.25, color = "green") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(mari.2019.screen.df$ext.v.min, mari.2019.screen.df$ext.v.max) +
+  ylim(mari.2020.screen.df$ext.v.min, mari.2020.screen.df$ext.v.max) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -1722,7 +1759,7 @@ print(mid.b.s)
 
 p = ggplot(field.bath, aes(datetime, ctd_sal))
 mid.b.s.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Mid-Deployment Common Bath for MARI 5/21/2019") + #last x label sets the time axis label
+  xlab("Mid-Deployment Common Bath for MARI 5/21/2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -1744,7 +1781,7 @@ summary(field.bath$ctd_temp)
 
 p = ggplot(field.bath, aes(datetime, ctd_temp))
 mid.b.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Mid-Deployment Common Bath for MARI 5/21/2019") + #last x label sets the time axis label
+  xlab("Mid-Deployment Common Bath for MARI 5/21/2020") + #last x label sets the time axis label
   ylab("T\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -1786,8 +1823,8 @@ print(k0.ext.mid.b.benchmark)
 # removing outlier bath sample
 
 # substitute for t1 and t2 in stabilized pH measurement
-t3 <- '2019-05-21 00:00:00'
-t4 <- '2019-05-21 18:00:00'
+t3 <- '2020-05-21 00:00:00'
+t4 <- '2020-05-21 18:00:00'
 
 df1 <- filter(df1, datetime > t3 & datetime < t4)
 
@@ -1815,14 +1852,14 @@ rm(df1)
 
 
 head(post.deploy.bath)
-"2019-10-30 21:40:00"
+"2020-10-30 21:40:00"
 
 tail(post.deploy.bath)
-"2019-11-07 02:40:00"
+"2020-11-07 02:40:00"
 
 #event time bounds
-t1 <-  '2019-10-30 20:40:00'
-t2 <- '2019-11-07 03:40:00'
+t1 <-  '2020-10-30 20:40:00'
+t2 <- '2020-11-07 03:40:00'
 
 
 p = ggplot(post.deploy.bath, aes(x = datetime))
@@ -1832,7 +1869,7 @@ post.b.int.v = p + geom_point(aes(y = pH_int_v), size = 0.25, color = "seagreen"
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(mari.2019.screen.df$int.v.min, mari.2019.screen.df$int.v.max) +
+  ylim(mari.2020.screen.df$int.v.min, mari.2020.screen.df$int.v.max) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -1853,7 +1890,7 @@ post.b.ext.v = p + geom_point(aes(), size = 0.25, color = "green") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(mari.2019.screen.df$ext.v.min, mari.2019.screen.df$ext.v.max) +
+  ylim(mari.2020.screen.df$ext.v.min, mari.2020.screen.df$ext.v.max) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -1966,7 +2003,7 @@ print(post.b.s)
 
 p = ggplot(post.deploy.bath, aes(datetime, ctd_sal))
 post.b.s.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Post-Deployment Common Bath for MARI 2019") + #last x label sets the time axis label
+  xlab("Post-Deployment Common Bath for MARI 2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -1988,7 +2025,7 @@ summary(post.deploy.bath$ctd_temp)
 
 p = ggplot(post.deploy.bath, aes(datetime, ctd_temp))
 post.b.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Post-Deployment Common Bath for MARI 2019") + #last x label sets the time axis label
+  xlab("Post-Deployment Common Bath for MARI 2020") + #last x label sets the time axis label
   ylab("T\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -2059,29 +2096,29 @@ post.dickson$DL_pH_diff_ext <- abs(post.dickson$pH_ext_cell - post.dickson$DL)
 #determine data time bounds
 
 head(post.dickson)
-"2019-11-07 03:10:00"
+"2020-11-07 03:10:00"
 
 
 tail(post.dickson)
-"2019-11-13 03:00:00"
+"2020-11-13 03:00:00"
 
 
 #event time bounds
-t1 <-  '2019-11-07 02:10:00'
-t2 <- '2019-11-13 04:00:00'
+t1 <-  '2020-11-07 02:10:00'
+t2 <- '2020-11-13 04:00:00'
 
 # for trim plots
 
-t3 <- '2019-11-12 00:00:00' # substitute for t1 in stabilized pH measurement
-t4 <- '2019-11-13 00:00:00'
+t3 <- '2020-11-12 00:00:00' # substitute for t1 in stabilized pH measurement
+t4 <- '2020-11-13 00:00:00'
 
 summary(post.dickson$pH_int_v)
 # Min.        1st Qu.         Median           Mean        3rd Qu.           Max. 
 # -1.01679800000 -1.01376125000 -1.01336950000 -1.01338753125 -1.01296650000 -1.01211900000 
 
-print(mari.2019.screen.df$int.v.min)
+print(mari.2020.screen.df$int.v.min)
 # -1.06
-print(mari.2019.screen.df$int.v.max) 
+print(mari.2020.screen.df$int.v.max) 
 # -1.02
 
 
@@ -2114,9 +2151,9 @@ summary(post.dickson$pH_ext_v)
 
 #adjusting plotting range for pH_int_v because it is out of range...
 
-print(mari.2019.screen.df$ext.v.min)
+print(mari.2020.screen.df$ext.v.min)
 # -1.01
-print(mari.2019.screen.df$ext.v.max) 
+print(mari.2020.screen.df$ext.v.max) 
 # -0.97
 
 p = ggplot(post.dickson, aes(datetime, pH_ext_v))
@@ -2220,7 +2257,7 @@ print(post.d.pH.diff)
 p = ggplot(post.dickson, aes(x =datetime))
 post.d.DL.diff = p + geom_point(aes(y = DL_pH_diff_int), size = 0.25, color = "seagreen") +
   geom_point(aes(datetime, DL_pH_diff_ext), size = 0.25, color = "green") +
-  xlab("Post-Deployment Dickson Standard Run for MARI 2019") + #last x label sets the time axis label
+  xlab("Post-Deployment Dickson Standard Run for MARI 2020") + #last x label sets the time axis label
   ylab("abs offset from Dickson\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -2245,7 +2282,7 @@ summary(post.dickson$pH_temp)
 
 p = ggplot(post.dickson, aes(datetime, pH_temp))
 post.d.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Post-Deployment Dickson Standard Run for MARI Nov 7-13th 2019") + #last x label sets the time axis label
+  xlab("Post-Deployment Dickson Standard Run for MARI Nov 7-13th 2020") + #last x label sets the time axis label
   ylab("T\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -2269,8 +2306,8 @@ print(post.d.t.dt)
 # adjusted POST deployment Dickson standard plots to more stable section #######################
 
 # substitute for t1 and t2 in stabilized pH measurement
-t3 <- '2019-11-12 00:00:00'
-t4 <- '2019-11-13 00:00:00'
+t3 <- '2020-11-12 00:00:00'
+t4 <- '2020-11-13 00:00:00'
 
 post.dickson.trim <- filter(post.dickson, datetime > t3 & datetime < t4)
 
@@ -2420,7 +2457,7 @@ print(post.d.DL.diff.trim)
 
 p = ggplot(post.dickson.trim, aes(datetime, pH_temp))
 post.d.t.dt.trim = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Post-Deployment Dickson Standard Run for MARI Nov 12-13th 2019") + #last x label sets the time axis label
+  xlab("Post-Deployment Dickson Standard Run for MARI Nov 12-13th 2020") + #last x label sets the time axis label
   ylab("T\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t3, format = "%Y-%m-%d %H:%M:%S"),
@@ -2470,21 +2507,21 @@ ls() # to pull object names
 # "pre.b.int.v"             "pre.b.pH.diff"           "pre.b.phs"              
 # "pre.b.s"                 "pre.b.s.dt"              "pre.b.t.dt"     
 
-ggsave("qaqc_plots/2019/MARI-pre-deployment_bath_Volt_Sal_2019.png",
+ggsave("qaqc_plots/2020/MARI-pre-deployment_bath_Volt_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.b.int.v), ggplotGrob(pre.b.ext.v),
                               ggplotGrob(pre.b.abs.v_diff), ggplotGrob(pre.b.s.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-pre-deployment_bath_pHs_Sal_2019.png",
+ggsave("qaqc_plots/2020/MARI-pre-deployment_bath_pHs_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.b.phs), ggplotGrob(pre.b.pH.diff),
                               ggplotGrob(pre.b.s.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-pre-deployment_bath_T_S_2019.png",
+ggsave("qaqc_plots/2020/MARI-pre-deployment_bath_T_S_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.b.s), ggplotGrob(pre.b.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-pre-deployment_bath_pHs_T_S_2019.png",
+ggsave("qaqc_plots/2020/MARI-pre-deployment_bath_pHs_T_S_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.b.phs), ggplotGrob(pre.b.pH.diff),
                               ggplotGrob(pre.b.s), ggplotGrob(pre.b.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
@@ -2492,7 +2529,7 @@ ggsave("qaqc_plots/2019/MARI-pre-deployment_bath_pHs_T_S_2019.png",
 
 # regression  plots
 
-ggsave("qaqc_plots/2019/MARI-pre-deployment_bath_disrete.spec.pH.v.sfx.pH_2019.png",
+ggsave("qaqc_plots/2020/MARI-pre-deployment_bath_disrete.spec.pH.v.sfx.pH_2020.png",
        plot = grid.draw(rbind(ggplotGrob(k0.int.pre.b.benchmark), ggplotGrob(k0.ext.pre.b.benchmark),
                               size = "last")), width = 5, height = 5)
 
@@ -2510,46 +2547,46 @@ ggsave("qaqc_plots/2019/MARI-pre-deployment_bath_disrete.spec.pH.v.sfx.pH_2019.p
 # "pre.dickson.trim"        "sal_std"                 
 
 
-ggsave("qaqc_plots/2019/MARI-pre-deployment_DSR_Volt_T_2019.png",
+ggsave("qaqc_plots/2020/MARI-pre-deployment_DSR_Volt_T_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.int.v), ggplotGrob(pre.d.ext.v),
                               ggplotGrob(pre.d.v_diff), ggplotGrob(pre.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 
-ggsave("qaqc_plots/2019/MARI-pre-deployment_DSR_pHs_DL_T_2019.png",
+ggsave("qaqc_plots/2020/MARI-pre-deployment_DSR_pHs_DL_T_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.pHs), ggplotGrob(pre.d.pH.diff),
                               ggplotGrob(pre.d.DL.diff), ggplotGrob(pre.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-pre-deployment_DSR_pHs_T_2019.png",
+ggsave("qaqc_plots/2020/MARI-pre-deployment_DSR_pHs_T_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.pHs), ggplotGrob(pre.d.pH.diff),
                               ggplotGrob(pre.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 # trimmed plots
 
-ggsave("qaqc_plots/2019/MARI-pre-deployment_DSR_Volt_T_2019-trim.png",
+ggsave("qaqc_plots/2020/MARI-pre-deployment_DSR_Volt_T_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.int.v.trim), ggplotGrob(pre.d.ext.v.trim),
                               ggplotGrob(pre.d.v_diff.trim), ggplotGrob(pre.d.t.dt.trim),
                               size = "last")), width = 6.65, height = 3.5)
 
 
-ggsave("qaqc_plots/2019/MARI-pre-deployment_DSR_pHs_DL_T_2019-trim.png",
+ggsave("qaqc_plots/2020/MARI-pre-deployment_DSR_pHs_DL_T_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.pHs.trim), ggplotGrob(pre.d.pH.diff.trim),
                               ggplotGrob(pre.d.DL.diff.trim), ggplotGrob(pre.d.t.dt.trim),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-pre-deployment_DSR_pHs_T_2019-trim.png",
+ggsave("qaqc_plots/2020/MARI-pre-deployment_DSR_pHs_T_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.pHs.trim), ggplotGrob(pre.d.pH.diff.trim),
                               ggplotGrob(pre.d.t.dt.trim),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-pre-deployment_DSR_DL.v.pHs_2019-trim.png",
+ggsave("qaqc_plots/2020/MARI-pre-deployment_DSR_DL.v.pHs_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.DL.v.pH.int.trim), ggplotGrob(pre.d.DL.v.pH.ext.trim),
                               size = "last")), width = 5, height = 5)
 
 
-ggsave("qaqc_plots/2019/MARI-pre-deployment_DSR_pHs.v.Volts_2019-trim.png",
+ggsave("qaqc_plots/2020/MARI-pre-deployment_DSR_pHs.v.Volts_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.pH.int.v.Volt.int.trim), 
                               ggplotGrob(pre.d.pH.ext.v.Volt.ext.trim),
                               size = "last")), width = 5, height = 5)
@@ -2570,23 +2607,23 @@ ggsave("qaqc_plots/2019/MARI-pre-deployment_DSR_pHs.v.Volts_2019-trim.png",
 # "spc.ph.v.sfx.ph.int.v"   "spc.ph.v.sfx.ph.int.v.2"  
 
 
-ggsave("qaqc_plots/2019/MARI-deployment_Volt_Sal_2019.png",
+ggsave("qaqc_plots/2020/MARI-deployment_Volt_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.int.v), ggplotGrob(sfx.ext.v),
                               ggplotGrob(sfx.v_diff), ggplotGrob(sfx.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_pHs_Sal_2019.png",
+ggsave("qaqc_plots/2020/MARI-deployment_pHs_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.pH_int), ggplotGrob(sfx.pH_ext),
                               ggplotGrob(sfx.pH.diff), ggplotGrob(sfx.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_pHs_T_S_O2_2019.png",
+ggsave("qaqc_plots/2020/MARI-deployment_pHs_T_S_O2_2020.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.phs), ggplotGrob(sfx.pH.diff.no.note),
                         ggplotGrob(sfx.sal), ggplotGrob(sfx.temp),
                         ggplotGrob(sfx.o2),
                         size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_pHs_T_S_O2_2019-2.png",
+ggsave("qaqc_plots/2020/MARI-deployment_pHs_T_S_O2_2020-2.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.phs), 
                               ggplotGrob(sfx.sal), ggplotGrob(sfx.temp),
                               ggplotGrob(sfx.o2),
@@ -2594,20 +2631,20 @@ ggsave("qaqc_plots/2019/MARI-deployment_pHs_T_S_O2_2019-2.png",
 
 # regression  plots
 
-ggsave("qaqc_plots/2019/MARI-deployment_pH_v_o2_2019.png",
+ggsave("qaqc_plots/2020/MARI-deployment_pH_v_o2_2020.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.ph.int.v.o2), ggplotGrob(sfx.ph.ext.v.o2),
                               size = "last")), width = 5, height = 5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_pH_v_o2_no_outliers_2019.png",
+ggsave("qaqc_plots/2020/MARI-deployment_pH_v_o2_no_outliers_2020.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.ph.int.v.o2.ol.rm), ggplotGrob(sfx.ph.ext.v.o2.ol.rm),
                               size = "last")), width = 5, height = 5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_spc.pH_v_sfx.pH.int_2019.png",
+ggsave("qaqc_plots/2020/MARI-deployment_spc.pH_v_sfx.pH.int_2020.png",
        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.sfx.ph.int.v), ggplotGrob(spc.ph.v.sfx.ph.int.v.2),
                               ggplotGrob(spc.ph.v.sfx.ph.int),
                               size = "last")), width = 5, height = 5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_spc.pH_v_sfx.pH.ext_2019.png",
+ggsave("qaqc_plots/2020/MARI-deployment_spc.pH_v_sfx.pH.ext_2020.png",
        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.sfx.ph.ext.v), ggplotGrob(spc.ph.v.sfx.ph.ext.v.2),
                               ggplotGrob(spc.ph.v.sfx.ph.ext),
                               size = "last")), width = 5, height = 5)
@@ -2625,12 +2662,12 @@ ggsave("qaqc_plots/2019/MARI-deployment_spc.pH_v_sfx.pH.ext_2019.png",
 # 
 # 
 # 
-# ggsave("qaqc_plots/2019/MARI-ADJ-deployment_pHs_Sal_2019.png",
+# ggsave("qaqc_plots/2020/MARI-ADJ-deployment_pHs_Sal_2020.png",
 #        plot = grid.draw(rbind(ggplotGrob(adj.sfx.pH_int), ggplotGrob(adj.sfx.pH_ext),
 #                               ggplotGrob(adj.sfx.pH.diff), ggplotGrob(adj.sfx.sal.dt),
 #                               size = "last")), width = 6.65, height = 3.5)
 # 
-# ggsave("qaqc_plots/2019/MARI-ADJ-deployment_pHs_T_S_O2_2019-2.png",
+# ggsave("qaqc_plots/2020/MARI-ADJ-deployment_pHs_T_S_O2_2020-2.png",
 #        plot = grid.draw(rbind(ggplotGrob(adj.sfx.phs), 
 #                               ggplotGrob(adj.sfx.sal), ggplotGrob(adj.sfx.temp),
 #                               ggplotGrob(adj.sfx.o2),
@@ -2638,7 +2675,7 @@ ggsave("qaqc_plots/2019/MARI-deployment_spc.pH_v_sfx.pH.ext_2019.png",
 # 
 # #regression plots
 # 
-# ggsave("qaqc_plots/2019/MARI-ADJ-deployment_spc.pH_v_sfx.pHs_2019.png",
+# ggsave("qaqc_plots/2020/MARI-ADJ-deployment_spc.pH_v_sfx.pHs_2020.png",
 #        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.adj.sfx.ph.int), 
 #                               ggplotGrob(spc.ph.v.adj.sfx.ph.ext),
 #                               size = "last")), width = 5, height = 5)
@@ -2658,21 +2695,21 @@ ggsave("qaqc_plots/2019/MARI-deployment_spc.pH_v_sfx.pH.ext_2019.png",
 # "k0.int.mid.b.benchmark.2pts" 
 
 
-ggsave("qaqc_plots/2019/MARI-mid-deployment_bath_Volt_Sal_2019.png",
+ggsave("qaqc_plots/2020/MARI-mid-deployment_bath_Volt_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(mid.b.int.v), ggplotGrob(mid.b.ext.v),
                               ggplotGrob(mid.b.abs.v_diff), ggplotGrob(mid.b.s.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-mid-deployment_bath_pHs_Sal_2019.png",
+ggsave("qaqc_plots/2020/MARI-mid-deployment_bath_pHs_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(mid.b.phs), ggplotGrob(mid.b.pH.diff),
                               ggplotGrob(mid.b.s.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-mid-deployment_bath_T_S_2019.png",
+ggsave("qaqc_plots/2020/MARI-mid-deployment_bath_T_S_2020.png",
        plot = grid.draw(rbind(ggplotGrob(mid.b.s), ggplotGrob(mid.b.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-mid-deployment_bath_pHs_T_S_2019.png",
+ggsave("qaqc_plots/2020/MARI-mid-deployment_bath_pHs_T_S_2020.png",
        plot = grid.draw(rbind(ggplotGrob(mid.b.phs), ggplotGrob(mid.b.pH.diff),
                               ggplotGrob(mid.b.s), ggplotGrob(mid.b.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
@@ -2680,12 +2717,12 @@ ggsave("qaqc_plots/2019/MARI-mid-deployment_bath_pHs_T_S_2019.png",
 
 # regression  plots
 
-ggsave("qaqc_plots/2019/MARI-mid-deployment_bath_disrete.spec.pH.v.sfx.pH_2019.png",
+ggsave("qaqc_plots/2020/MARI-mid-deployment_bath_disrete.spec.pH.v.sfx.pH_2020.png",
        plot = grid.draw(rbind(ggplotGrob(k0.int.mid.b.benchmark), ggplotGrob(k0.ext.mid.b.benchmark),
                               size = "last")), width = 5, height = 5)
 
 
-ggsave("qaqc_plots/2019/MARI-mid-deployment_bath_disrete.spec.pH.v.sfx.pH_2019-2pts.png",
+ggsave("qaqc_plots/2020/MARI-mid-deployment_bath_disrete.spec.pH.v.sfx.pH_2020-2pts.png",
        plot = grid.draw(rbind(ggplotGrob(k0.int.mid.b.benchmark.2pts), ggplotGrob(k0.ext.mid.b.benchmark.2pts),
                               size = "last")), width = 5, height = 5)
 
@@ -2698,28 +2735,28 @@ ggsave("qaqc_plots/2019/MARI-mid-deployment_bath_disrete.spec.pH.v.sfx.pH_2019-2
 # "post.b.s"                "post.b.s.dt"             "post.b.t.dt"  
 # "k0.ext.post.b.benchmark" "k0.int.post.b.benchmark"
 
-ggsave("qaqc_plots/2019/MARI-post-deployment_bath_Volt_Sal_2019.png",
+ggsave("qaqc_plots/2020/MARI-post-deployment_bath_Volt_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.b.int.v), ggplotGrob(post.b.ext.v),
                               ggplotGrob(post.b.abs.v_diff), ggplotGrob(post.b.s.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-post-deployment_bath_pHs_Sal_2019.png",
+ggsave("qaqc_plots/2020/MARI-post-deployment_bath_pHs_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.b.phs), ggplotGrob(post.b.pH.diff),
                               ggplotGrob(post.b.s.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-post-deployment_bath_T_S_2019.png",
+ggsave("qaqc_plots/2020/MARI-post-deployment_bath_T_S_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.b.s), ggplotGrob(post.b.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-post-deployment_bath_pHs_T_S_2019.png",
+ggsave("qaqc_plots/2020/MARI-post-deployment_bath_pHs_T_S_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.b.phs), ggplotGrob(post.b.pH.diff),
                               ggplotGrob(post.b.s), ggplotGrob(post.b.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 # regression  plots
 
-ggsave("qaqc_plots/2019/MARI-post-deployment_bath_disrete.spec.pH.v.sfx.pH_2019.png",
+ggsave("qaqc_plots/2020/MARI-post-deployment_bath_disrete.spec.pH.v.sfx.pH_2020.png",
        plot = grid.draw(rbind(ggplotGrob(k0.int.post.b.benchmark), ggplotGrob(k0.ext.post.b.benchmark),
                               size = "last")), width = 5, height = 5)
 
@@ -2736,41 +2773,41 @@ ggsave("qaqc_plots/2019/MARI-post-deployment_bath_disrete.spec.pH.v.sfx.pH_2019.
 
 
 
-ggsave("qaqc_plots/2019/MARI-post-deployment_DSR_Volt_T_2019.png",
+ggsave("qaqc_plots/2020/MARI-post-deployment_DSR_Volt_T_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.d.int.v), ggplotGrob(post.d.ext.v),
                               ggplotGrob(post.d.v_diff), ggplotGrob(post.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 
-ggsave("qaqc_plots/2019/MARI-post-deployment_DSR_pHs_DL_T_2019.png",
+ggsave("qaqc_plots/2020/MARI-post-deployment_DSR_pHs_DL_T_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.d.pHs), ggplotGrob(post.d.pH.diff),
                               ggplotGrob(post.d.DL.diff), ggplotGrob(post.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-post-deployment_DSR_pHs_T_2019.png",
+ggsave("qaqc_plots/2020/MARI-post-deployment_DSR_pHs_T_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.d.pHs), ggplotGrob(post.d.pH.diff),
                               ggplotGrob(post.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 # trimmed plots
 
-ggsave("qaqc_plots/2019/MARI-post-deployment_DSR_Volt_T_2019-trim.png",
+ggsave("qaqc_plots/2020/MARI-post-deployment_DSR_Volt_T_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(post.d.int.v.trim), ggplotGrob(post.d.ext.v.trim),
                               ggplotGrob(post.d.v_diff.trim), ggplotGrob(post.d.t.dt.trim),
                               size = "last")), width = 6.65, height = 3.5)
 
 
-ggsave("qaqc_plots/2019/MARI-post-deployment_DSR_pHs_DL_T_2019-trim.png",
+ggsave("qaqc_plots/2020/MARI-post-deployment_DSR_pHs_DL_T_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(post.d.pHs.trim), ggplotGrob(post.d.pH.diff.trim),
                               ggplotGrob(post.d.DL.diff.trim), ggplotGrob(post.d.t.dt.trim),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-post-deployment_DSR_pHs_T_2019-trim.png",
+ggsave("qaqc_plots/2020/MARI-post-deployment_DSR_pHs_T_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(post.d.pHs.trim), ggplotGrob(post.d.pH.diff.trim),
                               ggplotGrob(post.d.t.dt.trim),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-post-deployment_DSR_DL.v.pHs_2019-trim.png",
+ggsave("qaqc_plots/2020/MARI-post-deployment_DSR_DL.v.pHs_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(post.d.DL.v.pH.int.trim), ggplotGrob(post.d.DL.v.pH.ext.trim),
                               size = "last")), width = 5, height = 5)
 
@@ -2786,7 +2823,7 @@ setwd("C:/Users/915712257/Box Sync/Inbox/oceanographic work/MARI SeapHOx assessm
 
 
 #intstrument data
-load("2019 data/mari.2019.RData")
+load("2020 data/mari.2020.RData")
 sfx.df <- data
 rm(data)
 
@@ -2963,11 +3000,11 @@ sfx.df$pH_ext_final_flag <- do.call(pmax, sfx.df[,pH_ext_flag_cols])
 sfx.df$final_flag <- do.call(pmax, sfx.df[,14:17])
 
 
-save(sfx.df, file = 'mari.2019.all.combined.prcsd.flagged.RData')
+save(sfx.df, file = 'mari.2020.all.combined.prcsd.flagged.RData')
 
 rm(list=ls())
 
-load('mari.2019.all.combined.prcsd.flagged.RData')
+load('mari.2020.all.combined.prcsd.flagged.RData')
 
 # remove all rows of data where pH external is flagged for removal 
 sfx.df <- filter(sfx.df, pH_ext_final_flag != "4")
@@ -2975,11 +3012,11 @@ sfx.df <- filter(sfx.df, pH_ext_final_flag != "4")
 # replace pH internal flagged data with NA's only
 sfx.df <- mutate(sfx.df, pH_int = ifelse(pH_int_final_flag == "4", NA, pH_int))
 
-save(sfx.df, file = 'mari.2019.select.combined.prcsd.flagged.RData')
+save(sfx.df, file = 'mari.2020.select.combined.prcsd.flagged.RData')
 
-load('mari.2019.select.combined.prcsd.flagged.RData')
+load('mari.2020.select.combined.prcsd.flagged.RData')
 
-write.csv(sfx.df, "2019 data/mari-2019-final.flagged.data.csv", row.names = F)
+write.csv(sfx.df, "2020 data/mari-2020-final.flagged.data.csv", row.names = F)
 
 
 rm(list=ls())
@@ -3015,36 +3052,36 @@ ggplotRegression <- function(dat, xvar, yvar){
 }
 
 
-load('mari.2019.all.combined.prcsd.flagged.RData')
+load('mari.2020.all.combined.prcsd.flagged.RData')
 
 
 # field check samples
-load("2019 data/mari-check.samples-2019.RData")
+load("2020 data/mari-check.samples-2020.RData")
 
 # find data time bounds
 head(sfx.df) 
 tail(sfx.df)
 
 #sfx season time bounds
-#2019-03-11 19:20:00
-#2019-10-09 18:20:00
+#2020-03-11 19:20:00
+#2020-10-09 18:20:00
 
 
 #event time bounds
-t1 <-  '2019-03-11 00:00:00'
-t2 <- '2019-10-11 00:00:00'
-#t2 <- '2019-03-26 00:00:00'
+t1 <-  '2020-03-11 00:00:00'
+t2 <- '2020-10-11 00:00:00'
+#t2 <- '2020-03-26 00:00:00'
 
 summary(sfx.df)
 
 
 # datetime                      pH_int_v         pH_ext_v         abs_v_diff         ctd_temp    
-# Min.   :2019-03-11 19:20:00   Min.   :-1.056   Min.   :-1.0072   Min.   :0.04633   Min.   :10.95  
-# 1st Qu.:2019-05-03 17:45:00   1st Qu.:-1.048   1st Qu.:-0.9974   1st Qu.:0.04970   1st Qu.:13.73  
-# Median :2019-06-25 19:30:00   Median :-1.044   Median :-0.9930   Median :0.05033   Median :15.28  
-# Mean   :2019-06-25 19:02:42   Mean   :-1.043   Mean   :-0.9923   Mean   :0.05059   Mean   :15.31  
-# 3rd Qu.:2019-08-17 19:55:00   3rd Qu.:-1.038   3rd Qu.:-0.9870   3rd Qu.:0.05122   3rd Qu.:16.81  
-# Max.   :2019-10-09 18:20:00   Max.   :-1.026   Max.   :-0.9754   Max.   :0.06226   Max.   :20.41  
+# Min.   :2020-03-11 19:20:00   Min.   :-1.056   Min.   :-1.0072   Min.   :0.04633   Min.   :10.95  
+# 1st Qu.:2020-05-03 17:45:00   1st Qu.:-1.048   1st Qu.:-0.9974   1st Qu.:0.04970   1st Qu.:13.73  
+# Median :2020-06-25 19:30:00   Median :-1.044   Median :-0.9930   Median :0.05033   Median :15.28  
+# Mean   :2020-06-25 19:02:42   Mean   :-1.043   Mean   :-0.9923   Mean   :0.05059   Mean   :15.31  
+# 3rd Qu.:2020-08-17 19:55:00   3rd Qu.:-1.038   3rd Qu.:-0.9870   3rd Qu.:0.05122   3rd Qu.:16.81  
+# Max.   :2020-10-09 18:20:00   Max.   :-1.026   Max.   :-0.9754   Max.   :0.06226   Max.   :20.41  
 
 # ctd_sal          pH_int          pH_ext       abs_pH_diff      ctd_o2_mg_l       press_dbar   
 # Min.   :10.20   Min.   :7.608   Min.   :7.495   Min.   :0.0000   Min.   : 4.903   Min.   :14.74  
@@ -3283,7 +3320,7 @@ print(sfx.sal)
 
 p = ggplot(sfx.df, aes(datetime, ctd_sal))
 sfx.sal.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Deployment MARI 2019") + #last x label sets the time axis label
+  xlab("Deployment MARI 2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -3324,7 +3361,7 @@ print(sfx.temp)
 
 p = ggplot(sfx.df, aes(datetime, ctd_o2_mg_l))
 sfx.o2 = p + geom_point(aes(), size = 0.25, color = "red") +
-  xlab("Deployment MARI 2019") + #last x label sets the time axis label
+  xlab("Deployment MARI 2020") + #last x label sets the time axis label
   ylab("O2 (mg/L)\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -3452,17 +3489,17 @@ rm(df3)
 # "spc.ph.v.sfx.ph.int.v"   "spc.ph.v.sfx.ph.int.v.2"  
 
 
-ggsave("qaqc_plots/2019/MARI-deployment_Volt_Sal_2019-all-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_Volt_Sal_2020-all-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.int.v), ggplotGrob(sfx.ext.v),
                               ggplotGrob(sfx.v_diff), ggplotGrob(sfx.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_pHs_Sal_2019-all-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_pHs_Sal_2020-all-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.pH_int), ggplotGrob(sfx.pH_ext),
                               ggplotGrob(sfx.pH.diff), ggplotGrob(sfx.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_pHs_T_S_O2_2019-all-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_pHs_T_S_O2_2020-all-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.pH_int), ggplotGrob(sfx.pH_ext),
                               ggplotGrob(sfx.sal), ggplotGrob(sfx.temp),
                               ggplotGrob(sfx.o2),
@@ -3470,11 +3507,11 @@ ggsave("qaqc_plots/2019/MARI-deployment_pHs_T_S_O2_2019-all-flagged.png",
 
 # regression  plots
 
-ggsave("qaqc_plots/2019/MARI-deployment_pH_v_o2_2019-all-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_pH_v_o2_2020-all-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.ph.int.v.o2), ggplotGrob(sfx.ph.ext.v.o2),
                               size = "last")), width = 5, height = 5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_pH_v_o2_no_outliers_2019-all-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_pH_v_o2_no_outliers_2020-all-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.ph.int.v.o2.ol.rm), ggplotGrob(sfx.ph.ext.v.o2.ol.rm),
                               size = "last")), width = 5, height = 5)
 
@@ -3482,12 +3519,12 @@ ggsave("qaqc_plots/2019/MARI-deployment_pH_v_o2_no_outliers_2019-all-flagged.png
 #"spc.ph.v.sfx.ph.ext"          "spc.ph.v.sfx.ph.ext.v" 
 # "spc.ph.v.sfx.ph.int"          "spc.ph.v.sfx.ph.int.v"     
 
-ggsave("qaqc_plots/2019/MARI-deployment_spc.pH_v_sfX.pH.int_2019-all-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_spc.pH_v_sfX.pH.int_2020-all-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.sfx.ph.int.v), 
                               ggplotGrob(spc.ph.v.sfx.ph.int),
                               size = "last")), width = 5, height = 5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_spc.pH_v_sfX.pH.ext_2019-all-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_spc.pH_v_sfX.pH.ext_2020-all-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.sfx.ph.ext.v), 
                               ggplotGrob(spc.ph.v.sfx.ph.ext),
                               size = "last")), width = 5, height = 5)
@@ -3520,11 +3557,11 @@ ggplotRegression <- function(dat, xvar, yvar){
 }
 
 
-load('mari.2019.select.combined.prcsd.flagged.RData')
+load('mari.2020.select.combined.prcsd.flagged.RData')
 
 
 # field check samples
-load("2019 data/mari-check.samples-2019.RData")
+load("2020 data/mari-check.samples-2020.RData")
 
 
 
@@ -3533,25 +3570,25 @@ head(sfx.df)
 tail(sfx.df)
 
 #sfx season time bounds
-#2019-03-11 19:20:00
-#2019-10-09 18:20:00
+#2020-03-11 19:20:00
+#2020-10-09 18:20:00
 
 
 #event time bounds
-t1 <-  '2019-03-11 00:00:00'
-t2 <- '2019-10-11 00:00:00'
-#t2 <- '2019-03-26 00:00:00'
+t1 <-  '2020-03-11 00:00:00'
+t2 <- '2020-10-11 00:00:00'
+#t2 <- '2020-03-26 00:00:00'
 
 summary(sfx.df)
 
 
 # datetime                      pH_int_v         pH_ext_v         abs_v_diff         ctd_temp        ctd_sal     
-# Min.   :2019-03-11 19:20:00   Min.   :-1.056   Min.   :-1.0072   Min.   :0.04633   Min.   :10.95   Min.   :10.20  
-# 1st Qu.:2019-05-03 17:00:00   1st Qu.:-1.048   1st Qu.:-0.9974   1st Qu.:0.04970   1st Qu.:13.73   1st Qu.:26.71  
-# Median :2019-06-25 19:20:00   Median :-1.044   Median :-0.9930   Median :0.05033   Median :15.28   Median :28.83  
-# Mean   :2019-06-25 18:58:54   Mean   :-1.043   Mean   :-0.9923   Mean   :0.05059   Mean   :15.31   Mean   :27.98  
-# 3rd Qu.:2019-08-17 20:40:00   3rd Qu.:-1.038   3rd Qu.:-0.9870   3rd Qu.:0.05122   3rd Qu.:16.81   3rd Qu.:30.20  
-# Max.   :2019-10-09 18:20:00   Max.   :-1.026   Max.   :-0.9754   Max.   :0.06226   Max.   :20.41   Max.   :32.06 
+# Min.   :2020-03-11 19:20:00   Min.   :-1.056   Min.   :-1.0072   Min.   :0.04633   Min.   :10.95   Min.   :10.20  
+# 1st Qu.:2020-05-03 17:00:00   1st Qu.:-1.048   1st Qu.:-0.9974   1st Qu.:0.04970   1st Qu.:13.73   1st Qu.:26.71  
+# Median :2020-06-25 19:20:00   Median :-1.044   Median :-0.9930   Median :0.05033   Median :15.28   Median :28.83  
+# Mean   :2020-06-25 18:58:54   Mean   :-1.043   Mean   :-0.9923   Mean   :0.05059   Mean   :15.31   Mean   :27.98  
+# 3rd Qu.:2020-08-17 20:40:00   3rd Qu.:-1.038   3rd Qu.:-0.9870   3rd Qu.:0.05122   3rd Qu.:16.81   3rd Qu.:30.20  
+# Max.   :2020-10-09 18:20:00   Max.   :-1.026   Max.   :-0.9754   Max.   :0.06226   Max.   :20.41   Max.   :32.06 
 # 
 # pH_int          pH_ext       abs_pH_diff       ctd_o2_mg_l       press_dbar       pH_temp         cond_Sm     
 # Min.   :7.608   Min.   :7.495   Min.   :0.00000   Min.   : 4.903   Min.   :14.74   Min.   :10.99   Min.   :1.409  
@@ -3778,7 +3815,7 @@ print(sfx.sal)
 
 p = ggplot(sfx.df, aes(datetime, ctd_sal))
 sfx.sal.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Deployment MARI 2019") + #last x label sets the time axis label
+  xlab("Deployment MARI 2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -3819,7 +3856,7 @@ print(sfx.temp)
 
 p = ggplot(sfx.df, aes(datetime, ctd_o2_mg_l))
 sfx.o2 = p + geom_point(aes(), size = 0.25, color = "red") +
-  xlab("Deployment MARI 2019") + #last x label sets the time axis label
+  xlab("Deployment MARI 2020") + #last x label sets the time axis label
   ylab("O2 (mg/L)\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -3946,17 +3983,17 @@ rm(df3)
 # "spc.ph.v.sfx.ph.ext.v.2" "spc.ph.v.sfx.ph.int"     "spc.ph.v.sfx.ph.int.2"  
 # "spc.ph.v.sfx.ph.int.v"   "spc.ph.v.sfx.ph.int.v.2"  
 
-ggsave("qaqc_plots/2019/MARI-deployment_Volt_Sal_2019-select-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_Volt_Sal_2020-select-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.int.v), ggplotGrob(sfx.ext.v),
                               ggplotGrob(sfx.v_diff), ggplotGrob(sfx.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_pHs_Sal_2019-select-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_pHs_Sal_2020-select-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.pH_int), ggplotGrob(sfx.pH_ext),
                               ggplotGrob(sfx.pH.diff), ggplotGrob(sfx.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_pHs_T_S_O2_2019-select-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_pHs_T_S_O2_2020-select-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.pH_int), ggplotGrob(sfx.pH_ext),
                               ggplotGrob(sfx.sal), ggplotGrob(sfx.temp),
                               ggplotGrob(sfx.o2),
@@ -3964,11 +4001,11 @@ ggsave("qaqc_plots/2019/MARI-deployment_pHs_T_S_O2_2019-select-flagged.png",
 
 # regression  plots
 
-ggsave("qaqc_plots/2019/MARI-deployment_pH_v_o2_2019-select-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_pH_v_o2_2020-select-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.ph.int.v.o2), ggplotGrob(sfx.ph.ext.v.o2),
                               size = "last")), width = 5, height = 5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_pH_v_o2_no_outliers_2019-select-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_pH_v_o2_no_outliers_2020-select-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sfx.ph.int.v.o2.ol.rm), ggplotGrob(sfx.ph.ext.v.o2.ol.rm),
                               size = "last")), width = 5, height = 5)
 
@@ -3976,12 +4013,12 @@ ggsave("qaqc_plots/2019/MARI-deployment_pH_v_o2_no_outliers_2019-select-flagged.
 #"spc.ph.v.sfx.ph.ext"          "spc.ph.v.sfx.ph.ext.v" 
 # "spc.ph.v.sfx.ph.int"          "spc.ph.v.sfx.ph.int.v"     
 
-ggsave("qaqc_plots/2019/MARI-deployment_spc.pH_v_sfX.pH.int_2019-select-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_spc.pH_v_sfX.pH.int_2020-select-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.sfx.ph.int.v), 
                               ggplotGrob(spc.ph.v.sfx.ph.int),
                               size = "last")), width = 5, height = 5)
 
-ggsave("qaqc_plots/2019/MARI-deployment_spc.pH_v_sfX.pH.ext_2019-select-flagged.png",
+ggsave("qaqc_plots/2020/MARI-deployment_spc.pH_v_sfX.pH.ext_2020-select-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.sfx.ph.ext.v), 
                               ggplotGrob(spc.ph.v.sfx.ph.ext),
                               size = "last")), width = 5, height = 5)
