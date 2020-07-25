@@ -116,6 +116,23 @@ multMerge_skip8 = function(mypath){
 
 df  <- multMerge_skip8(here("data", "bob", "seafet", "pre-deploy.dickson.run-bob-july-2020"))
 
+df_test <- unique(df)
+
+df$tag <- paste(df$V2, df$V3)
+
+df_test <- distinct(df, tag, .keep_all = T)
+
+df_test <- distinct(df, V2, V3, .keep_all = T)
+
+# test if lengths match
+df_both_obsv_test <- length(df$Date) + length(df1$Date)
+
+# if true
+
+df <- df_both
+
+rm(df1, df_both, df_both_obsv_test)
+
 #get var names by printing data
 head(df)
 
