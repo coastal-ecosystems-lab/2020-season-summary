@@ -2,24 +2,19 @@
 
 library(ggplot2)
 library(scales)
-library(Scale)
 library(grid)
 library(lubridate)
 library(dplyr)
-
+library(here)
 
 
 ##### set working directory ###############################
 
-setwd("C:/Users/915712257/Box Sync/Inbox/oceanographic work/BOB SeaFET processing")
+setwd(here())
 
+getwd()
 
-
-
-rm(list =ls())
-
-
-# load regressing scatter plots function #####################################################
+# load regressing scatter plots function #########################################
 
 # found this nifty function here:
 # https://community.rstudio.com/t/annotate-ggplot2-with-regression-equation-and-r-squared/6112/7 
@@ -46,24 +41,24 @@ ggplotRegression <- function(dat, xvar, yvar){
 ######load tidied data ####################################
 
 #load instrument specifications
-load("2019 data/bob.2019.screen.RData")
+load("data/bob.2020.screen.RData")
 
 
 
 # field check samples
-load("2019 data/bob-check.samples-2019.RData")
+load("data/bob-check.samples-2020.RData")
 
 #tag for samples can be tied to time series
 chk.df$datetime.tag <- round_date(chk.df$datetime, "20 min")
 
 # bath check samples
-load("2019 data/bob-bath.check.samples-2019.RData")
+load("data/bob-bath.check.samples-2020.RData")
 
 #tag for samples can be tied to time series
 bth.chk.df$datetime.tag <- bth.chk.df$datetime
 
 #load predeployment common bath 
-load("2019 data/bob-pre.deploy.bath-2019-prcsd.RData")
+load("data/bob-pre.deploy.bath-2020-prcsd.RData")
 
 df1 <- df1 %>%
   rename(datetime = "datetime.x")
@@ -78,7 +73,7 @@ rm(df1)
 
 
 #load predeployment Dickson Standard Run
-load("2019 data/bob-pre-deploy-dickson-run-prcsd-2019.RData")
+load("tidied-data/bob/seafet/bob.dickson.run.predeploy.2020.sft.RData.RData")
 
 df1 <- select(df1, datetime,
               pH_int_v, pH_ext_v, abs_v_diff, pH_temp, 
@@ -89,10 +84,10 @@ rm(df1)
 
 #### combine seafet and ctd data #####################
 # # load seafet data
-# load("2019 data/bob.seafet.pro.2019.RData")
+# load("2020 data/bob.seafet.pro.2020.RData")
 # 
 # # load ctd data and prep to merge
-# load("2019 data/bob ctd raw/bob.ctd.2019.RData")
+# load("2020 data/bob ctd raw/bob.ctd.2020.RData")
 # df2 <- data
 # rm(data)
 # df2$datetime.tag <- round_date(df2$datetime, "20 min")
@@ -117,10 +112,10 @@ rm(df1)
 # sft.df <- df
 # rm(df, df1, df2)
 # 
-# save(sft.df, file = 'bob.2019.all.combined.prcsd.RData')
+# save(sft.df, file = 'bob.2020.all.combined.prcsd.RData')
 
 ###### load combined seafet file ############################################
-load('bob.2019.all.combined.prcsd.RData')
+load('bob.2020.all.combined.prcsd.RData')
 
 
 #load MID Deployment Field Bath (N/A)
@@ -128,7 +123,7 @@ load('bob.2019.all.combined.prcsd.RData')
 
 
 #load POST deployment common bath 
-load("2019 data/bob-post.deploy.bath-2019-prcsd.RData")
+load("2020 data/bob-post.deploy.bath-2020-prcsd.RData")
 
 df1 <- df1 %>%
   rename(datetime = "datetime.x")
@@ -142,7 +137,7 @@ rm(df1)
 
 
 #load POST deployment Dickson Standard Run
-load("2019 data/bob-post-deploy-dickson-run-prcsd-2019.RData")
+load("2020 data/bob-post-deploy-dickson-run-prcsd-2020.RData")
 
 df1 <- select(df1, datetime,
               pH_int_v, pH_ext_v, abs_v_diff, pH_temp,
@@ -154,7 +149,7 @@ rm(df1)
 
 
 #adjusted data with local calibration constant
-# load("2019 data/bob.2019.adj.final.RData")
+# load("2020 data/bob.2020.adj.final.RData")
 # adj.sft.df <- df1
 # rm(df1)
 
@@ -162,14 +157,14 @@ rm(df1)
 
 
 head(pre.deploy.bath)
-"2019-04-23 02:40:04"
+"2020-04-23 02:40:04"
 
 tail(pre.deploy.bath)
-"2019-04-30 23:00:13"
+"2020-04-30 23:00:13"
 
 #event time bounds
-t1 <-  '2019-04-23 01:40:04'
-t2 <- '2019-05-01 00:00:13'
+t1 <-  '2020-04-23 01:40:04'
+t2 <- '2020-05-01 00:00:13'
 
 summary(pre.deploy.bath$pH_int_v)
 
@@ -180,7 +175,7 @@ pre.b.int.v = p + geom_point(aes(y = pH_int_v), size = 0.25, color = "seagreen")
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(bob.2019.screen.df$int.v.min, bob.2019.screen.df$int.v.max) +
+  ylim(bob.2020.screen.df$int.v.min, bob.2020.screen.df$int.v.max) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -203,7 +198,7 @@ pre.b.ext.v = p + geom_point(aes(), size = 0.25, color = "green") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(bob.2019.screen.df$ext.v.min, bob.2019.screen.df$ext.v.max) +
+  ylim(bob.2020.screen.df$ext.v.min, bob.2020.screen.df$ext.v.max) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -316,7 +311,7 @@ print(pre.b.s)
 
 p = ggplot(pre.deploy.bath, aes(datetime, ctd_sal))
 pre.b.s.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Pre-Deployment Common Bath for BOB 2019") + #last x label sets the time axis label
+  xlab("Pre-Deployment Common Bath for BOB 2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -338,7 +333,7 @@ summary(pre.deploy.bath$pH_temp)
 
 p = ggplot(pre.deploy.bath, aes(datetime, pH_temp))
 pre.b.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Pre-Deployment Common Bath for BOB 2019") + #last x label sets the time axis label
+  xlab("Pre-Deployment Common Bath for BOB 2020") + #last x label sets the time axis label
   ylab("SeaFET T\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -415,13 +410,13 @@ pre.dickson$DL_pH_diff_ext <- abs(pre.dickson$pH_ext - pre.dickson$DL)
 #determine data time bounds
 
 head(pre.dickson)
-"2019-04-20 03:46:05"
+"2020-04-20 03:46:05"
 tail(pre.dickson)
-"2019-04-22 22:23:11"
+"2020-04-22 22:23:11"
 
 #event time bounds
-t1 <-  '2019-04-20 03:36:05'
-t2 <- '2019-04-22 22:00:00'
+t1 <-  '2020-04-20 03:36:05'
+t2 <- '2020-04-22 22:00:00'
 
 # getting rid of erroneous data at end of run
 pre.dickson <- filter(pre.dickson, datetime < t2)
@@ -430,9 +425,9 @@ summary(pre.dickson$pH_int_v)
 # Min.        1st Qu.         Median           Mean        3rd Qu.           Max. 
 # -1.01611400000 -1.01311950000 -1.01294000000 -1.01293489908 -1.01271700000 -1.01251900000
 
-print(bob.2019.screen.df$int.v.min)
+print(bob.2020.screen.df$int.v.min)
 # -1.06
-print(bob.2019.screen.df$int.v.max) 
+print(bob.2020.screen.df$int.v.max) 
 # -1.02
 
 
@@ -465,9 +460,9 @@ summary(pre.dickson$pH_ext_v)
 
 #adjusting plotting range for pH_int_v because it is out of range...
 
-print(bob.2019.screen.df$ext.v.min)
+print(bob.2020.screen.df$ext.v.min)
 # -1.01
-print(bob.2019.screen.df$ext.v.max) 
+print(bob.2020.screen.df$ext.v.max) 
 # -0.99
 
 p = ggplot(pre.dickson, aes(datetime, pH_ext_v))
@@ -571,7 +566,7 @@ print(pre.d.pH.diff)
 p = ggplot(pre.dickson, aes(x =datetime))
 pre.d.DL.diff = p + geom_point(aes(y = DL_pH_diff_int), size = 0.25, color = "seagreen") +
   geom_point(aes(datetime, DL_pH_diff_ext), size = 0.25, color = "green") +
-  xlab("Pre-Deployment Dickson Standard Run for BOB 2019") + #last x label sets the time axis label
+  xlab("Pre-Deployment Dickson Standard Run for BOB 2020") + #last x label sets the time axis label
   ylab("abs offset from Dickson\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -596,7 +591,7 @@ summary(pre.dickson$pH_temp)
 
 p = ggplot(pre.dickson, aes(datetime, pH_temp))
 pre.d.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Pre-Deployment Dickson Standard Run for BOB 2019") + #last x label sets the time axis label
+  xlab("Pre-Deployment Dickson Standard Run for BOB 2020") + #last x label sets the time axis label
   ylab("T\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -620,8 +615,8 @@ print(pre.d.t.dt)
 # adjusted PRE deployment Dickson standard plots to more stable section #######################
 
 # for setting up a regression when electrodes have stabilized
-t2 <-  '2019-04-22 22:00:00'
-t3 <- '2019-04-22 00:00:00'
+t2 <-  '2020-04-22 22:00:00'
+t3 <- '2020-04-22 00:00:00'
 pre.dickson.trim <- filter(pre.dickson, datetime > t3)
 
 p = ggplot(pre.dickson.trim, aes(x = datetime))
@@ -770,7 +765,7 @@ print(pre.d.DL.diff.trim)
 
 p = ggplot(pre.dickson.trim, aes(datetime, pH_temp))
 pre.d.t.dt.trim = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Pre-Deployment Dickson Standard Run for BOB April 22nd 2019") + #last x label sets the time axis label
+  xlab("Pre-Deployment Dickson Standard Run for BOB April 22nd 2020") + #last x label sets the time axis label
   ylab("T\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t3, format = "%Y-%m-%d %H:%M:%S"),
@@ -825,24 +820,24 @@ head(sft.df)
 tail(sft.df)
 
 #sft season time bounds
-"2019-05-01 20:20:04"
-"2019-10-24 17:00:13"
+"2020-05-01 20:20:04"
+"2020-10-24 17:00:13"
 
 
 #event time bounds
-t1 <-  "2019-05-01 20:00:04"
-t2 <- "2019-10-24 17:20:13"
-#t2 <- '2019-03-26 00:00:00'
+t1 <-  "2020-05-01 20:00:04"
+t2 <- "2020-10-24 17:20:13"
+#t2 <- '2020-03-26 00:00:00'
 
 summary(sft.df)
 
 # datetime                    datetime.tag                    pH_int_v         pH_ext_v      
-# Min.   :2019-05-01 20:20:04   Min.   :2019-05-01 20:20:00   Min.   :-1.188   Min.   :-1.0605  
-# 1st Qu.:2019-05-28 02:55:06   1st Qu.:2019-05-28 02:55:00   1st Qu.:-1.147   1st Qu.:-1.0366  
-# Median :2019-06-23 09:30:08   Median :2019-06-23 09:30:00   Median :-1.097   Median :-1.0225  
-# Mean   :2019-07-05 07:20:27   Mean   :2019-07-05 07:20:19   Mean   :-1.107   Mean   :-1.0238  
-# 3rd Qu.:2019-08-06 20:15:10   3rd Qu.:2019-08-06 20:15:00   3rd Qu.:-1.072   3rd Qu.:-1.0117  
-# Max.   :2019-10-24 17:00:13   Max.   :2019-10-24 17:00:00   Max.   :-1.052   Max.   :-0.9899  
+# Min.   :2020-05-01 20:20:04   Min.   :2020-05-01 20:20:00   Min.   :-1.188   Min.   :-1.0605  
+# 1st Qu.:2020-05-28 02:55:06   1st Qu.:2020-05-28 02:55:00   1st Qu.:-1.147   1st Qu.:-1.0366  
+# Median :2020-06-23 09:30:08   Median :2020-06-23 09:30:00   Median :-1.097   Median :-1.0225  
+# Mean   :2020-07-05 07:20:27   Mean   :2020-07-05 07:20:19   Mean   :-1.107   Mean   :-1.0238  
+# 3rd Qu.:2020-08-06 20:15:10   3rd Qu.:2020-08-06 20:15:00   3rd Qu.:-1.072   3rd Qu.:-1.0117  
+# Max.   :2020-10-24 17:00:13   Max.   :2020-10-24 17:00:00   Max.   :-1.052   Max.   :-0.9899  
 
 # abs_v_diff         pH_temp         ctd_sal         pH_int_cell     pH_ext_cell   
 # Min.   :0.04988   Min.   :12.77   Min.   : 0.9547   Min.   :5.815   Min.   :6.406  
@@ -1096,7 +1091,7 @@ print(sft.sal)
 
 p = ggplot(sft.df, aes(datetime, ctd_sal))
 sft.sal.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Deployment BOB 2019") + #last x label sets the time axis label
+  xlab("Deployment BOB 2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -1137,7 +1132,7 @@ print(sft.temp)
 
 p = ggplot(sft.df, aes(datetime, ctd_o2_mg_l))
 sft.o2 = p + geom_point(aes(), size = 0.25, color = "red") +
-  xlab("Deployment BOB 2019") + #last x label sets the time axis label
+  xlab("Deployment BOB 2020") + #last x label sets the time axis label
   ylab("O2 (mg/L)\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -1259,24 +1254,24 @@ head(adj.sft.df)
 tail(adj.sft.df)
 
 #adj.sft season time bounds
-#2019-03-11 19:20:00
-#2019-10-09 18:20:00
+#2020-03-11 19:20:00
+#2020-10-09 18:20:00
 
 
 #event time bounds
-t1 <-  '2019-03-11 00:00:00'
-t2 <- '2019-10-11 00:00:00'
-#t2 <- '2019-03-26 00:00:00'
+t1 <-  '2020-03-11 00:00:00'
+t2 <- '2020-10-11 00:00:00'
+#t2 <- '2020-03-26 00:00:00'
 
 summary(adj.sft.df)
 
 # datetime                      ctd_temp         pH_ext          pH_int         pH_ext_v          pH_int_v     
-# Min.   :2019-03-11 19:20:00   Min.   :10.95   Min.   :6.133   Min.   :7.608   Min.   :-1.0072   Min.   :-1.056  
-# 1st Qu.:2019-05-03 17:45:00   1st Qu.:13.72   1st Qu.:7.729   1st Qu.:7.727   1st Qu.:-0.9974   1st Qu.:-1.048  
-# Median :2019-06-25 19:30:00   Median :15.28   Median :7.802   Median :7.804   Median :-0.9930   Median :-1.044  
-# Mean   :2019-06-25 19:02:42   Mean   :15.31   Mean   :7.816   Mean   :7.819   Mean   :-0.9923   Mean   :-1.043  
-# 3rd Qu.:2019-08-17 19:55:00   3rd Qu.:16.81   3rd Qu.:7.912   3rd Qu.:7.905   3rd Qu.:-0.9870   3rd Qu.:-1.038  
-# Max.   :2019-10-09 18:20:00   Max.   :20.41   Max.   :8.146   Max.   :8.133   Max.   :-0.9754   Max.   :-1.026  
+# Min.   :2020-03-11 19:20:00   Min.   :10.95   Min.   :6.133   Min.   :7.608   Min.   :-1.0072   Min.   :-1.056  
+# 1st Qu.:2020-05-03 17:45:00   1st Qu.:13.72   1st Qu.:7.729   1st Qu.:7.727   1st Qu.:-0.9974   1st Qu.:-1.048  
+# Median :2020-06-25 19:30:00   Median :15.28   Median :7.802   Median :7.804   Median :-0.9930   Median :-1.044  
+# Mean   :2020-06-25 19:02:42   Mean   :15.31   Mean   :7.816   Mean   :7.819   Mean   :-0.9923   Mean   :-1.043  
+# 3rd Qu.:2020-08-17 19:55:00   3rd Qu.:16.81   3rd Qu.:7.912   3rd Qu.:7.905   3rd Qu.:-0.9870   3rd Qu.:-1.038  
+# Max.   :2020-10-09 18:20:00   Max.   :20.41   Max.   :8.146   Max.   :8.133   Max.   :-0.9754   Max.   :-1.026  
 
 # pH_temp        press_dbar       ctd_sal           cond_Sm         ctd_o2_ml_l      ctd_o2_mg_l           RH       
 # Min.   :10.99   Min.   : 0.01   Min.   : 0.2497   Min.   :0.04037   Min.   : 3.431   Min.   : 4.903   Min.   :0.000  
@@ -1503,7 +1498,7 @@ print(adj.sft.sal)
 
 p = ggplot(adj.sft.df, aes(datetime, ctd_sal))
 adj.sft.sal.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Deployment BOB 2019") + #last x label sets the time axis label
+  xlab("Deployment BOB 2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -1544,7 +1539,7 @@ print(adj.sft.temp)
 
 p = ggplot(adj.sft.df, aes(datetime, ctd_o2_mg_l))
 adj.sft.o2 = p + geom_point(aes(), size = 0.25, color = "red") +
-  xlab("Deployment BOB 2019") + #last x label sets the time axis label
+  xlab("Deployment BOB 2020") + #last x label sets the time axis label
   ylab("O2 (mg/L)\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -1659,14 +1654,14 @@ rm(df3)
 # 
 # 
 # head(field.bath)
-# "2019-05-21 17:27:00"
+# "2020-05-21 17:27:00"
 # 
 # tail(field.bath)
-# "2019-05-21 18:05:00"
+# "2020-05-21 18:05:00"
 # 
 # #event time bounds
-# t1 <-  '2019-05-21 17:26:00'
-# t2 <- '2019-05-21 18:06:00'
+# t1 <-  '2020-05-21 17:26:00'
+# t2 <- '2020-05-21 18:06:00'
 # 
 # 
 # p = ggplot(field.bath, aes(x = datetime))
@@ -1676,7 +1671,7 @@ rm(df3)
 #   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
 #   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
 #          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-#   ylim(bob.2019.screen.df$int.v.min, bob.2019.screen.df$int.v.max) +
+#   ylim(bob.2020.screen.df$int.v.min, bob.2020.screen.df$int.v.max) +
 #   theme_minimal() +
 #   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
 #         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -1697,7 +1692,7 @@ rm(df3)
 #   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
 #   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
 #          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-#   ylim(bob.2019.screen.df$ext.v.min, bob.2019.screen.df$ext.v.max) +
+#   ylim(bob.2020.screen.df$ext.v.min, bob.2020.screen.df$ext.v.max) +
 #   theme_minimal() +
 #   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
 #         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -1810,7 +1805,7 @@ rm(df3)
 # 
 # p = ggplot(field.bath, aes(datetime, ctd_sal))
 # mid.b.s.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-#   xlab("Mid-Deployment Common Bath for BOB 5/21/2019") + #last x label sets the time axis label
+#   xlab("Mid-Deployment Common Bath for BOB 5/21/2020") + #last x label sets the time axis label
 #   ylab("S\n")+ 
 #   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
 #   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -1832,7 +1827,7 @@ rm(df3)
 # 
 # p = ggplot(field.bath, aes(datetime, pH_temp))
 # mid.b.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
-#   xlab("Mid-Deployment Common Bath for BOB 5/21/2019") + #last x label sets the time axis label
+#   xlab("Mid-Deployment Common Bath for BOB 5/21/2020") + #last x label sets the time axis label
 #   ylab("T\n")+ 
 #   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
 #   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -1874,8 +1869,8 @@ rm(df3)
 # # removing outlier bath sample
 # 
 # # substitute for t1 and t2 in stabilized pH measurement
-# t3 <- '2019-05-21 00:00:00'
-# t4 <- '2019-05-21 18:00:00'
+# t3 <- '2020-05-21 00:00:00'
+# t4 <- '2020-05-21 18:00:00'
 # 
 # df1 <- filter(df1, datetime > t3 & datetime < t4)
 # 
@@ -1903,25 +1898,25 @@ rm(df3)
 
 
 head(post.deploy.bath)
-"2019-10-30 21:40:04"
+"2020-10-30 21:40:04"
 
 tail(post.deploy.bath)
-"2019-11-07 02:30:11"
+"2020-11-07 02:30:11"
 
 #event time bounds
-t1 <-  '2019-10-30 20:40:04'
-t2 <- '2019-11-07 03:30:11'
+t1 <-  '2020-10-30 20:40:04'
+t2 <- '2020-11-07 03:30:11'
 
 
 summary(post.deploy.bath)
 
 # datetime                    datetime.tag                    pH_int_v         pH_ext_v     
-# Min.   :2019-10-30 21:40:04   Min.   :2019-10-30 21:40:00   Min.   :-1.150   Min.   :-1.017  
-# 1st Qu.:2019-11-01 20:15:06   1st Qu.:2019-11-01 20:15:00   1st Qu.:-1.148   1st Qu.:-1.016  
-# Median :2019-11-03 18:50:08   Median :2019-11-03 18:50:00   Median :-1.147   Median :-1.016  
-# Mean   :2019-11-03 17:46:10   Mean   :2019-11-03 17:46:32   Mean   :-1.148   Mean   :-1.015  
-# 3rd Qu.:2019-11-05 17:25:10   3rd Qu.:2019-11-05 17:25:00   3rd Qu.:-1.147   3rd Qu.:-1.015  
-# Max.   :2019-11-07 02:30:13   Max.   :2019-11-07 02:40:00   Max.   :-1.145   Max.   :-1.012  
+# Min.   :2020-10-30 21:40:04   Min.   :2020-10-30 21:40:00   Min.   :-1.150   Min.   :-1.017  
+# 1st Qu.:2020-11-01 20:15:06   1st Qu.:2020-11-01 20:15:00   1st Qu.:-1.148   1st Qu.:-1.016  
+# Median :2020-11-03 18:50:08   Median :2020-11-03 18:50:00   Median :-1.147   Median :-1.016  
+# Mean   :2020-11-03 17:46:10   Mean   :2020-11-03 17:46:32   Mean   :-1.148   Mean   :-1.015  
+# 3rd Qu.:2020-11-05 17:25:10   3rd Qu.:2020-11-05 17:25:00   3rd Qu.:-1.147   3rd Qu.:-1.015  
+# Max.   :2020-11-07 02:30:13   Max.   :2020-11-07 02:40:00   Max.   :-1.145   Max.   :-1.012  
 
 
 # abs_v_diff        pH_temp         ctd_sal       pH_int_cell     pH_ext_cell   
@@ -2131,7 +2126,7 @@ print(post.b.s)
 
 p = ggplot(post.deploy.bath, aes(datetime, ctd_sal))
 post.b.s.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Post-Deployment Common Bath for BOB 2019") + #last x label sets the time axis label
+  xlab("Post-Deployment Common Bath for BOB 2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -2153,7 +2148,7 @@ summary(post.deploy.bath$pH_temp)
 
 p = ggplot(post.deploy.bath, aes(datetime, pH_temp))
 post.b.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Post-Deployment Common Bath for BOB 2019") + #last x label sets the time axis label
+  xlab("Post-Deployment Common Bath for BOB 2020") + #last x label sets the time axis label
   ylab("T\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -2224,29 +2219,29 @@ post.dickson$DL_pH_diff_ext <- abs(post.dickson$pH_ext - post.dickson$DL)
 #determine data time bounds
 
 head(post.dickson)
-"2019-11-07 02:40:04"
+"2020-11-07 02:40:04"
 
 
 tail(post.dickson)
-"2019-11-12 21:10:08"
+"2020-11-12 21:10:08"
 
 
 #event time bounds
-t1 <-  '2019-11-07 02:30:04'
-t2 <- '2019-11-12 21:20:08'
+t1 <-  '2020-11-07 02:30:04'
+t2 <- '2020-11-12 21:20:08'
 
 # for trim plots
 
-# t3 <- '2019-11-12 00:00:00' # substitute for t1 in stabilized pH measurement
-# t4 <- '2019-11-13 00:00:00'
+# t3 <- '2020-11-12 00:00:00' # substitute for t1 in stabilized pH measurement
+# t4 <- '2020-11-13 00:00:00'
 
 summary(post.dickson$pH_int_v)
 # Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 # -1.130  -1.126  -1.126  -1.126  -1.125  -1.124  
 
-print(bob.2019.screen.df$int.v.min)
+print(bob.2020.screen.df$int.v.min)
 # -1.06
-print(bob.2019.screen.df$int.v.max) 
+print(bob.2020.screen.df$int.v.max) 
 # -1.02
 
 
@@ -2280,9 +2275,9 @@ summary(post.dickson$pH_ext_v)
 
 #adjusting plotting range for pH_int_v because it is out of range...
 
-print(bob.2019.screen.df$ext.v.min)
+print(bob.2020.screen.df$ext.v.min)
 # -1.01
-print(bob.2019.screen.df$ext.v.max) 
+print(bob.2020.screen.df$ext.v.max) 
 # -0.97
 
 p = ggplot(post.dickson, aes(datetime, pH_ext_v))
@@ -2460,7 +2455,7 @@ print(post.d.pH.diff.2)
 p = ggplot(post.dickson, aes(x =datetime))
 post.d.DL.diff = p + geom_point(aes(y = DL_pH_diff_int), size = 0.25, color = "seagreen") +
   geom_point(aes(datetime, DL_pH_diff_ext), size = 0.25, color = "green") +
-  xlab("Post-Deployment Dickson Standard Run for BOB 2019") + #last x label sets the time axis label
+  xlab("Post-Deployment Dickson Standard Run for BOB 2020") + #last x label sets the time axis label
   ylab("abs offset from Dickson\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -2484,7 +2479,7 @@ print(post.d.DL.diff)
 p = ggplot(post.dickson, aes(x =datetime))
 post.d.DL.diff.ext = p +
   geom_point(aes(datetime, DL_pH_diff_ext), size = 0.25, color = "green") +
-  xlab("Post-Deployment Dickson Standard Run for BOB 2019") + #last x label sets the time axis label
+  xlab("Post-Deployment Dickson Standard Run for BOB 2020") + #last x label sets the time axis label
   ylab("abs offset from Dickson\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -2510,7 +2505,7 @@ summary(post.dickson$pH_temp)
 
 p = ggplot(post.dickson, aes(datetime, pH_temp))
 post.d.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Post-Deployment Dickson Standard Run for BOB Nov 7-12th 2019") + #last x label sets the time axis label
+  xlab("Post-Deployment Dickson Standard Run for BOB Nov 7-12th 2020") + #last x label sets the time axis label
   ylab("T\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -2534,8 +2529,8 @@ print(post.d.t.dt)
 # adjusted POST deployment Dickson standard plots to more stable section #######################
 
 # substitute for t1 and t2 in stabilized pH measurement
-t3 <- '2019-11-12 00:00:00'
-t4 <- '2019-11-13 00:00:00'
+t3 <- '2020-11-12 00:00:00'
+t4 <- '2020-11-13 00:00:00'
 
 post.dickson.trim <- filter(post.dickson, datetime > t3 & datetime < t4)
 
@@ -2685,7 +2680,7 @@ print(post.d.DL.diff.trim)
 
 p = ggplot(post.dickson.trim, aes(datetime, pH_temp))
 post.d.t.dt.trim = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Post-Deployment Dickson Standard Run for BOB Nov 12-13th 2019") + #last x label sets the time axis label
+  xlab("Post-Deployment Dickson Standard Run for BOB Nov 12-13th 2020") + #last x label sets the time axis label
   ylab("T\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t3, format = "%Y-%m-%d %H:%M:%S"),
@@ -2736,21 +2731,21 @@ ls() # to pull object names
 # "pre.b.int.v"             "pre.b.pH.diff"           "pre.b.phs"              
 # "pre.b.s"                 "pre.b.s.dt"              "pre.b.t.dt"     
 
-ggsave("qaqc_plots/2019/BOB-pre-deployment_bath_Volt_Sal_2019.png",
+ggsave("qaqc_plots/2020/BOB-pre-deployment_bath_Volt_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.b.int.v), ggplotGrob(pre.b.ext.v),
                               ggplotGrob(pre.b.abs.v_diff), ggplotGrob(pre.b.s.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-pre-deployment_bath_pHs_Sal_2019.png",
+ggsave("qaqc_plots/2020/BOB-pre-deployment_bath_pHs_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.b.phs), ggplotGrob(pre.b.pH.diff),
                               ggplotGrob(pre.b.s.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-pre-deployment_bath_T_S_2019.png",
+ggsave("qaqc_plots/2020/BOB-pre-deployment_bath_T_S_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.b.s), ggplotGrob(pre.b.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-pre-deployment_bath_pHs_T_S_2019.png",
+ggsave("qaqc_plots/2020/BOB-pre-deployment_bath_pHs_T_S_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.b.phs), ggplotGrob(pre.b.pH.diff),
                               ggplotGrob(pre.b.s), ggplotGrob(pre.b.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
@@ -2758,7 +2753,7 @@ ggsave("qaqc_plots/2019/BOB-pre-deployment_bath_pHs_T_S_2019.png",
 
 # regression  plots
 
-ggsave("qaqc_plots/2019/BOB-pre-deployment_bath_disrete.spec.pH.v.sft.pH_2019.png",
+ggsave("qaqc_plots/2020/BOB-pre-deployment_bath_disrete.spec.pH.v.sft.pH_2020.png",
        plot = grid.draw(rbind(ggplotGrob(k0.int.pre.b.benchmark), ggplotGrob(k0.ext.pre.b.benchmark),
                               size = "last")), width = 5, height = 5)
 
@@ -2774,46 +2769,46 @@ ggsave("qaqc_plots/2019/BOB-pre-deployment_bath_disrete.spec.pH.v.sft.pH_2019.pn
 # "pre.deploy.bath"              "pre.dickson"                  "pre.dickson.trim" 
 
 
-ggsave("qaqc_plots/2019/BOB-pre-deployment_DSR_Volt_T_2019.png",
+ggsave("qaqc_plots/2020/BOB-pre-deployment_DSR_Volt_T_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.int.v), ggplotGrob(pre.d.ext.v),
                               ggplotGrob(pre.d.v_diff), ggplotGrob(pre.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 
-ggsave("qaqc_plots/2019/BOB-pre-deployment_DSR_pHs_DL_T_2019.png",
+ggsave("qaqc_plots/2020/BOB-pre-deployment_DSR_pHs_DL_T_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.pHs), ggplotGrob(pre.d.pH.diff),
                               ggplotGrob(pre.d.DL.diff), ggplotGrob(pre.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-pre-deployment_DSR_pHs_T_2019.png",
+ggsave("qaqc_plots/2020/BOB-pre-deployment_DSR_pHs_T_2020.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.pHs), ggplotGrob(pre.d.pH.diff),
                               ggplotGrob(pre.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 # trimmed plots
 
-ggsave("qaqc_plots/2019/BOB-pre-deployment_DSR_Volt_T_2019-trim.png",
+ggsave("qaqc_plots/2020/BOB-pre-deployment_DSR_Volt_T_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.int.v.trim), ggplotGrob(pre.d.ext.v.trim),
                               ggplotGrob(pre.d.v_diff.trim), ggplotGrob(pre.d.t.dt.trim),
                               size = "last")), width = 6.65, height = 3.5)
 
 
-ggsave("qaqc_plots/2019/BOB-pre-deployment_DSR_pHs_DL_T_2019-trim.png",
+ggsave("qaqc_plots/2020/BOB-pre-deployment_DSR_pHs_DL_T_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.pHs.trim), ggplotGrob(pre.d.pH.diff.trim),
                               ggplotGrob(pre.d.DL.diff.trim), ggplotGrob(pre.d.t.dt.trim),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-pre-deployment_DSR_pHs_T_2019-trim.png",
+ggsave("qaqc_plots/2020/BOB-pre-deployment_DSR_pHs_T_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.pHs.trim), ggplotGrob(pre.d.pH.diff.trim),
                               ggplotGrob(pre.d.t.dt.trim),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-pre-deployment_DSR_DL.v.pHs_2019-trim.png",
+ggsave("qaqc_plots/2020/BOB-pre-deployment_DSR_DL.v.pHs_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.DL.v.pH.int.trim), ggplotGrob(pre.d.DL.v.pH.ext.trim),
                               size = "last")), width = 5, height = 5)
 
 
-ggsave("qaqc_plots/2019/BOB-pre-deployment_DSR_pHs.v.Volts_2019-trim.png",
+ggsave("qaqc_plots/2020/BOB-pre-deployment_DSR_pHs.v.Volts_2020-trim.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.pH.int.v.Volt.int.trim), 
                               ggplotGrob(pre.d.pH.ext.v.Volt.ext.trim),
                               size = "last")), width = 5, height = 5)
@@ -2833,40 +2828,40 @@ ggsave("qaqc_plots/2019/BOB-pre-deployment_DSR_pHs.v.Volts_2019-trim.png",
 # 
 
 
-ggsave("qaqc_plots/2019/BOB-deployment_Volt_Sal_2019.png",
+ggsave("qaqc_plots/2020/BOB-deployment_Volt_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(sft.int.v), ggplotGrob(sft.ext.v),
                               ggplotGrob(sft.v_diff), ggplotGrob(sft.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_Volt_Sal_2019-2.png",
+ggsave("qaqc_plots/2020/BOB-deployment_Volt_Sal_2020-2.png",
        plot = grid.draw(rbind(ggplotGrob(sft.int.v), ggplotGrob(sft.ext.v),
                               ggplotGrob(sft.v_diff.2), ggplotGrob(sft.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_pHs_Sal_2019.png",
+ggsave("qaqc_plots/2020/BOB-deployment_pHs_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(sft.pH_int), ggplotGrob(sft.pH_ext),
                               ggplotGrob(sft.pH.diff), ggplotGrob(sft.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_pHs_T_S_O2_2019.png",
+ggsave("qaqc_plots/2020/BOB-deployment_pHs_T_S_O2_2020.png",
        plot = grid.draw(rbind(ggplotGrob(sft.phs), ggplotGrob(sft.pH.diff.no.note),
                         ggplotGrob(sft.sal), ggplotGrob(sft.temp),
                         ggplotGrob(sft.o2),
                         size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_pHs_T_S_O2_2019-2.png",
+ggsave("qaqc_plots/2020/BOB-deployment_pHs_T_S_O2_2020-2.png",
        plot = grid.draw(rbind(ggplotGrob(sft.phs), 
                               ggplotGrob(sft.sal), ggplotGrob(sft.temp),
                               ggplotGrob(sft.o2),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_pH-ext_T_S_O2_2019.png",
+ggsave("qaqc_plots/2020/BOB-deployment_pH-ext_T_S_O2_2020.png",
        plot = grid.draw(rbind(ggplotGrob(sft.pH_ext), ggplotGrob(sft.pH.diff.no.note),
                               ggplotGrob(sft.sal), ggplotGrob(sft.temp),
                               ggplotGrob(sft.o2),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_pH-ext_T_S_O2_2019-2.png",
+ggsave("qaqc_plots/2020/BOB-deployment_pH-ext_T_S_O2_2020-2.png",
        plot = grid.draw(rbind(ggplotGrob(sft.pH_ext), 
                               ggplotGrob(sft.sal), ggplotGrob(sft.temp),
                               ggplotGrob(sft.o2),
@@ -2874,11 +2869,11 @@ ggsave("qaqc_plots/2019/BOB-deployment_pH-ext_T_S_O2_2019-2.png",
 
 # regression  plots
 
-ggsave("qaqc_plots/2019/BOB-deployment_pH_v_o2_2019.png",
+ggsave("qaqc_plots/2020/BOB-deployment_pH_v_o2_2020.png",
        plot = grid.draw(rbind(ggplotGrob(sft.ph.int.v.o2), ggplotGrob(sft.ph.ext.v.o2),
                               size = "last")), width = 5, height = 5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_pH_v_o2_no_outliers_2019.png",
+ggsave("qaqc_plots/2020/BOB-deployment_pH_v_o2_no_outliers_2020.png",
        plot = grid.draw(rbind(ggplotGrob(sft.ph.int.v.o2.ol.rm), ggplotGrob(sft.ph.ext.v.o2.ol.rm),
                               size = "last")), width = 5, height = 5)
 
@@ -2886,12 +2881,12 @@ ggsave("qaqc_plots/2019/BOB-deployment_pH_v_o2_no_outliers_2019.png",
 #"spc.ph.v.sft.ph.ext"          "spc.ph.v.sft.ph.ext.v" 
 # "spc.ph.v.sft.ph.int"          "spc.ph.v.sft.ph.int.v"     
 
-ggsave("qaqc_plots/2019/BOB-deployment_spc.pH_v_sft.pH.int_2019.png",
+ggsave("qaqc_plots/2020/BOB-deployment_spc.pH_v_sft.pH.int_2020.png",
        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.sft.ph.int.v), 
                               ggplotGrob(spc.ph.v.sft.ph.int),
                               size = "last")), width = 5, height = 5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_spc.pH_v_sft.pH.ext_2019.png",
+ggsave("qaqc_plots/2020/BOB-deployment_spc.pH_v_sft.pH.ext_2020.png",
        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.sft.ph.ext.v), 
                               ggplotGrob(spc.ph.v.sft.ph.ext),
                               size = "last")), width = 5, height = 5)
@@ -2908,12 +2903,12 @@ ggsave("qaqc_plots/2019/BOB-deployment_spc.pH_v_sft.pH.ext_2019.png",
 # "spc.ph.v.adj.sft.ph.ext" "spc.ph.v.adj.sft.ph.int"
 
 
-# ggsave("qaqc_plots/2019/BOB-ADJ-deployment_pHs_Sal_2019.png",
+# ggsave("qaqc_plots/2020/BOB-ADJ-deployment_pHs_Sal_2020.png",
 #        plot = grid.draw(rbind(ggplotGrob(adj.sft.pH_int), ggplotGrob(adj.sft.pH_ext),
 #                               ggplotGrob(adj.sft.pH.diff), ggplotGrob(adj.sft.sal.dt),
 #                               size = "last")), width = 6.65, height = 3.5)
 # 
-# ggsave("qaqc_plots/2019/BOB-ADJ-deployment_pHs_T_S_O2_2019-2.png",
+# ggsave("qaqc_plots/2020/BOB-ADJ-deployment_pHs_T_S_O2_2020-2.png",
 #        plot = grid.draw(rbind(ggplotGrob(adj.sft.phs), 
 #                               ggplotGrob(adj.sft.sal), ggplotGrob(adj.sft.temp),
 #                               ggplotGrob(adj.sft.o2),
@@ -2921,14 +2916,14 @@ ggsave("qaqc_plots/2019/BOB-deployment_spc.pH_v_sft.pH.ext_2019.png",
 # 
 # #regression plots
 # 
-# ggsave("qaqc_plots/2019/BOB-ADJ-deployment_spc.pH_v_sft.pHs_2019.png",
+# ggsave("qaqc_plots/2020/BOB-ADJ-deployment_spc.pH_v_sft.pHs_2020.png",
 #        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.adj.sft.ph.int), 
 #                               ggplotGrob(spc.ph.v.adj.sft.ph.ext),
 #                               size = "last")), width = 5, height = 5)
 # 
 # 
 
-# NO MID DEPLOYMENT FOR BOB 2019 ######################################################################
+# NO MID DEPLOYMENT FOR BOB 2020 ######################################################################
 
 # "Mid.Bath...."   Mid Deployment Field Bath plot objects 
 # "mid.b.abs.v_diff"       "mid.b.ext.v"            "mid.b.int.v"           
@@ -2939,21 +2934,21 @@ ggsave("qaqc_plots/2019/BOB-deployment_spc.pH_v_sft.pH.ext_2019.png",
 # "k0.int.mid.b.benchmark.2pts" 
 
 # 
-# ggsave("qaqc_plots/2019/BOB-mid-deployment_bath_Volt_Sal_2019.png",
+# ggsave("qaqc_plots/2020/BOB-mid-deployment_bath_Volt_Sal_2020.png",
 #        plot = grid.draw(rbind(ggplotGrob(mid.b.int.v), ggplotGrob(mid.b.ext.v),
 #                               ggplotGrob(mid.b.abs.v_diff), ggplotGrob(mid.b.s.dt),
 #                               size = "last")), width = 6.65, height = 3.5)
 # 
-# ggsave("qaqc_plots/2019/BOB-mid-deployment_bath_pHs_Sal_2019.png",
+# ggsave("qaqc_plots/2020/BOB-mid-deployment_bath_pHs_Sal_2020.png",
 #        plot = grid.draw(rbind(ggplotGrob(mid.b.phs), ggplotGrob(mid.b.pH.diff),
 #                               ggplotGrob(mid.b.s.dt),
 #                               size = "last")), width = 6.65, height = 3.5)
 # 
-# ggsave("qaqc_plots/2019/BOB-mid-deployment_bath_T_S_2019.png",
+# ggsave("qaqc_plots/2020/BOB-mid-deployment_bath_T_S_2020.png",
 #        plot = grid.draw(rbind(ggplotGrob(mid.b.s), ggplotGrob(mid.b.t.dt),
 #                               size = "last")), width = 6.65, height = 3.5)
 # 
-# ggsave("qaqc_plots/2019/BOB-mid-deployment_bath_pHs_T_S_2019.png",
+# ggsave("qaqc_plots/2020/BOB-mid-deployment_bath_pHs_T_S_2020.png",
 #        plot = grid.draw(rbind(ggplotGrob(mid.b.phs), ggplotGrob(mid.b.pH.diff),
 #                               ggplotGrob(mid.b.s), ggplotGrob(mid.b.t.dt),
 #                               size = "last")), width = 6.65, height = 3.5)
@@ -2961,12 +2956,12 @@ ggsave("qaqc_plots/2019/BOB-deployment_spc.pH_v_sft.pH.ext_2019.png",
 # 
 # # regression  plots
 # 
-# ggsave("qaqc_plots/2019/BOB-mid-deployment_bath_disrete.spec.pH.v.sft.pH_2019.png",
+# ggsave("qaqc_plots/2020/BOB-mid-deployment_bath_disrete.spec.pH.v.sft.pH_2020.png",
 #        plot = grid.draw(rbind(ggplotGrob(k0.int.mid.b.benchmark), ggplotGrob(k0.ext.mid.b.benchmark),
 #                               size = "last")), width = 5, height = 5)
 # 
 # 
-# ggsave("qaqc_plots/2019/BOB-mid-deployment_bath_disrete.spec.pH.v.sft.pH_2019-2pts.png",
+# ggsave("qaqc_plots/2020/BOB-mid-deployment_bath_disrete.spec.pH.v.sft.pH_2020-2pts.png",
 #        plot = grid.draw(rbind(ggplotGrob(k0.int.mid.b.benchmark.2pts), ggplotGrob(k0.ext.mid.b.benchmark.2pts),
 #                               size = "last")), width = 5, height = 5)
 # 
@@ -2984,44 +2979,44 @@ ggsave("qaqc_plots/2019/BOB-deployment_spc.pH_v_sft.pH.ext_2019.png",
 # "post.b.t.dt"                 
 # 
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_bath_Volt_Sal_2019.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_bath_Volt_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.b.int.v), ggplotGrob(post.b.ext.v),
                               ggplotGrob(post.b.abs.v_diff), ggplotGrob(post.b.s.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_bath_pHs_Sal_2019.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_bath_pHs_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.b.phs), ggplotGrob(post.b.pH.diff),
                               ggplotGrob(post.b.s.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_bath_pHs_Sal_2019-2.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_bath_pHs_Sal_2020-2.png",
        plot = grid.draw(rbind(ggplotGrob(post.b.phs), ggplotGrob(post.b.pH.diff.2),
                               ggplotGrob(post.b.s.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_bath_pH_ext_Sal_2019.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_bath_pH_ext_Sal_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.b.ext_ph), 
                               ggplotGrob(post.b.s.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_bath_T_S_2019.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_bath_T_S_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.b.s), ggplotGrob(post.b.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_bath_pHs_T_S_2019.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_bath_pHs_T_S_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.b.phs), ggplotGrob(post.b.pH.diff),
                               ggplotGrob(post.b.s), ggplotGrob(post.b.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_bath_pH_ext_T_S_2019.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_bath_pH_ext_T_S_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.b.ext_ph), 
                               ggplotGrob(post.b.s), ggplotGrob(post.b.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 # regression  plots
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_bath_disrete.spec.pH.v.sft.pH_2019.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_bath_disrete.spec.pH.v.sft.pH_2020.png",
        plot = grid.draw(rbind(ggplotGrob(k0.int.post.b.benchmark), ggplotGrob(k0.ext.post.b.benchmark),
                               size = "last")), width = 5, height = 5)
 
@@ -3036,58 +3031,58 @@ ggsave("qaqc_plots/2019/BOB-post-deployment_bath_disrete.spec.pH.v.sft.pH_2019.p
 # "post.dickson"                  "post.d.v_diff.2" 
 
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_DSR_Volt_T_2019.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_DSR_Volt_T_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.d.int.v), ggplotGrob(post.d.ext.v),
                               ggplotGrob(post.d.v_diff), ggplotGrob(post.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_DSR_Volt_T_2019-2.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_DSR_Volt_T_2020-2.png",
        plot = grid.draw(rbind(ggplotGrob(post.d.int.v), ggplotGrob(post.d.ext.v),
                               ggplotGrob(post.d.v_diff.2), ggplotGrob(post.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_DSR_pHs_DL_T_2019.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_DSR_pHs_DL_T_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.d.pHs), ggplotGrob(post.d.pH.diff),
                               ggplotGrob(post.d.DL.diff), ggplotGrob(post.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_DSR_pHs_DL_T_2019-2.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_DSR_pHs_DL_T_2020-2.png",
        plot = grid.draw(rbind(ggplotGrob(post.d.pHs), ggplotGrob(post.d.pH.diff.2),
                               ggplotGrob(post.d.DL.diff), ggplotGrob(post.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_DSR_pH_ext_DL_T_2019.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_DSR_pH_ext_DL_T_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.d.ext_pH), 
                               ggplotGrob(post.d.DL.diff.ext), ggplotGrob(post.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 
-ggsave("qaqc_plots/2019/BOB-post-deployment_DSR_pH_ext_T_2019.png",
+ggsave("qaqc_plots/2020/BOB-post-deployment_DSR_pH_ext_T_2020.png",
        plot = grid.draw(rbind(ggplotGrob(post.d.ext_pH), 
                               ggplotGrob(post.d.t.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 # trimmed plots
 
-# ggsave("qaqc_plots/2019/BOB-post-deployment_DSR_Volt_T_2019-trim.png",
+# ggsave("qaqc_plots/2020/BOB-post-deployment_DSR_Volt_T_2020-trim.png",
 #        plot = grid.draw(rbind(ggplotGrob(post.d.int.v.trim), ggplotGrob(post.d.ext.v.trim),
 #                               ggplotGrob(post.d.v_diff.trim), ggplotGrob(post.d.t.dt.trim),
 #                               size = "last")), width = 6.65, height = 3.5)
 # 
 # 
-# ggsave("qaqc_plots/2019/BOB-post-deployment_DSR_pHs_DL_T_2019-trim.png",
+# ggsave("qaqc_plots/2020/BOB-post-deployment_DSR_pHs_DL_T_2020-trim.png",
 #        plot = grid.draw(rbind(ggplotGrob(post.d.pHs.trim), ggplotGrob(post.d.pH.diff.trim),
 #                               ggplotGrob(post.d.DL.diff.trim), ggplotGrob(post.d.t.dt.trim),
 #                               size = "last")), width = 6.65, height = 3.5)
 # 
-# ggsave("qaqc_plots/2019/BOB-post-deployment_DSR_pHs_T_2019-trim.png",
+# ggsave("qaqc_plots/2020/BOB-post-deployment_DSR_pHs_T_2020-trim.png",
 #        plot = grid.draw(rbind(ggplotGrob(post.d.pHs.trim), ggplotGrob(post.d.pH.diff.trim),
 #                               ggplotGrob(post.d.t.dt.trim),
 #                               size = "last")), width = 6.65, height = 3.5)
 # 
-# ggsave("qaqc_plots/2019/BOB-post-deployment_DSR_DL.v.pHs_2019-trim.png",
+# ggsave("qaqc_plots/2020/BOB-post-deployment_DSR_DL.v.pHs_2020-trim.png",
 #        plot = grid.draw(rbind(ggplotGrob(post.d.DL.v.pH.int.trim), ggplotGrob(post.d.DL.v.pH.ext.trim),
 #                               size = "last")), width = 5, height = 5)
 
@@ -3098,25 +3093,29 @@ ggsave("qaqc_plots/2019/BOB-post-deployment_DSR_pH_ext_T_2019.png",
 
 rm(list=ls())
 
-load('bob.2019.all.combined.prcsd.RData')
+load('bob.2020.all.combined.prcsd.RData')
 
-sft.df <- sft.df %>%
-  group_by(datetime.tag) %>%
-  summarise(pH_int_v = median(pH_int_v),
-            pH_ext_v = median(pH_ext_v),
-            abs_v_diff = median(abs_v_diff),
-            pH_temp = median(pH_temp), 
-            ctd_sal = median(ctd_sal),
-            pH_int_cell =  median(pH_int_cell), 
-            pH_ext_cell =  median(pH_ext_cell), 
-            abs_pH_diff =  median(abs_pH_diff),
-            ctd_temp =  median(ctd_temp),
-            ctd_o2_mg_l = median(ctd_o2_mg_l),
-            ctd_chla =  median(ctd_chla),
-            ctd_turb =  median(ctd_turb))
 
-sft.df <- sft.df %>%                     
-  rename(datetime = "datetime.tag")
+#added this into data handling script
+# 
+
+# sft.df <- sft.df %>%
+#   group_by(datetime.tag) %>%
+#   summarise(pH_int_v = median(pH_int_v),
+#             pH_ext_v = median(pH_ext_v),
+#             abs_v_diff = median(abs_v_diff),
+#             pH_temp = median(pH_temp), 
+#             ctd_sal = median(ctd_sal),
+#             pH_int_cell =  median(pH_int_cell), 
+#             pH_ext_cell =  median(pH_ext_cell), 
+#             abs_pH_diff =  median(abs_pH_diff),
+#             ctd_temp =  median(ctd_temp),
+#             ctd_o2_mg_l = median(ctd_o2_mg_l),
+#             ctd_chla =  median(ctd_chla),
+#             ctd_turb =  median(ctd_turb))
+
+# sft.df <- sft.df %>%                     
+#   rename(datetime = "datetime.tag")
 
 #QARTOD FLAGS
 # '1' DATA HAS PASSED REQUIRED QC
@@ -3270,11 +3269,11 @@ sft.df$pH_ext_final_flag <- do.call(pmax, sft.df[,pH_ext_flag_cols])
 sft.df$final_flag <- do.call(pmax, sft.df[,14:17])
 
 
-save(sft.df, file = 'bob.2019.all.combined.prcsd.flagged.RData')
+save(sft.df, file = 'bob.2020.all.combined.prcsd.flagged.RData')
 
 rm(list=ls())
 
-load('bob.2019.all.combined.prcsd.flagged.RData')
+load('bob.2020.all.combined.prcsd.flagged.RData')
 
 # remove all rows of data where pH external is flagged for removal 
 sft.df <- filter(sft.df, pH_ext_final_flag != "4")
@@ -3282,7 +3281,7 @@ sft.df <- filter(sft.df, pH_ext_final_flag != "4")
 # replace pH internal flagged data with NA's only
 sft.df <- mutate(sft.df, pH_int_cell = ifelse(pH_int_final_flag == "4", NA, pH_int_cell))
 
-save(sft.df, file = 'bob.2019.select.combined.prcsd.flagged.RData')
+save(sft.df, file = 'bob.2020.select.combined.prcsd.flagged.RData')
 
 rm(list=ls())
 
@@ -3314,10 +3313,10 @@ ggplotRegression <- function(dat, xvar, yvar){
 
 
 
-load('bob.2019.all.combined.prcsd.flagged.RData')
+load('bob.2020.all.combined.prcsd.flagged.RData')
 
 # field check samples
-load("2019 data/bob-check.samples-2019.RData")
+load("2020 data/bob-check.samples-2020.RData")
 
 #tag for samples can be tied to time series
 chk.df$datetime.tag <- round_date(chk.df$datetime, "20 min")
@@ -3329,24 +3328,24 @@ head(sft.df)
 tail(sft.df)
 
 #sft season time bounds
-"2019-05-01 20:20:04"
-"2019-10-24 17:00:13"
+"2020-05-01 20:20:04"
+"2020-10-24 17:00:13"
 
 
 #event time bounds
-t1 <-  "2019-05-01 20:00:04"
-t2 <- "2019-10-24 17:20:13"
-#t2 <- '2019-03-26 00:00:00'
+t1 <-  "2020-05-01 20:00:04"
+t2 <- "2020-10-24 17:20:13"
+#t2 <- '2020-03-26 00:00:00'
 
 summary(sft.df)
 
 # datetime                    datetime.tag                    pH_int_v         pH_ext_v      
-# Min.   :2019-05-01 20:20:04   Min.   :2019-05-01 20:20:00   Min.   :-1.188   Min.   :-1.0605  
-# 1st Qu.:2019-05-28 02:55:06   1st Qu.:2019-05-28 02:55:00   1st Qu.:-1.147   1st Qu.:-1.0366  
-# Median :2019-06-23 09:30:08   Median :2019-06-23 09:30:00   Median :-1.097   Median :-1.0225  
-# Mean   :2019-07-05 07:20:27   Mean   :2019-07-05 07:20:19   Mean   :-1.107   Mean   :-1.0238  
-# 3rd Qu.:2019-08-06 20:15:10   3rd Qu.:2019-08-06 20:15:00   3rd Qu.:-1.072   3rd Qu.:-1.0117  
-# Max.   :2019-10-24 17:00:13   Max.   :2019-10-24 17:00:00   Max.   :-1.052   Max.   :-0.9899  
+# Min.   :2020-05-01 20:20:04   Min.   :2020-05-01 20:20:00   Min.   :-1.188   Min.   :-1.0605  
+# 1st Qu.:2020-05-28 02:55:06   1st Qu.:2020-05-28 02:55:00   1st Qu.:-1.147   1st Qu.:-1.0366  
+# Median :2020-06-23 09:30:08   Median :2020-06-23 09:30:00   Median :-1.097   Median :-1.0225  
+# Mean   :2020-07-05 07:20:27   Mean   :2020-07-05 07:20:19   Mean   :-1.107   Mean   :-1.0238  
+# 3rd Qu.:2020-08-06 20:15:10   3rd Qu.:2020-08-06 20:15:00   3rd Qu.:-1.072   3rd Qu.:-1.0117  
+# Max.   :2020-10-24 17:00:13   Max.   :2020-10-24 17:00:00   Max.   :-1.052   Max.   :-0.9899  
 
 # abs_v_diff         pH_temp         ctd_sal         pH_int_cell     pH_ext_cell   
 # Min.   :0.04988   Min.   :12.77   Min.   : 0.9547   Min.   :5.815   Min.   :6.406  
@@ -3625,7 +3624,7 @@ print(sft.sal)
 
 p = ggplot(sft.df, aes(datetime, ctd_sal))
 sft.sal.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Deployment BOB 2019") + #last x label sets the time axis label
+  xlab("Deployment BOB 2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -3666,7 +3665,7 @@ print(sft.temp)
 
 p = ggplot(sft.df, aes(datetime, ctd_o2_mg_l))
 sft.o2 = p + geom_point(aes(), size = 0.25, color = "red") +
-  xlab("Deployment BOB 2019") + #last x label sets the time axis label
+  xlab("Deployment BOB 2020") + #last x label sets the time axis label
   ylab("O2 (mg/L)\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -3737,23 +3736,23 @@ print(spc.ph.v.sft.ph.ext)
 # 
 
 
-ggsave("qaqc_plots/2019/BOB-deployment_Volt_Sal_2019-flagged.png",
+ggsave("qaqc_plots/2020/BOB-deployment_Volt_Sal_2020-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sft.int.v), ggplotGrob(sft.ext.v),
                               ggplotGrob(sft.v_diff), ggplotGrob(sft.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_Volt_Sal_2019-2-flagged.png",
+ggsave("qaqc_plots/2020/BOB-deployment_Volt_Sal_2020-2-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sft.int.v), ggplotGrob(sft.ext.v),
                               ggplotGrob(sft.v_diff.2), ggplotGrob(sft.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_pHs_Sal_2019-flagged.png",
+ggsave("qaqc_plots/2020/BOB-deployment_pHs_Sal_2020-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sft.pH_int), ggplotGrob(sft.pH_ext),
                               ggplotGrob(sft.pH.diff), ggplotGrob(sft.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 
-ggsave("qaqc_plots/2019/BOB-deployment_pH-ext_T_S_O2_2019-2-flagged.png",
+ggsave("qaqc_plots/2020/BOB-deployment_pH-ext_T_S_O2_2020-2-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sft.pH_ext), 
                               ggplotGrob(sft.sal), ggplotGrob(sft.temp),
                               ggplotGrob(sft.o2),
@@ -3764,12 +3763,12 @@ ggsave("qaqc_plots/2019/BOB-deployment_pH-ext_T_S_O2_2019-2-flagged.png",
 #"spc.ph.v.sft.ph.ext"          "spc.ph.v.sft.ph.ext.v" 
 # "spc.ph.v.sft.ph.int"          "spc.ph.v.sft.ph.int.v"     
 
-ggsave("qaqc_plots/2019/BOB-deployment_spc.pH_v_sft.pH.int_2019-flagged.png",
+ggsave("qaqc_plots/2020/BOB-deployment_spc.pH_v_sft.pH.int_2020-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.sft.ph.int.v), 
                               ggplotGrob(spc.ph.v.sft.ph.int),
                               size = "last")), width = 5, height = 5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_spc.pH_v_sft.pH.ext_2019-flagged.png",
+ggsave("qaqc_plots/2020/BOB-deployment_spc.pH_v_sft.pH.ext_2020-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.sft.ph.ext.v), 
                               ggplotGrob(spc.ph.v.sft.ph.ext),
                               size = "last")), width = 5, height = 5)
@@ -3798,14 +3797,14 @@ ggplotRegression <- function(dat, xvar, yvar){
 }
 
 
-load('bob.2019.select.combined.prcsd.flagged.RData')
+load('bob.2020.select.combined.prcsd.flagged.RData')
 
-write.csv(sft.df, "2019 data/bob-2019-final.flagged.data.csv", 
+write.csv(sft.df, "2020 data/bob-2020-final.flagged.data.csv", 
           row.names = F)
 
 
 # field check samples
-load("2019 data/bob-check.samples-2019.RData")
+load("2020 data/bob-check.samples-2020.RData")
 
 #tag for samples can be tied to time series
 chk.df$datetime.tag <- round_date(chk.df$datetime, "20 min")
@@ -3817,24 +3816,24 @@ head(sft.df)
 tail(sft.df)
 
 #sft season time bounds
-"2019-05-01 20:20:04"
-"2019-10-24 17:00:13"
+"2020-05-01 20:20:04"
+"2020-10-24 17:00:13"
 
 
 #event time bounds
-t1 <-  "2019-05-01 20:00:04"
-t2 <- "2019-10-24 17:20:13"
-#t2 <- '2019-03-26 00:00:00'
+t1 <-  "2020-05-01 20:00:04"
+t2 <- "2020-10-24 17:20:13"
+#t2 <- '2020-03-26 00:00:00'
 
 summary(sft.df)
 
 # datetime                    datetime.tag                    pH_int_v         pH_ext_v      
-# Min.   :2019-05-01 20:20:04   Min.   :2019-05-01 20:20:00   Min.   :-1.188   Min.   :-1.0605  
-# 1st Qu.:2019-05-28 02:55:06   1st Qu.:2019-05-28 02:55:00   1st Qu.:-1.147   1st Qu.:-1.0366  
-# Median :2019-06-23 09:30:08   Median :2019-06-23 09:30:00   Median :-1.097   Median :-1.0225  
-# Mean   :2019-07-05 07:20:27   Mean   :2019-07-05 07:20:19   Mean   :-1.107   Mean   :-1.0238  
-# 3rd Qu.:2019-08-06 20:15:10   3rd Qu.:2019-08-06 20:15:00   3rd Qu.:-1.072   3rd Qu.:-1.0117  
-# Max.   :2019-10-24 17:00:13   Max.   :2019-10-24 17:00:00   Max.   :-1.052   Max.   :-0.9899  
+# Min.   :2020-05-01 20:20:04   Min.   :2020-05-01 20:20:00   Min.   :-1.188   Min.   :-1.0605  
+# 1st Qu.:2020-05-28 02:55:06   1st Qu.:2020-05-28 02:55:00   1st Qu.:-1.147   1st Qu.:-1.0366  
+# Median :2020-06-23 09:30:08   Median :2020-06-23 09:30:00   Median :-1.097   Median :-1.0225  
+# Mean   :2020-07-05 07:20:27   Mean   :2020-07-05 07:20:19   Mean   :-1.107   Mean   :-1.0238  
+# 3rd Qu.:2020-08-06 20:15:10   3rd Qu.:2020-08-06 20:15:00   3rd Qu.:-1.072   3rd Qu.:-1.0117  
+# Max.   :2020-10-24 17:00:13   Max.   :2020-10-24 17:00:00   Max.   :-1.052   Max.   :-0.9899  
 
 # abs_v_diff         pH_temp         ctd_sal         pH_int_cell     pH_ext_cell   
 # Min.   :0.04988   Min.   :12.77   Min.   : 0.9547   Min.   :5.815   Min.   :6.406  
@@ -4113,7 +4112,7 @@ print(sft.sal)
 
 p = ggplot(sft.df, aes(datetime, ctd_sal))
 sft.sal.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Deployment BOB 2019") + #last x label sets the time axis label
+  xlab("Deployment BOB 2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -4154,7 +4153,7 @@ print(sft.temp)
 
 p = ggplot(sft.df, aes(datetime, ctd_o2_mg_l))
 sft.o2 = p + geom_point(aes(), size = 0.25, color = "red") +
-  xlab("Deployment BOB 2019") + #last x label sets the time axis label
+  xlab("Deployment BOB 2020") + #last x label sets the time axis label
   ylab("O2 (mg/L)\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -4225,23 +4224,23 @@ print(spc.ph.v.sft.ph.ext)
 # 
 
 
-ggsave("qaqc_plots/2019/BOB-deployment_Volt_Sal_2019-select-flagged.png",
+ggsave("qaqc_plots/2020/BOB-deployment_Volt_Sal_2020-select-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sft.int.v), ggplotGrob(sft.ext.v),
                               ggplotGrob(sft.v_diff), ggplotGrob(sft.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_Volt_Sal_2019-2-select-flagged.png",
+ggsave("qaqc_plots/2020/BOB-deployment_Volt_Sal_2020-2-select-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sft.int.v), ggplotGrob(sft.ext.v),
                               ggplotGrob(sft.v_diff.2), ggplotGrob(sft.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_pHs_Sal_2019-select-flagged.png",
+ggsave("qaqc_plots/2020/BOB-deployment_pHs_Sal_2020-select-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sft.pH_int), ggplotGrob(sft.pH_ext),
                               ggplotGrob(sft.pH.diff), ggplotGrob(sft.sal.dt),
                               size = "last")), width = 6.65, height = 3.5)
 
 
-ggsave("qaqc_plots/2019/BOB-deployment_pH-ext_T_S_O2_2019-2-select-flagged.png",
+ggsave("qaqc_plots/2020/BOB-deployment_pH-ext_T_S_O2_2020-2-select-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(sft.pH_ext), 
                               ggplotGrob(sft.sal), ggplotGrob(sft.temp),
                               ggplotGrob(sft.o2),
@@ -4252,12 +4251,12 @@ ggsave("qaqc_plots/2019/BOB-deployment_pH-ext_T_S_O2_2019-2-select-flagged.png",
 #"spc.ph.v.sft.ph.ext"          "spc.ph.v.sft.ph.ext.v" 
 # "spc.ph.v.sft.ph.int"          "spc.ph.v.sft.ph.int.v"     
 
-ggsave("qaqc_plots/2019/BOB-deployment_spc.pH_v_sft.pH.int_2019-select-flagged.png",
+ggsave("qaqc_plots/2020/BOB-deployment_spc.pH_v_sft.pH.int_2020-select-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.sft.ph.int.v), 
                               ggplotGrob(spc.ph.v.sft.ph.int),
                               size = "last")), width = 5, height = 5)
 
-ggsave("qaqc_plots/2019/BOB-deployment_spc.pH_v_sft.pH.ext_2019-select-flagged.png",
+ggsave("qaqc_plots/2020/BOB-deployment_spc.pH_v_sft.pH.ext_2020-select-flagged.png",
        plot = grid.draw(rbind(ggplotGrob(spc.ph.v.sft.ph.ext.v), 
                               ggplotGrob(spc.ph.v.sft.ph.ext),
                               size = "last")), width = 5, height = 5)

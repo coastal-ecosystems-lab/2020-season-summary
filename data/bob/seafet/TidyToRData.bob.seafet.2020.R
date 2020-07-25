@@ -228,7 +228,18 @@ df <- select(df, datetime,
               pH_int, pH_ext, abs_pH_diff, everything())
 
 
+df <- df %>%
+  group_by(datetime.tag) %>%
+  summarise(pH_int_v = median(pH_int_v),
+            pH_ext_v = median(pH_ext_v),
+            abs_v_diff = median(abs_v_diff),
+            pH_temp = median(pH_temp), 
+            pH_int =  median(pH_int), 
+            pH_ext =  median(pH_ext), 
+            abs_pH_diff =  median(abs_pH_diff))
 
+df <- df %>%                     
+  rename(datetime = "datetime.tag")
 
 
 #### save BOB 2020 PRE deployment dickson std run #################################
@@ -236,6 +247,10 @@ df <- select(df, datetime,
 here()
 
 setwd(here("tidied-data", "bob", "seafet"))
+
+# rm(df)
+# 
+# load("bob.dickson.run.predeploy.2020.sft.RData")
 
 getwd()
 
