@@ -14,15 +14,10 @@ library(here)
 
 getwd()
 
-#setwd("C:/Users/915712257/Box Sync/Inbox/oceanographic work/2020 season summary/data/bob/seafet") #replaced with line 21
-
 setwd(here("data", "bob", "seafet"))
 
 getwd()
 
-#setwd(here()) #to reset to parent directory
-
-getwd()
 
 
 #read in field check sample data for BOB 2020 ########################################
@@ -100,7 +95,10 @@ setwd(here("data", "bob", "seafet", "pre-deploy.dickson.run-bob-july-2020"))
 
 getwd()
 
-# read data tables and match var names
+# read data tables with matching var names
+# included skip = 8 option for working with SeaFET individual files
+# where first 8 columns contain metadata
+
 # adapted from:
 # https://www.r-bloggers.com/merging-multiple-data-files-into-one-data-frame/
 # https://stackoverflow.com/questions/43858448/how-to-load-and-merge-multiple-csv-files-in-r
