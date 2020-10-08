@@ -51,11 +51,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #### note: last of T35 Dickson TRIS Seawater buffer in the lab
 
 
-## Buffer Run for the SeapHOx ended at  
 
-
-
-## Buffer run for the SeaFET ended at 01:20 hours UTC on 7/24/2020
+## Buffer run for the SeaFET and SeapHOx ended at 01:20 hours UTC on 7/24/2020
 
 
 
@@ -75,7 +72,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-### Baywater bath run began for SeaFET/CTD combo at 06:03 hours UTC. Then sampled hourly thereafter.
+### Baywater bath run began for SeaFET/CTD combo on 07/24/2020 at 06:03 hours UTC. Then sampled hourly thereafter.
 
 #### note both instruments sampling with a minute offset from each other and 3 or 4 minutes offset from the top of the hour
 
