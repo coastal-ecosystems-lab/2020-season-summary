@@ -41,13 +41,43 @@ rm(list=ls())
 
 #read in bath check sample data for mari 2020 ########################################
 
+setwd(here("data", "chk-samples"))
+
+getwd()
+
+list.files()
+
+
 #read data tables and match var names
-df1 = read.csv("mari-buoy_bath_samples_metadata_2020.csv",
-               header=T, stringsAsFactors=F, sep=",")
+df1 <- read.csv("20200924_predeploy_bath_chk_samples.csv",
+               header=T, stringsAsFactors=F, sep=",", )
 
-df1$datetime <- as.POSIXct(paste(df1$Date,df1$UTC), format = "%m/%d/%Y %H:%M") 
+df1 <- filter(df1, pH_is_crct != "NA")
 
-df1$pH.check.median <- as.numeric(df1$pH.check.median)
+df1 <- mutate(df1, date = substr(Sample.ID, 10, 17))
+
+df1 <- df1[-10, ]
+df1 <- df1[-10, ]
+
+df1 <- select(df1, date, pH_is_crct, salinity, temperature)
+
+
+df1 <- df1 %>% 
+  group_by(date) %>% 
+  summarise(
+    date = median(date),
+    pH = median(pH_is_crct),
+    salinity = median(salinity),
+    temperature = median(temperature)
+     )
+
+df1$time <- c("14:00:00", "03:03:00", "19:00:00")
+
+df1$datetime <- as.POSIXct(paste(df1$date,df1$time), 
+                           format = "%m%d%Y %H:%M:%S", 
+                           tz = "GMT") 
+
+
 
 
 head(df1)
@@ -60,11 +90,11 @@ bth.chk.df <- df1
 rm(df1)
 
 #clear workspace and reload tidied data
-save(bth.chk.df, file = "mari-bath.check.samples-2020.RData")
+save(bth.chk.df, file = "bath.check.samples-2020.RData")
 
 rm(list=ls())
 
-load("mari-bath.check.samples-2020.RData")
+load("bath.check.samples-2020.RData")
 
 rm(list=ls())
 
