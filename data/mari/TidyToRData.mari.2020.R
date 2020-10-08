@@ -70,7 +70,7 @@ rm(list=ls())
 
 
 
-# PRE deployment dickson standard run 2020 ############################################
+# PRE deployment Dickson TRIS Buffer 2020 ############################################
 
 setwd(here("data", "mari", "pre-deploy.dickson.run-mari-july-2020"))
 
@@ -136,7 +136,7 @@ df1 <- df1 %>%
 
 
 
-# PRE deployment set up seafetV2 processing algorithm mari 2020 ###################
+# PRE deployment Dickson TRIS buffer seafetV2 algorithm 2020 ###################
 
 
 #for calculations to be accurate, greatest digit count is 22, deafault is 7
@@ -147,6 +147,7 @@ options(digits = 15)
 # see: https://www.seabird.com/application-notes
 
 # creating calibration data frame
+
 # can pull data from seafet summary reports or raw .sbsdata for V2
 # in summary report I assumed KDF0 and KDF2 were for the DuraFET internal electrode reference 
 # will know if orignal and newly added pH values match
@@ -295,9 +296,18 @@ print(median.temp.value)
 
 
 
-# PRE deployment common bath run 2020 ############################################
+# PRE deployment baywater bath 2020 ############################################
+
+
+setwd(here("data", "mari", "pre-deploy.bath-mari-2020"))
+
+getwd()
+
+list.files()
+
 
 #pull in instrument data
+
 
 #read data tables and match var names
 df1 = read.csv("pre-deployment.mari-2020/mari predeployment bath 20200301-20200307.csv",
