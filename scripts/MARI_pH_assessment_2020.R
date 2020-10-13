@@ -12,6 +12,9 @@ library(here)
 
 ##### set working directory ###############################
 
+# clear work space at your peril...
+# rm(list=ls())
+
 setwd(here())
 
 getwd()
@@ -47,10 +50,14 @@ ggplotRegression <- function(dat, xvar, yvar){
 #load("data/mari.2020.screen.RData")
 
 
-#load predeployment common bath and check samples
-load("tidied-data/mari-common-bath-predeploy.2020.sphx.RData")
+#load predeployment bay water bath and check samples
+load("tidied-data/mari-baywater-bath-predeploy.2020.sphx.RData")
 pre.deploy.bath <- df1
 rm(df1)
+
+# bath check samples
+load("data/chk-samples/bath.check.samples-2020.RData")
+
 
 #load predeployment Dickson Standard Run
 load("tidied-data/mari/mari-pre-deploy-dickson-run-prcsd-2020.RData")
@@ -59,31 +66,29 @@ rm(df1)
 
 
 #intstrument data
-load("tidied-data/mari.2020.RData")
-sfx.df <- data
-rm(data)
+# load("tidied-data/mari.2020.RData")
+# sfx.df <- data
+# rm(data)
 
 #load MID Deployment Field Bath (5/21/2020)
-load("tidied-data/mari-field-bath-20200521.sphx.RData")
-field.bath <- df1
-rm(df1)
+#load("tidied-data/mari-field-bath-20200521.sphx.RData")
+#field.bath <- df1
+#rm(df1)
 
 # field check samples
-load("tidied-data/mari-check.samples-2020.RData")
+#load("tidied-data/mari-check.samples-2020.RData")
 
-# bath check samples
-load("tidied-data/mari-bath.check.samples-2020.RData")
 
 
 #load POST deployment common bath and check samples
-load("tidied-data/mari-common-bath-post.deploy.2020.sphx.RData")
-post.deploy.bath <- df1
-rm(df1)
+# load("tidied-data/mari-common-bath-post.deploy.2020.sphx.RData")
+# post.deploy.bath <- df1
+# rm(df1)
 
 #load POST deployment Dickson Standard Run
-load("tidied-data/mari-post-deploy-dickson-run-prcsd-2020.RData")
-post.dickson <- df1
-rm(df1)
+# load("tidied-data/mari-post-deploy-dickson-run-prcsd-2020.RData")
+# post.dickson <- df1
+# rm(df1)
 
 
 #adjusted data with local calibration constant

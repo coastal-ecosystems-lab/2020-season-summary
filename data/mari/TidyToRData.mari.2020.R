@@ -102,19 +102,27 @@ rm(list=ls())
 
 # PRE deployment Dickson TRIS Buffer 2020 ############################################
 
+#clear work space at your peril...
+# rm(list=ls())
+
 setwd(here("data", "mari", "pre-deploy.dickson.run-mari-july-2020"))
 
 getwd()
 
 list.files()
 
-# [1] "03-10-july-2020-sphx-1004-data.txt" "feb-july-2020-sphx-1004-data.txt"  
-# [3] "sphx-1004-2020-cal-coeffs.txt" 
+# [1] "03-10-july-2020-sphx-1004-data.txt" "20200723-sphx-upload.txt"          
+# [3] "feb-july-2020-sphx-1004-data.txt"   "sphx-1004-2020-cal-coeffs.txt" 
 
 
 #reading in the text file, as.is = T keeps the strings as strings and not factors
 df1 <- read.table("03-10-july-2020-sphx-1004-data.txt", sep = ",", as.is = T, header = F)
 
+df2 <- read.table("20200723-sphx-upload.txt", sep = ",", as.is = T, header = F)
+
+df1 <- bind_rows(df1, df2, .id= NULL)
+
+rm(df2)
 
 #get var names by printing data
 head(df1)
@@ -142,11 +150,11 @@ df1 <- df1 %>%
          press_dbar = V11,
          ctd_sal = V12,
          cond_Sm = V13,
-         ctd_o2_ml_l = V14, 
+         ctd_o2_mg_l = V14, 
          RH = V15,
          pH_int_temp = V16)
 
-df1 <- select(df1, -instrument, -sbe_err, -sample.num, -press_dbar, -cond_Sm, -ctd_o2_ml_l, -RH, -pH_int_temp)
+df1 <- select(df1, -instrument, -sbe_err, -sample.num, -press_dbar, -cond_Sm, -ctd_o2_mg_l, -RH, -pH_int_temp)
 
 
 # pulling datetime object from "2020-07-03T00:27:29" format
@@ -329,81 +337,110 @@ print(median.temp.value)
 # PRE deployment baywater bath 2020 ############################################
 
 
+#clear all at your peril...
+# rm(list=ls())
+
 setwd(here("data", "mari", "pre-deploy.bath-mari-2020"))
 
 getwd()
 
 list.files()
 
+# [1] "20200820-20200924-mari-upload.txt" "20200820-upload-mari-sphx.txt" 
 
 #pull in instrument data
 
 
-#read data tables and match var names
-df1 = read.csv("pre-deployment.mari-2020/mari predeployment bath 20200301-20200307.csv",
-               header=T, stringsAsFactors=F, sep=",")
+#reading in the text file, as.is = T keeps the strings as strings and not factors
+df1 <- read.table("20200820-upload-mari-sphx.txt", sep = ",", as.is = T, header = F)
+
+df2 <- read.table("20200820-20200924-mari-upload.txt", sep = ",", as.is = T, header = F)
+
+df1 <- bind_rows(df1, df2, .id= NULL)
+
+rm(df2)
 
 
 #get var names by printing data
 head(df1)
 # 
 
-# FrameSync      DateTime..UTC. Sample.Number.... Error.Flags.... Temperature..Celsius.
-# 1 SSPHOX01004 03/01/2020 04:25:42                 1              20               16.2112
-# 
-# External.pH..pH. Internal.pH..pH. External.pH..Volt. Internal.pH..Volt. pH.Temperature..Celsius.
-# 1           7.8070           8.0059          -0.996100          -1.031704                  16.5352
-# 
-# Pressure..Decibar. Salinity..psu. Conductivity..S.m. Oxygen..ml.L. Relative.Humidity....
-# 1              0.219        32.7005            4.15122         5.679                     0
-#
-# Int.Temperature..Celsius.
-# 1                      16.9
+# V1                  V2 V3 V4      V5     V6     V7        V8        V9     V10   V11
+# 1 SSPHOX01004 2020-07-24T02:39:08  1 20 19.3474 8.0323 8.0839 -0.858942 -0.902958 19.0911 0.003
+
+ 
+# V12     V13   V14 V15  V16
+# 1 35.0634 4.73326 7.446 3.6 19.6
+
+
 
 df1 <- df1 %>%                     
-  rename(datetime = 'DateTime..UTC.',
-         sample.num = 'Sample.Number....',
-         sbe_err = 'Error.Flags....', 
-         ctd_temp = 'Temperature..Celsius.', 
-         pH_ext = 'External.pH..pH.', 
-         pH_int = 'Internal.pH..pH.', 
-         pH_ext_v = "External.pH..Volt.",
-         pH_int_v = 'Internal.pH..Volt.', 
-         pH_temp = 'pH.Temperature..Celsius.', 
-         press_dbar = 'Pressure..Decibar.',
-         ctd_sal = 'Salinity..psu.',
-         cond_Sm = "Conductivity..S.m.",
-         ctd_o2_ml_l = 'Oxygen..ml.L.', 
-         RH = "Relative.Humidity....",
-         pH_int_temp = 'Int.Temperature..Celsius.')
+  rename(instrument = V1,
+         datetime = V2,
+         sample.num = V3,
+         sbe_err = V4, 
+         ctd_temp = V5, 
+         pH_ext = V6, #origninal pH value based on wrong temp
+         pH_int = V7, #origninal pH value based on wrong temp
+         pH_ext_v = V8,
+         pH_int_v = V9, 
+         pH_temp = V10, 
+         press_dbar = V11,
+         ctd_sal = V12,
+         cond_Sm = V13,
+         ctd_o2_mg_l = V14, 
+         RH = V15,
+         pH_int_temp = V16)
 
-df1 <- select(df1, -FrameSync, -sbe_err, -sample.num, -press_dbar, -cond_Sm, -ctd_o2_ml_l, -RH, -pH_int_temp)
+df1 <- select(df1, -instrument, -sbe_err, -sample.num, -press_dbar, -cond_Sm, -RH, -pH_int_temp)
 
+
+# pulling datetime object from "2020-07-03T00:27:29" format
+
+df1$datetime <- ymd_hms(df1$datetime, tz = "UTC")
 
 #setting date time to POSIXct and arranging data by datetime
+# if in format mm/dd/yyyy hh:mm 
+# change format = "%m/%d/%Y %H:%M:%S" if you have seconds
 
-df1$datetime <- as.POSIXct(df1$datetime, format = "%m/%d/%Y %H:%M") 
+#df1$datetime <- as.POSIXct(df1$datetime, format = "%m/%d/%Y %H:%M", tz = "GMT") 
 
 #have data ascend in time
 
 df1 <- df1 %>%
   arrange(datetime)
 
+str(df1)
+
 #calculate difference between pH electrodes
-df1$pH_diff <- df1$pH_int - df1$pH_ext
+
 df1$abs_pH_diff <- abs(df1$pH_int - df1$pH_ext)
 
-df1$volt_diff <- df1$pH_ext_v - df1$pH_int_v
+
 df1$abs_v_diff <- abs(df1$pH_ext_v - df1$pH_int_v)
 
-#saving final test proof data for seafetV2 translator script
-save(df1, file = "mari-common-bath-predeploy.2020.sphx.RData")
+
+
+# save mari 2020 bay water bath data --------------------------------------
+
+here()
+
+setwd(here("tidied-data", "mari"))
+
+getwd()
+
+df1 <- select(df1, datetime,
+              pH_int_v, pH_ext_v, abs_v_diff, pH_temp,
+              pH_int, pH_ext, abs_pH_diff,
+              ctd_temp, ctd_sal, ctd_o2_mg_l)
+
+save(df1, file = "mari-baywater-bath-predeploy.2020.sphx.RData")
 
 rm(list=ls())
 
 
 #double check looks good
-load("mari-common-bath-predeploy.2020.sphx.RData")
+load("mari-baywater-bath-predeploy.2020.sphx.RData")
 
 
 
