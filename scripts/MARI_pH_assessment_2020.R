@@ -2,7 +2,6 @@
 
 library(ggplot2)
 library(scales)
-library(Scale)
 library(grid)
 library(lubridate)
 library(dplyr)
@@ -51,7 +50,7 @@ ggplotRegression <- function(dat, xvar, yvar){
 
 
 #load predeployment bay water bath and check samples
-load("tidied-data/mari-baywater-bath-predeploy.2020.sphx.RData")
+load("tidied-data/mari/mari-baywater-bath-predeploy.2020.sphx.RData")
 pre.deploy.bath <- df1
 rm(df1)
 
@@ -102,15 +101,17 @@ rm(df1)
 
 
 head(pre.deploy.bath)
-"2020-03-01 04:25:00"
+"2020-07-24 02:39:08"
 
 tail(pre.deploy.bath)
-"2020-03-08 04:15:00"
+"2020-09-24 05:00:01"
 
 #event time bounds
-t1 <-  '2020-03-01 00:00:00'
-t2 <- '2020-03-09 00:00:00'
+t1 <-  '2020-07-24 01:39:08'
+t2 <- '2020-09-24 06:00:01'
 
+max_int_v <- max(pre.deploy.bath$pH_int_v)
+min_int_v <- min(pre.deploy.bath$pH_int_v)
 
 p = ggplot(pre.deploy.bath, aes(x = datetime))
 pre.b.int.v = p + geom_point(aes(y = pH_int_v), size = 0.25, color = "seagreen") +
@@ -119,7 +120,7 @@ pre.b.int.v = p + geom_point(aes(y = pH_int_v), size = 0.25, color = "seagreen")
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(mari.2020.screen.df$int.v.min, mari.2020.screen.df$int.v.max) +
+  ylim(min_int_v, max_int_v) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -132,6 +133,10 @@ pre.b.int.v = p + geom_point(aes(y = pH_int_v), size = 0.25, color = "seagreen")
 
 print(pre.b.int.v)
 
+max_ext_v <- max(pre.deploy.bath$pH_ext_v)
+min_ext_v <- min(pre.deploy.bath$pH_ext_v)
+
+
 
 p = ggplot(pre.deploy.bath, aes(datetime, pH_ext_v))
 pre.b.ext.v = p + geom_point(aes(), size = 0.25, color = "green") +
@@ -140,7 +145,7 @@ pre.b.ext.v = p + geom_point(aes(), size = 0.25, color = "green") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(mari.2020.screen.df$ext.v.min, mari.2020.screen.df$ext.v.max) +
+  ylim(min_ext_v, max_ext_v) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -189,8 +194,8 @@ pre.b.phs = p + geom_point(aes(y = pH_int), size = 0.25, color = "seagreen") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(7.8, 8.2) +
-  geom_point(data = bth.chk.df, aes(x=datetime, y= pH.check.median), shape = 18, size = 1,
+  ylim(8.0, 8.2) +
+  geom_point(data = bth.chk.df, aes(x=datetime, y= pH), shape = 18, size = 1,
              color = "black", show.legend = F)  +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
@@ -238,7 +243,7 @@ pre.b.s = p + geom_point(aes(), size = 0.25, color = "seagreen") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(15, 34) +
+  ylim(25, 33) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), #theme for top two plots
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -258,7 +263,7 @@ pre.b.s.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(15, 34) +
+  ylim(25, 33) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), #theme for top two plots
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -280,7 +285,7 @@ pre.b.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(10, 18) +
+  ylim(16, 22) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), #theme for top two plots
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -299,21 +304,21 @@ print(pre.b.t.dt)
 
 # combine check samples to instrument data in a new data frame
 
-df1 <- left_join(pre.deploy.bath, bth.chk.df, by = "datetime")
-
-
-# Discrete spec pH regressed versus pH
-
-k0.int.pre.b.benchmark <- ggplotRegression(df1, "pH.check.median", "pH_int_v")
-
-print(k0.int.pre.b.benchmark)
-
-
-k0.ext.pre.b.benchmark <- ggplotRegression(df1, "pH.check.median", "pH_ext_v")
-
-print(k0.ext.pre.b.benchmark)
-
-rm(df1)
+# df1 <- left_join(pre.deploy.bath, bth.chk.df, by = "datetime")
+# 
+# 
+# # Discrete spec pH regressed versus pH
+# 
+# k0.int.pre.b.benchmark <- ggplotRegression(df1, "pH", "pH_int_v")
+# 
+# print(k0.int.pre.b.benchmark)
+# 
+# 
+# k0.ext.pre.b.benchmark <- ggplotRegression(df1, "pH", "pH_ext_v")
+# 
+# print(k0.ext.pre.b.benchmark)
+# 
+# rm(df1)
 
 
 
@@ -353,24 +358,22 @@ pre.dickson$DL_pH_diff_ext <- abs(pre.dickson$pH_ext_cell - pre.dickson$DL)
 
 head(pre.dickson)
 
-# datetime  pH_int_v  pH_ext_v abs_v_diff pH_temp pH_int_cell pH_ext_cell
-# 1 2020-07-03 00:27:29 -0.894020 -0.857622   0.036398 20.9791      8.2263      8.0284
+"2020-07-03 00:27:29"
 
 tail(pre.dickson)
 
-# datetime  pH_int_v  pH_ext_v abs_v_diff pH_temp pH_int_cell pH_ext_cell
-# 557 2020-07-10 19:01:12 -0.891338 -0.847015   0.044323 18.2690      8.2920      8.2547
+"2020-07-24 01:20:15"
 
 #event time bounds
 t1 <-  '2020-07-02 23:27:29'
-t2 <- '2020-07-10 20:01:12'
+t2 <- '2020-07-24 02:20:15'
 
 # t3 <- '2020-03-08 20:00:00'
 
 summary(pre.dickson$pH_int_v)
 
-# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-# -0.8940 -0.8923 -0.8916 -0.8914 -0.8907 -0.8889 
+# Min.         1st Qu.          Median            Mean         3rd Qu.            Max. 
+# -0.894020000000 -0.892518500000 -0.891735000000 -0.891662267373 -0.890885000000 -0.888929000000  
 
 # will add this in later when we determine our screens with more seasons of data
 #print(mari.2020.screen.df$int.v.min)
@@ -388,7 +391,7 @@ pre.d.int.v = p + geom_point(aes(y = pH_int_v), size = 0.25, color = "seagreen")
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(-0.897, -0.885) +
+  ylim(-0.895, -0.887) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -403,8 +406,8 @@ print(pre.d.int.v)
 
 
 summary(pre.dickson$pH_ext_v)
-# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-# -0.8576 -0.8469 -0.8465 -0.8465 -0.8460 -0.8449 
+# Min.         1st Qu.          Median            Mean         3rd Qu.            Max. 
+# -0.857622000000 -0.848725500000 -0.847968000000 -0.847801702184 -0.846808000000 -0.844947000000 
 
 #adjusting plotting range for pH_int_v because it is out of range...
 
@@ -420,7 +423,7 @@ pre.d.ext.v = p + geom_point(aes(), size = 0.25, color = "green") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(-0.850, -0.844) +
+  ylim(-0.855, -0.843) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -460,6 +463,8 @@ pre.d.v_diff =p + geom_point(aes(), size = 0.25, color = "black") +
 
 print(pre.d.v_diff)
 
+summary(pre.dickson$pH_int_cell)
+summary(pre.dickson$pH_ext_cell)
 
 
 p = ggplot(pre.dickson, aes(x = datetime))
@@ -471,7 +476,7 @@ pre.d.pHs = p + geom_point(aes(y = pH_int_cell), size = 0.25, color = "seagreen"
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(8.2, 8.5) +
+  ylim(8.1, 8.4) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
         panel.grid.minor = element_line(colour = "grey", size = 0.25), 
@@ -536,6 +541,8 @@ print(pre.d.DL.diff)
 
 summary(pre.dickson$pH_temp)
 
+# Min.       1st Qu.        Median          Mean       3rd Qu.          Max. 
+# 17.0306000000 17.9843000000 18.4853000000 18.4283678359 18.9045000000 20.9791000000
 
 p = ggplot(pre.dickson, aes(datetime, pH_temp))
 pre.d.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
@@ -544,7 +551,7 @@ pre.d.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(16.0, 22.0) +
+  ylim(17.0, 21.0) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25),  #theme for bottom plot
         panel.grid.minor = element_line(colour = "grey", size = 0.25),
