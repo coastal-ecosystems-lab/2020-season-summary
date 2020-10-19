@@ -22,67 +22,46 @@ getwd()
 
 #read in field check sample data for BOB 2020 ########################################
 
+# #read data tables and match var names
+# 
+# 
+# 
+# # df1 = read.csv("bob-buoy_field_samples_metadata_2020.csv",
+# #                header=T, stringsAsFactors=F, sep=",")
+# # 
+# # df1$datetime <- as.POSIXct(paste(df1$Date,df1$UTC), format = "%m/%d/%Y %H:%M") 
+# # 
+# # df1$pH.check.median <- as.numeric(df1$pH.check.median)
+# 
+# 
+# # head(df1)
+# # 
+# # Date   UTC Sample.. Cast_Sal Cast_Temp pH.check.median      pH.check1      pH.check2      pH.check3
+# # 1  5/1/2020 20:43   B-0061 14.85028  15.86863        7.959483    7.949450246    7.971714823    7.959483096
+# 
+# # 
+# # datetime
+# # 1 2020-05-01 20:43:00
+# 
+# 
+# chk.df <- df1
+# rm(df1)
+# 
+# #clear workspace and reload tidied data
+# save(chk.df, file = "bob-check.samples-2020.RData")
+# 
+# rm(list=ls())
+# 
+# load("bob-check.samples-2020.RData")
+# 
+# rm(list=ls())
+
+
+#read in bay water bath check sample data for BOB 2020 ########################################
+
 #read data tables and match var names
-df1 = read.csv("bob-buoy_field_samples_metadata_2020.csv",
-               header=T, stringsAsFactors=F, sep=",")
+#READ IN MARI DATA TIDYING
 
-df1$datetime <- as.POSIXct(paste(df1$Date,df1$UTC), format = "%m/%d/%Y %H:%M") 
-
-df1$pH.check.median <- as.numeric(df1$pH.check.median)
-
-
-head(df1)
-# 
-# Date   UTC Sample.. Cast_Sal Cast_Temp pH.check.median      pH.check1      pH.check2      pH.check3
-# 1  5/1/2020 20:43   B-0061 14.85028  15.86863        7.959483    7.949450246    7.971714823    7.959483096
-
-# 
-# datetime
-# 1 2020-05-01 20:43:00
-
-
-chk.df <- df1
-rm(df1)
-
-#clear workspace and reload tidied data
-save(chk.df, file = "bob-check.samples-2020.RData")
-
-rm(list=ls())
-
-load("bob-check.samples-2020.RData")
-
-rm(list=ls())
-
-
-#read in bath check sample data for BOB 2020 ########################################
-
-#read data tables and match var names
-
-df1 = read.csv("bob-buoy_bath_samples_metadata_2020.csv",
-               header=T, stringsAsFactors=F, sep=",")
-
-df1$datetime <- as.POSIXct(paste(df1$Date,df1$UTC), format = "%m/%d/%Y %H:%M") 
-
-df1$pH.check.median <- as.numeric(df1$pH.check.median)
-
-
-head(df1)
-# 
-#Date   UTC              Sample.. Cast_Sal Cast_Temp pH.check.median pH.check1 pH.check2 pH.check3
-#4/30/2020 19:00      SFT-04302020-1-B  15.3479   22.8455        7.981264  7.981264        NA        NA
-
-
-bth.chk.df <- df1
-rm(df1)
-
-#clear workspace and reload tidied data
-save(bth.chk.df, file = "bob-bath.check.samples-2020.RData")
-
-rm(list=ls())
-
-load("bob-bath.check.samples-2020.RData")
-
-rm(list=ls())
 
 
 # PRE deployment dickson standard run 2020 ############################################
@@ -116,22 +95,7 @@ multMerge_skip8 = function(mypath){
 
 df  <- multMerge_skip8(here("data", "bob", "seafet", "pre-deploy.dickson.run-bob-july-2020"))
 
-df_test <- unique(df)
 
-df$tag <- paste(df$V2, df$V3)
-
-df_test <- distinct(df, tag, .keep_all = T)
-
-df_test <- distinct(df, V2, V3, .keep_all = T)
-
-# test if lengths match
-df_both_obsv_test <- length(df$Date) + length(df1$Date)
-
-# if true
-
-df <- df_both
-
-rm(df1, df_both, df_both_obsv_test)
 
 #get var names by printing data
 head(df)
