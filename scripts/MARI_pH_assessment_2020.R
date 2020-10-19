@@ -49,7 +49,7 @@ ggplotRegression <- function(dat, xvar, yvar){
 #load("data/mari.2020.screen.RData")
 
 
-#load predeployment bay water bath and check samples
+#load predeployment bay water bath
 load("tidied-data/mari/mari-baywater-bath-predeploy.2020.sphx.RData")
 pre.deploy.bath <- df1
 rm(df1)

@@ -265,15 +265,31 @@ print(median.temp.value)
 
 
 
-# PRE deployment common bath run 2020 ############################################
+# PRE deployment bay water bath run 2020 ############################################
 
-rm(list=ls())
+# use at your peril...
 
-instr.info <- read.csv("bob seafet raw/20200430-20200710_raw.csv",
+# rm(list=ls())
+
+getwd()
+
+setwd(here("data", "bob", "seafet", "pre-deploy.bath-bob-2020"))
+
+getwd()
+
+
+# get file names
+
+list.files()
+
+# [1] "bob-seafet-upload-20200820.CSV" "bob-seafet-upload-20200924.CSV"
+
+
+instr.info <- read.csv("bob-seafet-upload-20200820.CSV",
                        header=F, nrows = 8,  stringsAsFactors=F, sep=",")
 
 bob.2020.screen.df <- data.frame(k0_int.bob.2020.sbe = as.numeric(instr.info$V3[3]),
-                                 k2_int.bob.2020.sbe = as.numeric(instr.info$V3[4]), 
+                                 k2_int.bob.2020.sbe = as.numeric(instr.info$V3[4]),
                                  k0_ext.bob.2020.sbe = as.numeric(instr.info$V3[5]),
                                  k2_ext.bob.2020.sbe = as.numeric(instr.info$V3[6]),
                                  int.v.min = -1.065,
@@ -292,19 +308,33 @@ load("bob.2020.screen.RData")
 
 ###### pulling raw files #############################################
 
+getwd()
+
+setwd(here("data", "bob", "seafet", "pre-deploy.bath-bob-2020"))
+
+getwd()
+
+
+# get file names
+
+list.files()
+
+# [1] "bob-seafet-upload-20200820.CSV" "bob-seafet-upload-20200924.CSV"
+
 #read data tables and match var names
 
 #sft data
-df = read.csv("bob seafet raw/pre-deployment.bob-2020/20200430 Predeployment common bath/bob.seafet.20200423-20200430.csv", 
+df1 = read.csv("bob-seafet-upload-20200820.CSV", 
                header=F, skip = 8, stringsAsFactors=F, sep=",")
 
-
+df2 = read.csv("bob-seafet-upload-20200924.CSV", 
+               header=F, skip = 8, stringsAsFactors=F, sep=",")
 
 # #combine into one data frame
-# 
-# df <- bind_rows(df1,df2, df3, .id= NULL)
-# 
-# rm(df1, df2, df3)
+
+df <- bind_rows(df1,df2, .id= NULL)
+
+rm(df1, df2)
 
 
 df <- df %>%                     
@@ -389,12 +419,40 @@ df <- select(df, datetime, og_pH_int, og_pH_ext, pH_temp, pH_int_v, pH_ext_v, da
 
 # read in CTD raw data file ########################################
 
-df4 = read.csv("bob ctd raw/pre.deployment.ctd.raw-2020/bob.T.S.pre.deployment.bath.20200422-20200430.csv", header=F, stringsAsFactors=F, sep=",")
+rm(df4)
+
+getwd()
+
+setwd(here("data", "bob", "ctd", "pre-deploy.bath-bob-2020"))
+
+getwd()
+
+list.files()
+
+# [1] "20200724-20200930-bob-ctd.txt"
+
+# NEED TO CHECK WHICH COLUMNS ARE WHICH...
+
+df4 = read.csv("20200724-20200930-bob-ctd.txt", header=F, stringsAsFactors=F, sep=",")
+
+# pulled below from page 68 of SBE 16 manual with CTD Settings
+# volt0 =1 (chl), volt1 = 1 (turb), SBE63 = Y (usec, temp_voltage), outputsal = y
 
 df4 <- df4 %>% 
-  rename(datetime = "V1",
-         ctd_temp =  "V2",
-         ctd_sal = "V3")
+  rename(ctd_temp = "V1",
+         ctd_cond =  "V2",
+         ctd_press_db = "V3",
+         ctd_chl_volts = "V4",
+         ctd_turb_volts = "V5",
+         ctd_o2_phase_usec = "V6",
+         ctd_02_temp_volts = "V7",
+         ctd_sal = "V8",
+         datetime = "V9")
+
+
+#pull only datetime, ctd_temp, ctd_sal
+
+df4 <- select(df4, datetime, ctd_temp, ctd_sal)
 
 # convert to POSIXcT
 
@@ -412,6 +470,13 @@ rm(df,df4)
 #remove NA emtpy cell (NA) values
 df1 <- df1 %>%
   filter(ctd_temp != '')
+
+
+getwd()
+
+setwd(here("tidied-data", "bob", "seafet", "pre-deploy.bath-bob-2020"))
+
+getwd()
 
 
 save(df1, file = 'bob-pre.deploy.bath-2020-raw.RData')

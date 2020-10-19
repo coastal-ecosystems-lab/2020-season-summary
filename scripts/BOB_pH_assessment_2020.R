@@ -10,6 +10,10 @@ library(here)
 
 ##### set working directory ###############################
 
+# use at your peril
+
+# rm(list=ls())
+
 setwd(here())
 
 getwd()
@@ -41,13 +45,12 @@ ggplotRegression <- function(dat, xvar, yvar){
 ######load tidied data ####################################
 
 #load instrument specifications
-load("tidied-data/bob.2020.screen.RData")
+# load("tidied-data/bob.2020.screen.RData")
 
 
 
-# field check samples
-load("tidied-data/bob-check.samples-2020.RData")
-
+# pre-deployment bay water bath check samples
+load("data/chk-samples/bath.check.samples-2020.RData")
 
 
 
@@ -61,8 +64,6 @@ rm(df)
 #tag for samples can be tied to time series
 chk.df$datetime.tag <- round_date(chk.df$datetime, "20 min")
 
-# bath check samples
-load("tidied-data/bob-bath.check.samples-2020.RData")
 
 #tag for samples can be tied to time series
 bth.chk.df$datetime.tag <- bth.chk.df$datetime
