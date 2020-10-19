@@ -190,12 +190,12 @@ p = ggplot(pre.deploy.bath, aes(datetime))
 pre.b.phs = p + geom_point(aes(y = pH_int), size = 0.25, color = "seagreen") +
   geom_point(aes(y = pH_ext), size = 0.25, color = "green") +
   xlab("") + #last x label sets the time axis label
-  ylab("pH int, ext, dickson\n")+ 
+  ylab("pH int (dark green)\n ext (light green)\n dickson (black)\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
   ylim(8.0, 8.2) +
-  geom_point(data = bth.chk.df, aes(x=datetime, y= pH), shape = 18, size = 1,
+  geom_point(data = bth.chk.df, aes(x=datetime, y= pH), shape = 18, size = 2,
              color = "black", show.legend = F)  +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25), 
@@ -258,7 +258,7 @@ print(pre.b.s)
 
 p = ggplot(pre.deploy.bath, aes(datetime, ctd_sal))
 pre.b.s.dt = p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("Pre-Deployment Common Bath for MARI 2020") + #last x label sets the time axis label
+  xlab("Pre-Deployment Bay Water Bath MARI 2020") + #last x label sets the time axis label
   ylab("S\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -280,7 +280,7 @@ summary(pre.deploy.bath$ctd_temp)
 
 p = ggplot(pre.deploy.bath, aes(datetime, ctd_temp))
 pre.b.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Pre-Deployment Common Bath for MARI 2020") + #last x label sets the time axis label
+  xlab("Pre-Deployment Bay Water Bath MARI 2020") + #last x label sets the time axis label
   ylab("T\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -325,7 +325,7 @@ print(pre.b.t.dt)
 
 
 
-# PRE deployment Dickson Standard Run Assessment ##############################
+# PRE deployment Dickson TRIS Seawater Plots ##############################
 
 
 #creating Dickson Standard Line to be plotted alongside instrument data
@@ -472,7 +472,7 @@ pre.d.pHs = p + geom_point(aes(y = pH_int_cell), size = 0.25, color = "seagreen"
   geom_point(aes(y = pH_ext_cell), size = 0.25, color = "green") +
   geom_point(aes(y = DL), size = 0.25, color = "black") +
   xlab(" ") + #last x label sets the time axis label
-  ylab("pH int, ext, dickson\n")+ 
+  ylab("pH int (light green)\n ext (dark green)\n TRIS (black)\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
@@ -519,8 +519,8 @@ print(pre.d.pH.diff)
 p = ggplot(pre.dickson, aes(x =datetime))
 pre.d.DL.diff = p + geom_point(aes(y = DL_pH_diff_int), size = 0.25, color = "seagreen") +
   geom_point(aes(datetime, DL_pH_diff_ext), size = 0.25, color = "green") +
-  xlab("Pre-Deployment Dickson Standard Run for MARI 2020") + #last x label sets the time axis label
-  ylab("abs offset from Dickson\n")+
+  xlab("Pre-Deployment Dickson TRIS Run for MARI 2020") + #last x label sets the time axis label
+  ylab("abs offset from Dickson\n pH_int (dark green) pH_ext (light green) \n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
@@ -546,7 +546,7 @@ summary(pre.dickson$pH_temp)
 
 p = ggplot(pre.dickson, aes(datetime, pH_temp))
 pre.d.t.dt = p + geom_point(aes(), size = 0.25, color = "red4") +
-  xlab("Pre-Deployment Dickson Standard Run for MARI 2020") + #last x label sets the time axis label
+  xlab("Pre-Deployment Dickson TRIS Run for MARI 2020") + #last x label sets the time axis label
   ylab("T\n")+
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -568,13 +568,20 @@ print(pre.d.t.dt)
 
 
 
-# saving plots of pre deployment dickson standard run ##############
+# saving plots of pre deployment runs ##############
 
 ls()
 
-# "pre.d.DL.diff"   
-# [5] "pre.d.ext.v"      "pre.d.int.v"      "pre.d.pH.diff"    "pre.d.pHs"       
-# [9] "pre.d.t.dt"       "pre.d.v_diff"     "pre.dickson"      "sal_std"         
+# [1] "bth.chk.df"       "ggplotRegression" "max_ext_v"       
+# [4] "max_int_v"        "min_ext_v"        "min_int_v"       
+# [7] "offset_std"       "p"                "pre.b.abs.v_diff"
+# [10] "pre.b.ext.v"      "pre.b.int.v"      "pre.b.pH.diff"   
+# [13] "pre.b.phs"        "pre.b.s"          "pre.b.s.dt"      
+# [16] "pre.b.t.dt"       "pre.d.DL.diff"    "pre.d.ext.v"     
+# [19] "pre.d.int.v"      "pre.d.pH.diff"    "pre.d.pHs"       
+# [22] "pre.d.t.dt"       "pre.d.v_diff"     "pre.deploy.bath" 
+# [25] "pre.dickson"      "sal_std"          "t1"              
+# [28] "t2"                
 
 
 
@@ -582,17 +589,35 @@ ls()
 ggsave("plots/mari/MARI-pre.deployment_dickson.std.volts.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.int.v), ggplotGrob(pre.d.ext.v),
                               ggplotGrob(pre.d.v_diff), ggplotGrob(pre.d.t.dt), 
-                              size = "last")), width = 6.65, height = 3.5)
+                              size = "first")), width = 6.65, height = 3.5)
 
 
 
 ggsave("plots/mari/MARI-pre.deployment_dickson.std.pHs.png",
        plot = grid.draw(rbind(ggplotGrob(pre.d.pHs), ggplotGrob(pre.d.pH.diff),
                               ggplotGrob(pre.d.t.dt), 
-                              size = "last")), width = 6.65, height = 3.5)
+                              size = "first")), width = 6.65, height = 3.5)
 
+# save pre-deployment bath plots
 
+ggsave("plots/mari/MARI-pre-deployment_bath_Volt_Sal_2020.png",
+       plot = grid.draw(rbind(ggplotGrob(pre.b.int.v), ggplotGrob(pre.b.ext.v),
+                              ggplotGrob(pre.b.abs.v_diff), ggplotGrob(pre.b.s.dt),
+                              size = "first")), width = 6.65, height = 3.5)
 
+ggsave("plots/mari/MARI-pre-deployment_bath_pHs_Sal_2020.png",
+       plot = grid.draw(rbind(ggplotGrob(pre.b.phs), ggplotGrob(pre.b.pH.diff),
+                              ggplotGrob(pre.b.s.dt),
+                              size = "first")), width = 6.65, height = 3.5)
+
+ggsave("plots/mari/MARI-pre-deployment_bath_T_S_2020.png",
+       plot = grid.draw(rbind(ggplotGrob(pre.b.s), ggplotGrob(pre.b.t.dt),
+                              size = "first")), width = 6.65, height = 3.5)
+
+ggsave("plots/mari/MARI-pre-deployment_bath_pHs_T_S_2020.png",
+       plot = grid.draw(rbind(ggplotGrob(pre.b.phs), ggplotGrob(pre.b.pH.diff),
+                              ggplotGrob(pre.b.s), ggplotGrob(pre.b.t.dt),
+                              size = "first")), width = 6.65, height = 3.5)
 
 
 
@@ -2495,14 +2520,14 @@ print(post.d.t.dt.trim)
 # regression plots
 
 # Dickson predicted versus pH
-post.d.DL.v.pH.int.trim <- ggplotRegression(post.dickson.trim, "DL", "pH_int_v")
-
-print(post.d.DL.v.pH.int.trim)
-
-
-post.d.DL.v.pH.ext.trim <- ggplotRegression(post.dickson.trim, "DL", "pH_ext_v")
-
-print(post.d.DL.v.pH.ext.trim)
+# post.d.DL.v.pH.int.trim <- ggplotRegression(post.dickson.trim, "DL", "pH_int_v")
+# 
+# print(post.d.DL.v.pH.int.trim)
+# 
+# 
+# post.d.DL.v.pH.ext.trim <- ggplotRegression(post.dickson.trim, "DL", "pH_ext_v")
+# 
+# print(post.d.DL.v.pH.ext.trim)
 
 
 
