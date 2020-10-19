@@ -1,0 +1,10 @@
+Analyst, Sample ID, Sample Tag, Notes1, Type, 434 nm, 578 nm, 730 nm
+RHartnett, Blank, no dye, 0.0000, Blank, 0.0000, 0.0000, -0.0000
+RHartnett, P-0076-1-1-1, no dye, 0.0000, Measurement 1, 0.1102, 0.0894, 0.1547
+RHartnett, P-0076-1-1-1, m-cresol added, 0.0000, Measurement 2, 0.7807, 0.6836, 0.1561
+RHartnett, P-0076-1-2-2, no dye, 0.0000, Measurement 1, 0.1056, 0.0847, 0.1506
+RHartnett, P-0076-1-2-2, m-cresol added, 0.0000, Measurement 2, 0.7924, 0.6962, 0.1537
+RHartnett, P-0076-1-B-3, no dye, 0.0000, Measurement 1, 0.1054, 0.0818, 0.1494
+RHartnett, P-0076-1-B-3, m-cresol added, 0.0000, Measurement 2, 0.7742, 0.6799, 0.1483
+RHartnett, BAY-STD-BATCH-1, no dye, 0.0000, Measurement 1, 0.0480, 0.0385, 0.1137
+RHartnett, BAY-STD-BATCH-1, m-cresol added, 0.0000, Measurement 2, 0.6963, 0.6649, 0.1140
