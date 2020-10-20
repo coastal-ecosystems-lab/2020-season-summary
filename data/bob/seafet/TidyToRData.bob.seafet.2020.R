@@ -11,6 +11,8 @@ library(here)
 # "20200710-20200815_processed.csv"
 # "20200815-20201025_processed.csv"
 
+# use at your peril...
+# rm(list=ls())
 
 getwd()
 
@@ -171,7 +173,7 @@ df$datetime <- paste0(df$date," ", df$hms)
 
 # convert datetime to POSIXcT
 
-df$datetime <- as.POSIXct(df$datetime) 
+df$datetime <- as.POSIXct(df$datetime, tz ="GMT") 
 
 #round to nearest 20th minute to group each sampling event
 # the setting on the seafet is to take 10 samples every 20 minutes
@@ -251,15 +253,15 @@ save(df, file = "bob.dickson.run.predeploy.2020.sft.RData")
 
 median.dickson.value.int <- median(df$pH_int)
 print(median.dickson.value.int) 
-# [1] 8.252905
+# [1] 8.2572
 
 median.dickson.value.ext <- median(df$pH_ext)
 print(median.dickson.value.ext) 
-#[1] 8.253865
+#[1] 8.2162
 
 median.temp.value <- median(df$pH_temp) 
 print(median.temp.value) 
-#[1] 18.5659
+#[1] 18.59635
 
 #rm(list=ls())
 
@@ -400,7 +402,7 @@ df$datetime <- paste0(df$date," ", df$hms)
 
 # convert datetime to POSIXcT
 
-df$datetime <- as.POSIXct(df$datetime) 
+df$datetime <- as.POSIXct(df$datetime, tz = "GMT") 
 
 #round to nearest 20th minute
 
@@ -419,7 +421,7 @@ df <- select(df, datetime, og_pH_int, og_pH_ext, pH_temp, pH_int_v, pH_ext_v, da
 
 # read in CTD raw data file ########################################
 
-rm(df4)
+#rm(df4)
 
 getwd()
 
@@ -456,7 +458,9 @@ df4 <- select(df4, datetime, ctd_temp, ctd_sal)
 
 # convert to POSIXcT
 
-df4$datetime <- as.POSIXct(df4$datetime) 
+# format: "%d %b %Y %H:%M:%S"
+
+df4$datetime <- as.POSIXct(df4$datetime, format = "%d %b %Y %H:%M:%S", tz = "GMT") 
 
 df4$datetime.tag <- round_date(df4$datetime, "20 min")
 
@@ -467,14 +471,14 @@ df1 <- left_join(df, df4, by = "datetime.tag")
 
 rm(df,df4)
 
-#remove NA emtpy cell (NA) values
-df1 <- df1 %>%
-  filter(ctd_temp != '')
+#remove NA emtpy cell (NA) values (if needed)
+#df1 <- df1 %>%
+#  filter(ctd_temp != '')
 
 
 getwd()
 
-setwd(here("tidied-data", "bob", "seafet", "pre-deploy.bath-bob-2020"))
+setwd(here("data", "bob", "seafet", "pre-deploy.bath-bob-2020"))
 
 getwd()
 
@@ -494,7 +498,7 @@ rm(list=ls())
 
 load('bob-pre.deploy.bath-2020-raw.RData')
 
-instr.info <- read.csv("bob seafet raw/20200430-20200710_raw.csv",
+instr.info <- read.csv("bob-seafet-upload-20200820.CSV",
                        header=F, nrows = 8,  stringsAsFactors=F, sep=",")
 
 
@@ -512,7 +516,8 @@ pH.calc.df <- data.frame(k0_int.bob.2020.sbe = as.numeric(instr.info$V3[3]),
                          stringsAsFactors = FALSE)
 
 
-#for calculations to be accurate, greatest digit count is 22, deafault is 7
+#for calculations to be accurate 8 digits are needed.
+#using this command greatest digit count is 22, deafault is 7
 options(digits = 8)
 
 # set up seafetV1 processing algorithm bob deployment 2020 ###################
@@ -610,9 +615,36 @@ df1$abs_v_diff <- abs(df1$pH_int_v - df1$pH_ext_v)
 
 #reorder and pull select vars
 
-df1 <- select(df1, datetime.x, datetime.y, datetime.tag,
-              pH_int_v, pH_ext_v, abs_v_diff, pH_temp, ctd_sal,
+
+df1 <- select(df1, datetime.tag,
+              pH_int_v, pH_ext_v, abs_v_diff, pH_temp, ctd_sal, ctd_temp,
               pH_int_cell, pH_ext_cell, abs_pH_diff)
+
+
+df1 <- rename(df1, datetime = datetime.tag,
+              pH_int = pH_int_cell,
+              pH_ext = pH_ext_cell)
+
+
+df1 <- df1 %>%
+  group_by(datetime) %>%
+  summarise(pH_int_v = median(pH_int_v),
+            pH_ext_v = median(pH_ext_v),
+            abs_v_diff = median(abs_v_diff),
+            pH_int =  median(pH_int), 
+            pH_ext =  median(pH_ext), 
+            abs_pH_diff =  median(abs_pH_diff),
+            pH_temp = median(pH_temp),
+            ctd_sal = median(ctd_sal),
+            ctd_temp = median(ctd_temp))
+
+
+getwd()
+
+setwd(here("tidied-data", "bob", "seafet"))
+
+getwd()
+
 
 
 save(df1, file = 'bob-pre.deploy.bath-2020-prcsd.RData')
