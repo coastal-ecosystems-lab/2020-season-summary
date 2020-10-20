@@ -62,7 +62,7 @@ rm(df)
 
 
 #tag for samples can be tied to time series
-chk.df$datetime.tag <- round_date(chk.df$datetime, "20 min")
+# chk.df$datetime.tag <- round_date(chk.df$datetime, "20 min")
 
 
 #tag for samples can be tied to time series
@@ -71,14 +71,7 @@ bth.chk.df$datetime.tag <- bth.chk.df$datetime
 
 
 #load predeployment common bath 
-load("tidied-data/bob-pre.deploy.bath-2020-prcsd.RData")
-
-df1 <- df1 %>%
-  rename(datetime = "datetime.x")
-
-df1 <- select(df1, datetime, datetime.tag,
-              pH_int_v, pH_ext_v, abs_v_diff, pH_temp, ctd_sal,
-              pH_int_cell, pH_ext_cell, abs_pH_diff)
+load("tidied-data/bob/seafet/bob-pre.deploy.bath-2020-prcsd.RData")
 
 pre.deploy.bath <- df1
 rm(df1)
@@ -127,29 +120,29 @@ rm(df1)
 
 
 #load POST deployment common bath 
-load("tidied-data/bob-post.deploy.bath-2020-prcsd.RData")
-
-df1 <- df1 %>%
-  rename(datetime = "datetime.x")
-
-df1 <- select(df1, datetime, datetime.tag,
-              pH_int_v, pH_ext_v, abs_v_diff, pH_temp, ctd_sal,
-              pH_int_cell, pH_ext_cell, abs_pH_diff)
-
-post.deploy.bath <- df1
-rm(df1)
+# load("tidied-data/bob-post.deploy.bath-2020-prcsd.RData")
+# 
+# df1 <- df1 %>%
+#   rename(datetime = "datetime.x")
+# 
+# df1 <- select(df1, datetime, datetime.tag,
+#               pH_int_v, pH_ext_v, abs_v_diff, pH_temp, ctd_sal,
+#               pH_int_cell, pH_ext_cell, abs_pH_diff)
+# 
+# post.deploy.bath <- df1
+# rm(df1)
 
 
 #load POST deployment Dickson Standard Run
-load("tidied-data/bob-post-deploy-dickson-run-prcsd-2020.RData")
-
-df1 <- select(df1, datetime,
-              pH_int_v, pH_ext_v, abs_v_diff, pH_temp,
-              pH_int, pH_ext, abs_pH_diff)
-
-
-post.dickson <- df1
-rm(df1)
+# load("tidied-data/bob-post-deploy-dickson-run-prcsd-2020.RData")
+# 
+# df1 <- select(df1, datetime,
+#               pH_int_v, pH_ext_v, abs_v_diff, pH_temp,
+#               pH_int, pH_ext, abs_pH_diff)
+# 
+# 
+# post.dickson <- df1
+# rm(df1)
 
 
 #adjusted data with local calibration constant
