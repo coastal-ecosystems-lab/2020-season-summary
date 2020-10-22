@@ -1,20 +1,20 @@
-Analyst, Sample ID, Sample Tag, Notes1, Type, 434 nm, 578 nm, 730 nm
-CH, Blank, no dye, 0.0000, Blank, 0.0000, -0.0000, -0.0001
-CH, BI-0035-1-P1-D, no dye, 0.0000, Measurement 1, 0.0472, 0.0389, 0.1150
-CH, BI-0035-1-P1-D, m-cresol added, 0.0000, Measurement 2, 0.6211, 0.8710, 0.1158
-CH, BI-0035-1-P2-C, no dye, 0.0000, Measurement 1, 0.1155, 0.0980, 0.1689
-CH, BI-0035-1-P2-C, m-cresol added, 0.0000, Measurement 2, 0.6970, 0.9386, 0.1688
-CH, M-0044-1-P1-4, no dye, 0.0000, Measurement 1, 0.0561, 0.0458, 0.1201
-CH, M-0044-1-P1-4, m-cresol added, 0.0000, Measurement 2, 0.6664, 0.7970, 0.1210
-CH, M-0044-1-P2-G, no dye, 0.0000, Measurement 1, 0.3160, 0.2708, 0.3176
-CH, M-0044-1-P2-G, m-cresol added, 0.0000, Measurement 2, 0.8869, 0.9746, 0.3234
-CH, P-0035-2-P1-B, no dye, 0.0000, Measurement 1, 0.0531, 0.0443, 0.1198
-CH, P-0035-2-P1-B, m-cresol added, 0.0000, Measurement 2, 0.6684, 0.7813, 0.1211
-CH, P-0035-2-P2-1, no dye, 0.0000, Measurement 1, 0.1295, 0.1130, 0.1801
-CH, P-0035-2-P2-1, m-cresol added, 0.0000, Measurement 2, 0.7468, 0.8531, 0.1779
-CH, P-0036-1-P1-E, no dye, 0.0000, Measurement 1, 0.0732, 0.0632, 0.1360
-CH, P-0036-1-P1-E, m-cresol added, 0.0000, Measurement 2, 0.6532, 0.8800, 0.1364
-CH, P-0036-1-P2-3, no dye, 0.0000, Measurement 1, 0.2819, 0.2471, 0.2993
-CH, P-0036-1-P2-3, m-cresol added, 0.0000, Measurement 2, 0.8412, 1.0368, 0.2913
-CH, BAY-STD1-10202020-2, no dye, 0.0000, Measurement 1, 0.0882, 0.0676, 0.1368
-CH, BAY-STD1-10202020-2, m-cresol added, 0.0000, Measurement 2, 0.6882, 0.8244, 0.1345
+Analyst, Sample ID, Sample Tag, Notes1, Type, 434 nm, 578 nm, 730 nm,dyeV,salinity,temperature
+CH, Blank, no dye,0, Blank,0,0,-0.0001,0,NaN,NaN
+CH, BI-0035-1-P1-D, no dye,0, Measurement 1,0.0472,0.0389,0.115,0,31.48,16.4
+CH, BI-0035-1-P1-D, m-cresol added,0, Measurement 2,0.6211,0.871,0.1158,80,31.48,16.4
+CH, BI-0035-1-P2-C, no dye,0, Measurement 1,0.1155,0.098,0.1689,0,31.48,16.4
+CH, BI-0035-1-P2-C, m-cresol added,0, Measurement 2,0.697,0.9386,0.1688,80,31.48,16.4
+CH, M-0044-1-P1-4, no dye,0, Measurement 1,0.0561,0.0458,0.1201,0,31.28430305,16.17393697
+CH, M-0044-1-P1-4, m-cresol added,0, Measurement 2,0.6664,0.797,0.121,80,31.28430305,16.17393697
+CH, M-0044-1-P2-G, no dye,0, Measurement 1,0.316,0.2708,0.3176,0,31.28430305,16.17393697
+CH, M-0044-1-P2-G, m-cresol added,0, Measurement 2,0.8869,0.9746,0.3234,80,31.28430305,16.17393697
+CH, P-0035-2-P1-B, no dye,0, Measurement 1,0.0531,0.0443,0.1198,0,31.23176915,15.3563308
+CH, P-0035-2-P1-B, m-cresol added,0, Measurement 2,0.6684,0.7813,0.1211,80,31.23176915,15.3563308
+CH, P-0035-2-P2-1, no dye,0, Measurement 1,0.1295,0.113,0.1801,0,31.23176915,15.3563308
+CH, P-0035-2-P2-1, m-cresol added,0, Measurement 2,0.7468,0.8531,0.1779,80,31.23176915,15.3563308
+CH, P-0036B-1-P1-E, no dye,0, Measurement 1,0.0732,0.0632,0.136,0,31.55,16.32
+CH, P-0036B-1-P1-E, m-cresol added,0, Measurement 2,0.6532,0.88,0.1364,80,31.55,16.32
+CH, P-0036B-1-P2-3, no dye,0, Measurement 1,0.0882,0.0676,0.1368,0,31.55,16.32
+CH, P-0036B-1-P2-3, m-cresol added,0, Measurement 2,0.6882,0.8244,0.1345,80,31.55,16.32
+CH, BAY-STD1-10202020-2, no dye,0, Measurement 1,0.2819,0.2471,0.2993,0,27.53,11.92
+CH, BAY-STD1-10202020-2, m-cresol added,0, Measurement 2,0.8412,1.0368,0.2913,80,27.53,11.92
