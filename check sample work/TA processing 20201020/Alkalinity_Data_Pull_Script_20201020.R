@@ -8,18 +8,27 @@
 
 library(dplyr)
 library(stringr)
+library(here)
 
-#setwd("C:/Users/915712257/Box Sync/Nielsen Lab/RTC CeNCOOS/Seawater Chemistry/Data/TA/processed/20feb2020")
 
-setwd("C:/Users/rrkad/Box Sync/Nielsen Lab/RTC CeNCOOS/Seawater Chemistry/Data/TA/processed/20feb2020")
+setwd(here())
 
-rm(list=ls())
+getwd()
+
+setwd(here("check sample work", "TA processing 20201020"))
+
+
+getwd()
+
+#use at your own peril....
+
+#rm(list=ls())
 
 
 list.files()
 
 #   sample information file
-#  "alkalinity run 02202020 samples only.csv"
+#"alkalinity run 10122020 samples only.csv"
 
 #   sample environmental data
 # "20200220 sample metadata.csv" 
@@ -28,30 +37,34 @@ list.files()
 # "alkalinity run 02202020 data only.csv"  
 
 
+
 # read in sample summary information ####-----------------------------------------------------
 
-df_sum = read.csv("alkalinity run 02202020 samples only.csv",
-                  header=T, stringsAsFactors=F, sep=",")
+#NEED TO UPDATE HOW TO BRING THIS DATA IN
+# WOULD BE BETTER TO GET .CSV FROM LABX THEN LESS ALTERING WOULD NEED TO HAPPEN
+# FOR THIS PARTICULAR VERSION I DOWNLOADED A .XLSX AND THEN SAVED AS .CSV IN EXCEL
 
-df_sum_rm_rows <- 1:9
+df_sum = read.csv("alkalinity run 10122020 samples only.csv",
+                  header=T, skip = 14, stringsAsFactors=F, sep=",")
+
+# used before finding option skip above
+#df_sum_rm_rows <- 1:9
+#df_sum <- df_sum[-df_sum_rm_rows,]
 
 
-df_sum <- df_sum[-df_sum_rm_rows,]
-
-
-df_sum <- select(df_sum,  X,
-                X.5)
+df_sum <- select(df_sum,  Sample.ID,
+                Result)
 
 
 df_sum <- df_sum %>% 
-  filter(X != '') 
+  filter(Sample.ID != '') 
 
 
-df_sum$X.5 <- str_remove(df_sum$X.5, "g")
+df_sum$Result <- str_remove(df_sum$Result, "g")
 
 df_sum <- df_sum %>%                     
-  rename(sample = 'X', 
-         weight ='X.5')
+  rename(sample = 'Sample.ID', 
+         weight ='Result')
 
 
 df_sum$weight <- as.numeric(df_sum$weight) 
