@@ -28,14 +28,17 @@ getwd()
 list.files()
 
 #   sample information file
-#"alkalinity run 10122020 samples only.csv"
+# "alkalinity run 10122020 samples only.csv"
+# "alkalinity run 10132020 samples only.xlsx"
 
 #   sample environmental data
-# "20200220 sample metadata.csv" 
+# "20201012 sample metadata.csv" 
+# "20201013 sample metadata.csv"
 
-# alkalinity titration data file
-# "alkalinity run 02202020 data only.csv"  
-
+# alkalinity titration data files
+# "alkalinity run 10122020 data only.xlsx"       
+# "alkalinity run 10122020 part 1 data only.xlsx"
+# "alkalinity run 10132020 data only.xlsx"
 
 
 # read in sample summary information ####-----------------------------------------------------
