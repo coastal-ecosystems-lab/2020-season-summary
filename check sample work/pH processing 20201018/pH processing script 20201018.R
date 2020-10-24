@@ -26,7 +26,7 @@ list.files()
     
 
 #pH bay water baths with Dickson Standard check - ran 9/24/2020
-"20201012_results.csv"            "20201013_results.csv"
+# "20201012_results.csv"            "20201013_results.csv"
 
 
 
@@ -39,7 +39,7 @@ rm(list = ls())
 
 #enter your csv file title below
 
-filename <- "20200924_results"
+filename <- "20201013_results"
 
 results <- paste0(filename, "_processed")
 
