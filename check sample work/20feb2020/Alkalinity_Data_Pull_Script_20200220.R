@@ -6,24 +6,18 @@
 
 #set work environment ------------------------------------------------------
 
-# use at your peril....
-# rm(list=ls())
-
 library(dplyr)
 library(stringr)
 library(here)
-
 
 setwd(here())
 
 getwd()
 
-setwd(here("check sample work", "TA processing 20201020"))
+setwd(here("check sample work", "20feb2020"))
 
 
 getwd()
-
-#use at your own peril....
 
 #rm(list=ls())
 
@@ -31,46 +25,39 @@ getwd()
 list.files()
 
 #   sample information file
-# "alkalinity run 10122020 samples only.csv"
-# "alkalinity run 10132020 samples only.xlsx"
+#  "alkalinity run 02202020 samples only.csv"
 
 #   sample environmental data
-# "20201012 sample metadata.csv" 
-# "20201013 sample metadata.csv"
+# "20200220 sample metadata.csv" 
 
-# alkalinity titration data files
-# "alkalinity run 10122020 data only.csv"       
-# "alkalinity run 10122020 part 1 data only.csv"
-# "alkalinity run 10132020 data only.csv"
+# alkalinity titration data file
+# "alkalinity run 02202020 data only.csv"  
 
 
 # read in sample summary information ####-----------------------------------------------------
 
-#NEED TO UPDATE HOW TO BRING THIS DATA IN
-# WOULD BE BETTER TO GET .CSV FROM LABX THEN LESS ALTERING WOULD NEED TO HAPPEN
-# FOR THIS PARTICULAR VERSION I DOWNLOADED A .XLSX AND THEN SAVED AS .CSV IN EXCEL
+df_sum = read.csv("alkalinity run 02202020 samples only.csv",
+                  header=T, stringsAsFactors=F, sep=",")
 
-df_sum = read.csv("alkalinity run 10122020 samples only.csv",
-                  header=T, skip = 14, stringsAsFactors=F, sep=",")
-
-# used before finding option skip above
-#df_sum_rm_rows <- 1:9
-#df_sum <- df_sum[-df_sum_rm_rows,]
+df_sum_rm_rows <- 1:9
 
 
-df_sum <- select(df_sum,  Sample.ID,
-                Result)
+df_sum <- df_sum[-df_sum_rm_rows,]
+
+
+df_sum <- select(df_sum,  X,
+                X.5)
 
 
 df_sum <- df_sum %>% 
-  filter(Sample.ID != '') 
+  filter(X != '') 
 
 
-df_sum$Result <- str_remove(df_sum$Result, "g")
+df_sum$X.5 <- str_remove(df_sum$X.5, "g")
 
 df_sum <- df_sum %>%                     
-  rename(sample = 'Sample.ID', 
-         weight ='Result')
+  rename(sample = 'X', 
+         weight ='X.5')
 
 
 df_sum$weight <- as.numeric(df_sum$weight) 
@@ -78,7 +65,7 @@ df_sum$weight <- as.numeric(df_sum$weight)
 #read in environmental and electrode data ------------------------------------------------
 
 
-df_env = read.csv("20201012 sample metadata.csv",
+df_env = read.csv("20200220 sample metadata.csv",
                   header=T, stringsAsFactors=F, sep=",")
 
 df_env <- df_env %>%                     
@@ -88,50 +75,16 @@ df_env <- df_env %>%
 
 # read in sample data ####-------------------------------------------------------------------
 
-# "alkalinity run 10122020 data only.csv"       
-# "alkalinity run 10122020 part 1 data only.csv"
 
-df1 = read.csv("alkalinity run 10122020 part 1 data only.csv",
+df = read.csv("alkalinity run 02202020 data only.csv",
                header=F, stringsAsFactors=F, sep=",")
-
-df1 <- select(df1,  
-              V6,
-              V12,
-              V20)
-
-
-df1 <- df1 %>%                     
-  rename(V1 = 'V6', 
-         V2 ='V12',
-         V3 = 'V20')
-
-
-
-df2 = read.csv("alkalinity run 10122020 data only.csv",
-              header=F, stringsAsFactors=F, sep=",")
-
-
-df2 <- select(df2,  
-              V5,
-              V11,
-              V18)
-
-df2 <- df2 %>%                     
-  rename(V1 = 'V5', 
-         V2 = 'V11',
-         V3 = 'V18')
-
-
-df <- bind_rows(df1, df2, .id = NULL)
-
-rm(df1,df2)
 
 # below selects variables of interest
 # if throws error "unused arguments" restart R session with ctrl + Shift + F10, and reload library(dplyr)
 
-# df1 <- select(df1,  V6,
-#                   V12,
-#                   V20)
+df <- select(df,  V3,
+                  V6,
+                  V10)
 
 
 #pulled this nifty fix to remove empty cells from each row. 
@@ -139,15 +92,15 @@ rm(df1,df2)
 # https://markhneedham.com/blog/2015/06/02/r-dplyr-removing-empty-rows/
 
 df <- df %>%
-  filter(V1 != '') %>%
-  filter(V2 != '') %>%
-  filter(V3 != '')
+  filter(V3 != '') %>%
+  filter(V6 != '') %>%
+  filter(V10 != '')
 
 
 df <- df %>%
-  rename(volume = 'V1',
-         E ='V2',
-         temperature = 'V3')
+  rename(volume = 'V3',
+         E ='V6',
+         temperature = 'V10')
 
 
 #point to each titration

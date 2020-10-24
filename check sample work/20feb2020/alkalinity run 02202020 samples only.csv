@@ -1,0 +1,69 @@
+Titration Samples Only,,,,,,,,,
+Method,,,,,,,,,
+Method ID,,Alk EQPoint 20200220,,,"Release state
+",,Released,,
+Name,,Alk EQPoint 20200220,,,Modified by,,SystemInternal,,
+Version,,23,,,,,,,
+Modified on,,2/20/2020 12:13:15 PM,,,,,,,
+Comment,,,,,,,,,
+Summary,,,,,,,,,
+Samples,,,,,,,,,
+,Sample ID,,,Name,,Result,,,State
+1,SACRIFICE,,,Sample size,,58.436 g,,,
+,,,,pH Start R1,,-24.800 pH,,,OK
+,,,,Total HCl R2,,1.102 mL,,,OK
+2,BAYSTD1-02202020-1,,,Sample size,,59.436 g,,,
+,,,,pH Start R1,,-54.400 pH,,,OK
+,,,,Total HCl R2,,1.424 mL,,,OK
+3,BAYSTD1-02202020-2,,,Sample size,,57.542 g,,,
+,,,,pH Start R1,,-54.700 pH,,,OK
+,,,,Total HCl R2,,1.379 mL,,,OK
+4,BAYSTD1-02202020-3,,,Sample size,,57.430 g,,,
+,,,,pH Start R1,,-55.000 pH,,,OK
+,,,,Total HCl R2,,1.376 mL,,,OK
+5,AMB-6-1,,,Sample size,,47.700 g,,,
+,,,,pH Start R1,,-54.600 pH,,,OK
+,,,,Total HCl R2,,1.158 mL,,,OK
+6,AMB-6-2,,,Sample size,,46.531 g,,,
+,,,,pH Start R1,,-55.300 pH,,,OK
+,,,,Total HCl R2,,1.124 mL,,,OK
+7,AMB-6-3,,,Sample size,,52.817 g,,,
+,,,,pH Start R1,,-55.100 pH,,,OK
+,,,,Total HCl R2,,1.283 mL,,,OK
+8,AMB-4-1,,,Sample size,,47.123 g,,,
+,,,,pH Start R1,,-56.400 pH,,,OK
+,,,,Total HCl R2,,1.142 mL,,,OK
+9,AMB-4-2,,,Sample size,,46.690 g,,,
+,,,,pH Start R1,,-57.000 pH,,,OK
+,,,,Total HCl R2,,1.133 mL,,,OK
+10,AMB-4-3,,,Sample size,,50.202 g,,,
+,,,,pH Start R1,,-56.900 pH,,,OK
+,,,,Total HCl R2,,1.220 mL,,,OK
+11,AMB-2-1,,,Sample size,,46.052 g,,,
+,,,,pH Start R1,,-57.800 pH,,,OK
+,,,,Total HCl R2,,1.117 mL,,,OK
+12,AMB-2-2,,,Sample size,,50.073 g,,,
+,,,,pH Start R1,,-57.300 pH,,,OK
+,,,,Total HCl R2,,1.216 mL,,,OK
+13,AMB-2-3,,,Sample size,,46.296 g,,,
+,,,,pH Start R1,,-58.300 pH,,,OK
+,,,,Total HCl R2,,1.124 mL,,,OK
+14,BAYSTD1-02202020-4,,,Sample size,,54.573 g,,,
+,,,,pH Start R1,,-57.300 pH,,,OK
+,,,,Total HCl R2,,1.310 mL,,,OK
+15,BAYSTD1-02202020-5,,,Sample size,,54.130 g,,,
+,,,,pH Start R1,,-57.400 pH,,,OK
+,,,,Total HCl R2,,1.300 mL,,,OK
+16,BAYSTD1-02202020-6,,,Sample size,,51.131 g,,,
+,,,,pH Start R1,,-57.700 pH,,,OK
+,,,,Total HCl R2,,1.230 mL,,,OK
+17,CRM186-02202020-1,,,Sample size,,48.138 g,,,
+,,,,pH Start R1,,-64.500 pH,,,OK
+,,,,Total HCl R2,,1.183 mL,,,OK
+18,CRM186-02202020-2,,,Sample size,,47.452 g,,,
+,,,,pH Start R1,,-64.700 pH,,,OK
+,,,,Total HCl R2,,1.170 mL,,,OK
+19,CRM186-02202020-3,,,Sample size,,46.955 g,,,
+,,,,pH Start R1,,-64.700 pH,,,OK
+,,,,Total HCl R2,,1.154 mL,,,OK
+2/20/2020 5:22:54 PM,,,SystemInternal,,,,,1/1,
