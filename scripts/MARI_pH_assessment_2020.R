@@ -190,7 +190,7 @@ p = ggplot(pre.deploy.bath, aes(datetime))
 pre.b.phs = p + geom_point(aes(y = pH_int), size = 0.25, color = "seagreen") +
   geom_point(aes(y = pH_ext), size = 0.25, color = "green") +
   xlab("") + #last x label sets the time axis label
-  ylab("pH int (dark green)\n ext (light green)\n dickson (black)\n")+ 
+  ylab("pH int (dark green)\n ext (light green)\n check samples (black)\n")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
