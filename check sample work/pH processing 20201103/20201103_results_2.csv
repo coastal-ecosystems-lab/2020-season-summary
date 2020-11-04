@@ -1,0 +1,20 @@
+Analyst, Sample ID, Sample Tag, Notes1, Type, 434 nm, 578 nm, 730 nm,dyeV,salinity,temperature
+CH, Blank, no dye,0, Blank,0.0001,0,0,0,NaN,NaN
+CH, P-0036-C1-P1-C, no dye,0, Measurement 1,0.0465,0.0548,0.1297,0,28.17258831,17.5611691
+CH, P-0036-C1-P1-C, m-cresol added,0, Measurement 2,0.4709,0.0688,0.1312,80,28.17258831,17.5611691
+CH, P-0036-C1-P2-B, no dye,0, Measurement 1,0.168,0.1597,0.2211,0,28.17258831,17.5611691
+CH, P-0036-C1-P2-B, m-cresol added,0, Measurement 2,0.5876,0.1722,0.2202,80,28.17258831,17.5611691
+CH, P-0045-C2-P1-3, no dye,0, Measurement 1,0.0428,0.0509,0.1263,0,27.93769792,18.93880826
+CH, P-0045-C2-P1-3, m-cresol added,0, Measurement 2,0.4742,0.0649,0.1265,80,27.93769792,18.93880826
+CH, P-0045-C2-P2-E, no dye,0, Measurement 1,0.2093,0.1983,0.2544,0,27.93769792,18.93880826
+CH, P-0045-C2-P2-E, m-cresol added,0, Measurement 2,0.6309,0.213,0.2547,80,27.93769792,18.93880826
+CH, B-0048-C1-P1-1, no dye,0, Measurement 1,0.0466,0.0546,0.1291,0,27.81492735,17.92967218
+CH, B-0048-C1-P1-1, m-cresol added,0, Measurement 2,0.4598,0.0661,0.1278,80,27.81492735,17.92967218
+CH, B-0048-C1-P2-D, no dye,0, Measurement 1,0.204,0.1927,0.2474,0,27.81492735,17.92967218
+CH, B-0048-C1-P2-D, m-cresol added,0, Measurement 2,0.633,0.2061,0.25,80,27.81492735,17.92967218
+CH, P-0036-C2-P1-G, no dye,0, Measurement 1,0.0417,0.0501,0.1255,0,27.80337652,18.02689593
+CH, P-0036-C2-P1-G, m-cresol added,0, Measurement 2,0.4645,0.0632,0.1257,80,27.80337652,18.02689593
+CH, P-0036-C2-P2-2, no dye,0, Measurement 1,0.1492,0.142,0.2039,0,27.80337652,18.02689593
+CH, P-0036-C2-P2-2, m-cresol added,0, Measurement 2,0.5656,0.155,0.2047,80,27.80337652,18.02689593
+CH, BAYSTD-1-4, no dye,0, Measurement 1,0.1762,0.169,0.2288,0,27.53,11.92
+CH, BAYSTD-1-4, m-cresol added,0, Measurement 2,0.5844,0.1824,0.2295,80,27.53,11.92
