@@ -1,0 +1,10 @@
+"Analyst","Sample.ID","Sample.Tag","Notes1","Type","X434.nm","X578.nm","X730.nm","dyeV","salinity","temperature","a1a2","a1a2crct","pH_is","pH_a","pH_is_crct","pH_a_crct"
+"RHartnett"," Blank"," no dye",0," Blank",0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA
+"RHartnett"," baystd1-epp-11092020-1-4"," no dye",0," Measurement 1",0.1361,0.1147,0.1994,0,27.53,11.92,1.16523638633172,1.16893956623498,7.96154053440705,7.7698364382155,7.96303034118783,7.77132624499628
+"RHartnett"," baystd1-epp-11092020-1-4"," m-cresol added",0," Measurement 2",0.7888,0.8733,0.2112,80,27.53,11.92,NA,NA,NA,NA,NA,NA
+"RHartnett"," baystd1-epp-11092020-2-2"," no dye",0," Measurement 1",0.0486,0.0396,0.114,0,27.53,11.92,0.958174324530606,0.959442454587086,7.87025821676535,7.67855412057381,7.87087178915735,7.6791676929658
+"RHartnett"," baystd1-epp-11092020-2-2"," m-cresol added",0," Measurement 2",0.7028,0.6664,0.1131,80,27.53,11.92,NA,NA,NA,NA,NA,NA
+"RHartnett"," baystd1-stck-11092020-3-G"," no dye",0," Measurement 1",0.0606,0.0479,0.1195,0,27.53,11.92,0.975169300225734,0.976637291196388,7.87841797720877,7.68671388101722,7.87911647865354,7.68741238246199
+"RHartnett"," baystd1-stck-11092020-3-G"," m-cresol added",0," Measurement 2",0.7338,0.7046,0.1282,80,27.53,11.92,NA,NA,NA,NA,NA,NA
+"RHartnett"," baystd1-stck-11092020-4-D"," no dye",0," Measurement 1",0.0704,0.065,0.1402,0,27.53,11.92,0.941454490013722,0.942525994816283,7.86209578746713,7.67039169127558,7.86262298564612,7.67091888945457
+"RHartnett"," baystd1-stck-11092020-4-D"," m-cresol added",0," Measurement 2",0.7184,0.6746,0.1323,80,27.53,11.92,NA,NA,NA,NA,NA,NA
