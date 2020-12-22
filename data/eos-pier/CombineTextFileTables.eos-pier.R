@@ -1,13 +1,22 @@
+library(dplyr)
+library(lubridate)
+library(here)
 
 
 #combining data from text files
 
-setwd("C:/Users/Ryan/Desktop/2020 season summary/data/eos-pier")
+setwd(here())
+
+getwd()
+
+setwd(here("data", "eos-pier"))
+
+getwd()
+
 
 rm(list = ls())
 
-library(dplyr)
-library(lubridate)
+
 
 # ====================================================================================================================================
 #   Date     Time  Temp SpCond   Cond  Resist   TDS    Sal   Press   Depth    pH      pH   Chl   Chl Turbid+ ODOsat    ODO Battery
@@ -19,6 +28,8 @@ list.files()
 
 #assign file names
 
+#June 2020 Files
+
 file1 <- "YSI_RTC_20191120-20191219.txt"
 file1.1 <- "YSI_RTC_20191120-20191219.csv"
 file2 <- "YSI_RTC_20191220-20191226.txt"    
@@ -27,6 +38,20 @@ file4 <- "YSI_RTC_20200207-20200317.csv"
 file5 <- "YSI_RTC_20200317-20200403.csv"   
 file6 <- "YSI_RTC_20200403-20200515.csv"    
 file7 <- "YSI_RTC_20200515.csv" 
+
+#December 2020 Files
+
+file7.1 <- "YSI_RTC_20200515-20200619.csv"
+file8 <-  "YSI_RTC_20200620-20200723.csv"   
+file9 <-  "YSI_RTC_20200723-20200820.csv"   
+file10 <-  "YSI_RTC_20200820-20200923.csv"   
+file11 <- "YSI_RTC_20200924-20201015.csv"   
+file12<-  "YSI_RTC_20201016-20201118.csv"   
+file13 <-  "YSI_RTC_20201118-20201123.csv"   
+file14 <-  "YSI_RTC_20201124-20201218.csv"   
+file15 <-  "YSI_RTC_20201218-20201219.csv"   
+ 
+
 
 header <- read.table(file2, as.is = T, skip = 1,nrows = 1, header = F)
 header$V12 <- "pH.1"
@@ -84,7 +109,57 @@ df7 = read.csv(file7,
 df7 <- df7[-1,]
 
 
-df <- bind_rows(df1, df3, df4, df5, df6, df7, .id= NULL)
+df7.1 = read.csv(file7.1,
+               header=T, stringsAsFactors=F, sep=",")
+df7.1 <- df7.1[-1,]
+
+
+
+df8 = read.csv(file8,
+               header=T, stringsAsFactors=F, sep=",")
+df8 <- df8[-1,]
+
+
+df9 = read.csv(file9,
+               header=T, stringsAsFactors=F, sep=",")
+df9 <- df9[-1,]
+
+
+df10 = read.csv(file10,
+               header=T, stringsAsFactors=F, sep=",")
+df10 <- df10[-1,]
+
+
+df11 = read.csv(file11,
+               header=T, stringsAsFactors=F, sep=",")
+df11 <- df11[-1,]
+
+
+df12 = read.csv(file12,
+               header=T, stringsAsFactors=F, sep=",")
+df12 <- df12[-1,]
+
+
+df13 = read.csv(file13,
+               header=T, stringsAsFactors=F, sep=",")
+df13 <- df13[-1,]
+
+
+df14 = read.csv(file14,
+               header=T, stringsAsFactors=F, sep=",")
+df14 <- df14[-1,]
+
+
+df15 = read.csv(file15,
+               header=T, stringsAsFactors=F, sep=",")
+df15 <- df15[-1,]
+
+
+
+
+df <- bind_rows(df1, df3, df4, df5, df6, df7,
+                df7.1, df8, df9, df10, df11, df12,
+                df13, df14, df15, .id= NULL)
 
 
 
@@ -153,11 +228,14 @@ df <- df %>%
 eos_pier_2020 <- select(df, datetime, everything())
 
 
-save(eos_pier_2020, file = "EOS_YSI_20191201-20200515.RData")
+#save(eos_pier_2020, file = "EOS_YSI_20191201-20200515.RData")
+
+save(eos_pier_2020, file = "EOS_YSI_20191120-20201219.RData")
+
 
 rm(list = ls())
 
-load(file = "EOS_YSI_20191201-20200515.RData")
+load(file = "EOS_YSI_20191120-20201219.RData")
 
 str(eos_pier_2020)
 
