@@ -122,7 +122,18 @@ df15 <- df15[-1,]
 # df <- bind_rows(bind_list, .id= NULL)
 
 df <- bind_rows(df1, df2, df3, df4, df5, df6, df7, df8, df9,
-                df10, df11, df12, df13, df14, df15, .id= NULL)
+                df10, df11, df12, df15, .id= NULL)
+
+df16 <- bind_rows(df13, df14, .id= NULL)
+
+df16$Date <- mdy(df16$Date)
+
+df16$Date <- as.character(df16$Date)
+
+df16$Date <- gsub("-", "/", df16$Date)
+
+df <- bind_rows(df, df16, .id = NULL)
+
 
 rm(list=setdiff(ls(), c("df")))
 

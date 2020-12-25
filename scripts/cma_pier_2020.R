@@ -2,16 +2,15 @@
 
 library(ggplot2)
 library(scales)
-library(Scale)
 library(grid)
 library(dplyr)
-
+library(here)
 
 
 ##### set working directory ###############################
 
 
-setwd("C:/Users/Ryan/Desktop/2020 season summary")
+setwd(here())
 
 
 # loading in  data ##############
@@ -20,7 +19,7 @@ setwd("C:/Users/Ryan/Desktop/2020 season summary")
 
 rm(list =ls())
 
-load("data/cma-pier/CMA_YSI_20191201-20200515.RData")
+load("data/cma-pier/CMA_YSI_20191108-20201219.RData")
 
 
 df1 <- cma_2020
@@ -28,22 +27,19 @@ rm(cma_2020)
 
 colnames(df1)
 
-df1 <- df1 %>%                     
-  rename(o2 = 'o2_mg_l')
-
 summary(df1$datetime)
 
 # season time bounds
 t1 <-  "2019-12-01 00:00:00"
-t2 <- "2020-05-15 00:00:00"
+t2 <- "2020-12-01 00:00:00"
 
 
 
 # plotting oxygen ####
 
-summary(df1$o2)
+summary(df1$o2_mg_l)
 
-p = ggplot(df1, aes(datetime, o2))
+p = ggplot(df1, aes(datetime, o2_mg_l))
 a1=p + geom_point(aes(), size = 0.25, color = "blue") +
   xlab("") + #last x label sets the time axis label
   ylab("DO (mg/L)")+ 
@@ -147,7 +143,7 @@ print(a4)
 
 p = ggplot(df1, aes(datetime, sst))
 a5=p + geom_point(aes(), size = 0.25, color = "red") +
-  xlab("CMA Pier") + #last x label sets the time axis label
+  xlab("CMA Pier Dec 2019 to Dec 2020") + #last x label sets the time axis label
   ylab("Temp (degC)")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -174,7 +170,7 @@ summary(df1$Depth)
 
 p = ggplot(df1, aes(datetime, Depth))
 a6=p + geom_point(aes(), size = 0.25, color = "black") +
-  xlab("CMA Pier") + #last x label sets the time axis label
+  xlab("CMA Pier Dec 2019 to Dec 2020") + #last x label sets the time axis label
   ylab("Depth (m)")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
