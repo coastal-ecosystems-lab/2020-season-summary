@@ -5,14 +5,14 @@ library(scales)
 library(Scale)
 library(grid)
 library(dplyr)
-
+library(here)
 
 
 ##### set working directory ###############################
 
+setwd(here())
 
-setwd("C:/Users/Ryan/Desktop/2020 season summary")
-
+getwd()
 
 # loading in  data ##############
 
@@ -20,7 +20,7 @@ setwd("C:/Users/Ryan/Desktop/2020 season summary")
 
 rm(list =ls())
 
-load("data/eos-pier/EOS_YSI_20191201-20200515.RData")
+load("data/eos-pier/EOS_YSI_20191120-20201219.RData")
 
 
 df1 <- eos_pier_2020
