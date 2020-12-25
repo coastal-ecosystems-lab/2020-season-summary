@@ -2,7 +2,6 @@
 
 library(ggplot2)
 library(scales)
-library(Scale)
 library(grid)
 library(dplyr)
 library(here)
@@ -27,25 +26,19 @@ df1 <- eos_pier_2020
 rm(eos_pier_2020)
 
 
-colnames(df1)
-
-
-df1 <- df1 %>%                     
-  rename(o2 = 'o2_mg_l')
-
 summary(df1$datetime)
 
 # season time bounds
 t1 <-  "2019-12-01 00:00:00"
-t2 <- "2020-05-15 00:00:00"
+t2 <- "2020-12-02 00:00:00"
 
 
 
 # plotting oxygen ####
 
-summary(df1$o2)
+summary(df1$o2_mg_l)
 
-p = ggplot(df1, aes(datetime, o2))
+p = ggplot(df1, aes(datetime, o2_mg_l))
 a1=p + geom_point(aes(), size = 0.25, color = "blue") +
   xlab("") + #last x label sets the time axis label
   ylab("DO (mg/L)")+ 
@@ -128,7 +121,7 @@ a4=p + geom_point(aes(), size = 0.25, color = "red") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(9, 19) +
+  ylim(9, 22) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25),  #theme for bottom plot
         panel.grid.minor = element_line(colour = "grey", size = 0.25),
@@ -154,7 +147,7 @@ a5=p + geom_point(aes(), size = 0.25, color = "red") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(9, 19) +
+  ylim(9, 22) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25),  #theme for bottom plot
         panel.grid.minor = element_line(colour = "grey", size = 0.25),
@@ -256,18 +249,18 @@ print(a8)
 #the following plots aligned time series into one .png with 4K HD aspect ratios
 
 
-ggsave("plots/eos-pier/O_pH_T_S_Dec_01_2019_to_May_15_2020_eos-pier.png",
+ggsave("plots/eos-pier/O_pH_T_S_Dec_01_2019_to_Dec_01_2020_eos-pier.png",
        plot = grid.draw(rbind(ggplotGrob(a1), ggplotGrob(a2), ggplotGrob(a3), ggplotGrob(a5), 
                               size = "last")), width = 6.65, height = 3.5)
 
 
 
-ggsave("plots/eos-pier/O_S_T_D_Dec_01_2019_to_May_15_2020_eos-pier.png",
+ggsave("plots/eos-pier/O_S_T_D_Dec_01_2019_to_Dec_01_2020_eos-pier.png",
        plot = grid.draw(rbind(ggplotGrob(a1), ggplotGrob(a3), ggplotGrob(a4), ggplotGrob(a6), 
                               size = "first")), width = 6.65, height = 3.5)
 
 
-ggsave("plots/eos-pier/trb_chl_S_T_D_Dec_01_2019_to_May_15_2020_eos-pier.png",
+ggsave("plots/eos-pier/trb_chl_S_T_D_Dec_01_2019_to_Dec_01_2020_eos-pier.png",
        plot = grid.draw(rbind(ggplotGrob(a7), ggplotGrob(a8), ggplotGrob(a3),
                               ggplotGrob(a4), ggplotGrob(a6),
                               size = "first")), width = 6.65, height = 3.5)
