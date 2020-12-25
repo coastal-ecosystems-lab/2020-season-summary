@@ -30,7 +30,7 @@ colnames(df1)
 summary(df1$datetime)
 
 # season time bounds
-t1 <-  "2019-12-01 00:00:00"
+t1 <-  "2020-05-01 00:00:00"
 t2 <- "2020-12-01 00:00:00"
 
 
@@ -96,7 +96,7 @@ a3=p + geom_point(aes(), size = 0.25, color = "steel blue") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(0, 25) +
+  ylim(5, 27) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25),  #theme for bottom plot
         panel.grid.minor = element_line(colour = "grey", size = 0.25),
@@ -122,7 +122,7 @@ a4=p + geom_point(aes(), size = 0.25, color = "red") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(8, 20) +
+  ylim(8, 25) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25),  #theme for bottom plot
         panel.grid.minor = element_line(colour = "grey", size = 0.25),
@@ -143,12 +143,12 @@ print(a4)
 
 p = ggplot(df1, aes(datetime, sst))
 a5=p + geom_point(aes(), size = 0.25, color = "red") +
-  xlab("CMA Pier Dec 2019 to Dec 2020") + #last x label sets the time axis label
+  xlab("CMA Pier May to Dec 2020") + #last x label sets the time axis label
   ylab("Temp (degC)")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(8, 20) +
+  ylim(8, 25) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25),  #theme for bottom plot
         panel.grid.minor = element_line(colour = "grey", size = 0.25),
@@ -170,7 +170,7 @@ summary(df1$Depth)
 
 p = ggplot(df1, aes(datetime, Depth))
 a6=p + geom_point(aes(), size = 0.25, color = "black") +
-  xlab("CMA Pier Dec 2019 to Dec 2020") + #last x label sets the time axis label
+  xlab("CMA Pier May to Dec 2020") + #last x label sets the time axis label
   ylab("Depth (m)")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -250,18 +250,18 @@ print(a8)
 #the following plots aligned time series into one .png with 4K HD aspect ratios
 
 
-ggsave("plots/cma-pier/O_pH_T_S_Dec_01_2019_to_May_15_2020_cma-pier.png",
+ggsave("plots/cma-pier/O_pH_T_S_May_01_2020_to_Dec_01_2020_cma-pier.png",
        plot = grid.draw(rbind(ggplotGrob(a1), ggplotGrob(a2), ggplotGrob(a3), ggplotGrob(a5), 
                               size = "last")), width = 6.65, height = 3.5)
 
 
 
-ggsave("plots/cma-pier/O_S_T_D_Dec_01_2019_to_May_15_2020_cma-pier.png",
+ggsave("plots/cma-pier/O_S_T_D_May_01_2020_to_Dec_01_2020_cma-pier.png",
        plot = grid.draw(rbind(ggplotGrob(a1), ggplotGrob(a3), ggplotGrob(a4), ggplotGrob(a6), 
                               size = "first")), width = 6.65, height = 3.5)
 
 
-ggsave("plots/cma-pier/trb_chl_S_T_D_Dec_01_2019_to_May_15_2020_cma-pier.png",
+ggsave("plots/cma-pier/trb_chl_S_T_D_May_01_2020_to_Dec_01_2020_cma-pier.png",
        plot = grid.draw(rbind(ggplotGrob(a7), ggplotGrob(a8), ggplotGrob(a3),
                               ggplotGrob(a4), ggplotGrob(a6),
                               size = "first")), width = 6.65, height = 3.5)
