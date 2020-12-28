@@ -2,7 +2,6 @@
 
 library(ggplot2)
 library(scales)
-library(Scale)
 library(grid)
 library(dplyr)
 library(here)
@@ -10,9 +9,9 @@ library(here)
 
 ##### set working directory ###############################
 
+setwd(here())
 
-setwd("C:/Users/Ryan/Desktop/2020 season summary")
-
+getwd()
 
 # loading in  data ##############
 
@@ -20,11 +19,11 @@ setwd("C:/Users/Ryan/Desktop/2020 season summary")
 
 rm(list =ls())
 
-load("data/eos-met/EOS_MET_20191201-20200515.RData")
+load("data/eos-met/EOS_MET_20191120-20201219.RData")
 
 
-df1 <- df
-rm(df)
+df1 <- eos_met_2020
+rm(eos_met_2020)
 
 
 colnames(df1)
@@ -35,8 +34,8 @@ colnames(df1)
 summary(df1$datetime)
 
 # season time bounds
-t1 <-  "2019-12-01 00:00:00"
-t2 <- "2020-05-15 00:00:00"
+t1 <-  "2020-05-01 00:00:00"
+t2 <- "2020-12-02 00:00:00"
 
 
 
@@ -51,7 +50,7 @@ a1=p + geom_point(aes(), size = 0.25, color = "red3") +
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
          as.POSIXct(t2, format = "%Y-%m-%d %H:%M:%S"))) +
-  ylim(4, 27) +
+  ylim(4, 40) +
   theme_minimal() +
   theme(panel.grid.major = element_line(colour = "black", size = 0.25),  #theme for bottom plot
         panel.grid.minor = element_line(colour = "grey", size = 0.25),
@@ -153,7 +152,7 @@ summary(df1$BP_mbar)
 
 p = ggplot(df1, aes(datetime, BP_mbar))
 a5=p + geom_point(aes(), size = 0.25, color = "seagreen") +
-  xlab("EOS Met") + #last x label sets the time axis label
+  xlab("EOS Met May to Dec 2020") + #last x label sets the time axis label
   ylab("Air Press (mbar)")+ 
   scale_x_datetime(labels=date_format("%m"), breaks = date_breaks("1 month"), expand=c(0,0)) +
   xlim(c(as.POSIXct(t1, format = "%Y-%m-%d %H:%M:%S"),
@@ -233,16 +232,33 @@ print(a7)
 
 #the following plots aligned time series into one .png with 4K HD aspect ratios
 
+# annual plots
 
-ggsave("plots/eos-met/airT_ws_wdir_press_Dec_01_2019_to_May_15_2020_eos-met.png",
+# ggsave("plots/eos-met/airT_ws_wdir_press_Dec_01_2019_to_Dec_01_2020_eos-met.png",
+#        plot = grid.draw(rbind(ggplotGrob(a1), ggplotGrob(a2), ggplotGrob(a3), ggplotGrob(a5), 
+#                               size = "last")), width = 6.65, height = 3.5)
+# 
+# 
+# 
+# ggsave("plots/eos-met/par_rain_rh_press_Dec_01_2019_to_Dec_01_2020_eos-met.png",
+#        plot = grid.draw(rbind(ggplotGrob(a7), ggplotGrob(a4), ggplotGrob(a6), ggplotGrob(a5), 
+#                               size = "first")), width = 6.65, height = 3.5)
+
+
+#last 6 months plotted
+
+ggsave("plots/eos-met/airT_ws_wdir_press_May_01_2020_to_Dec_01_2020_eos-met.png",
        plot = grid.draw(rbind(ggplotGrob(a1), ggplotGrob(a2), ggplotGrob(a3), ggplotGrob(a5), 
                               size = "last")), width = 6.65, height = 3.5)
 
 
 
-ggsave("plots/eos-met/par_rain_rh_press_Dec_01_2019_to_May_15_2020_eos-met.png",
+ggsave("plots/eos-met/par_rain_rh_press_May_01_2020_to_Dec_01_2020_eos-met.png",
        plot = grid.draw(rbind(ggplotGrob(a7), ggplotGrob(a4), ggplotGrob(a6), ggplotGrob(a5), 
                               size = "first")), width = 6.65, height = 3.5)
+
+
+
 
 
 
